@@ -32,7 +32,7 @@ In general, eggs will explode in 3 seconds, and obstacle can block the explosion
 >attach two images here to show the explosion zone
 
 ## Wireframes
-![](https://wireframe.cc/hqUg1P)
+![wireframe](https://wireframe.cc/hqUg1P)
 ## Technologies
 - Javascript
 - HTML/CSS
