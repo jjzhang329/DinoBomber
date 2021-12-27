@@ -13,11 +13,20 @@ In DinoBomber, users will be able to:
 - Start, pause, and reset the game board
 - Control dino to move around using keyboard(up/down/left/right)
 - Drop an egg using keyboard(space)
-  - Egg will explode in 3s
-  - Egg as center [0, 0], explosion zone: [[0, 1], [0, -1], [-1, 0], [1, 0]]
-> attach an image here to show the explosion zone
-- One power-up item (maybe an apple)
+  - Egg will explode in 3s  
+- Use power-up item (maybe an apple)
   - Rendered every 10 seconds at a radom position
-  - Doubled the explosion area to [[0, 2], [0, -2], [-2, 0], [2, 0]]
-  - if three items are collected and not used, explosion extend to the entire row and column
->attach an image here to show the explosion zone
+- Trap soldiers in your explosion zone to kill them  
+- Hide behind obstacles to protect dino from exposion
+
+**Explosion Zone explaination:**
+In general, eggs will explode in 3 seconds, and obstacle can block the explosion. Egg as center [0, 0],
+- without power-up
+  -explosion zone: [[0, 1], [0, -1], [-1, 0], [1, 0]]
+> attach an image here to show the explosion zone
+- with power-up
+  - Extend the area to [[0, 2], [0, -2], [-2, 0], [2, 0]]
+>attach two images here to show the explosion zone
+- with three power-ups
+  - explosion extend to the entire row and column
+>attach two images here to show the explosion zone
