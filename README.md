@@ -30,3 +30,41 @@ In general, eggs will explode in 3 seconds, and obstacle can block the explosion
 - with three power-ups
   - explosion extend to the entire row and column
 >attach two images here to show the explosion zone
+
+## Wireframes
+
+## Technologies
+- Javascript
+- HTML/CSS
+- Canvas
+- Sprite
+- might need an map editor(three.js?)
+- Webpack
+
+## Implementation Timeline:
+- 12/31 Thursday: 
+  1. Set-up the project blueprint 
+  2. Create the js files for game, grid, characters, etc 
+  3. Add all other necessary files, css, html, images, sprites
+  4. Using webpack to organize the files
+- 1/3 Monday:
+  1. Using canvas to create the game board
+  2. Create and add the instruction page
+  3. Create and add the initial game state (with map and all characters)
+  4. Set-up the baisc animation loop
+- 1/4 Tuesday:
+  1. Create the move function
+  2. Setup the collision detection!
+  3. Setup the explosion zone and safe zone
+- 1/5 Wednesday:
+  1. Add and render the game over page
+  2. Add the power-up function
+  3. Render the count of power-up on top
+- 1/6 Thursday: 
+- 1/7 Friday: Presentaion Date!
+
+## Bonus Features:
+Potential add-on features:
+- Adding more maps and game characters to choose from
+- Adding battle version (player1 vs player2 or player vs AI)
+- Adding differnet levels
