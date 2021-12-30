@@ -1,0 +1,41 @@
+{
+  "name": "DinoBomber",
+  "version": "1.0.0",
+  "description": "DinoBomber is a 2D javascript game, it is designed based on the concept of the classic Bobmberman game. Game will be played on a grid based map with obstacles. There are four game charactors:  - cute green dino (main charactor, controlled by the player) - soldier #1 (walking randomly on the map) - soldier #2 (chasing dino) - soldier #3 (walking in his own zone, if dino is close by, walking away from the dino)",
+  "main": "index.js",
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjzhang329/DinoBomber.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjzhang329/DinoBomber/issues"
+  },
+  "homepage": "https://github.com/jjzhang329/DinoBomber#readme",
+  "dependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "babel-loader": "^8.2.3",
+    "core-js": "^3.20.1",
+    "css-loader": "^6.5.1",
+    "mini-css-extract-plugin": "^2.4.5",
+    "regenerator-runtime": "^0.13.9",
+    "sass": "^1.45.1",
+    "sass-loader": "^12.4.0",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+
+  
+}
+
