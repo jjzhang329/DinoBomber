@@ -1,4 +1,21 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
+.title {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 50px;
+  color: #638f37;
+}
 
+#canvas {
+  height: 500px;
+  width: 800px;
+  border: 2px solid gray;
+  background-color: gainsboro;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -39,6 +39,11 @@ module.exports = (env, argv) => {
     } else {
         config.devtool = 'eval-source-map';
     }
+    resolve: {
+        alias: {
+            util: require.resolve("util/")
+        }
+    }
 
     return config;
 }
