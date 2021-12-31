@@ -9,6 +9,9 @@ canvas.height = 500;
 ctx.clearRect(0, 0, canvas.width, canvas.height)
 const newDino = new Dino(ctx)
 
+//if this game clieckd, start game;
+//if this cliecked, restart game;
+//
 
 window.addEventListener('keydown', function (e) {
     keys[e.keycode] = true;

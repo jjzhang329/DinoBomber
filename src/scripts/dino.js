@@ -12,6 +12,8 @@ class Dino{
     draw(ctx){
         ctx.fillStyle = 'green';
         ctx.fillRect(this.x, this.y, this.width, this.height)
+        const dinoSprite = new Image();
+        // dinoSprite.src = 
     }
 
    move(){
