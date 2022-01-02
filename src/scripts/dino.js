@@ -9,13 +9,39 @@ export default class Dino {
     this.frameY= 0
     this.speed= 10
     this.moving= false
+  
+    }
+ 
+
+    draw(ctx){
+        const dinoSprite = new Image();
+        //  ctx.clearRect(0, 0, 800, 480)
+        dinoSprite.addEventListener('load', () =>        
+            ctx.drawImage(dinoSprite, 
+            this.width * this.frameX, this.height * this.frameY, 
+            this.width, this.height,
+            this.x, this.y, this.width * 2, this.height * 2))
+        dinoSprite.src = "src/assets/DinoSheet.png"
     }
 
-    drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
-        ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
-    };
+    move(key){
+        if (key['ArrowUp'] && this.y > 5) {    
+            this.y -= this.speed;
+            this.frameY = 3;
+        }
+        if (key['ArrowLeft'] && this.x > 0) {
+            this.x -= this.speed;
+            this.frameY = 0;
+        }
+        if (key['ArrowRight'] && this.x < canvas.width - this.width * 2) {
+            this.x += this.speed;
+            this.frameY = 2;
 
-  
-
+        }
+        if (key['ArrowDown'] && this.y < canvas.height - this.height * 2) {
+            this.y += this.speed
+            this.frameY = 1;
+        }
+    }
 }
 

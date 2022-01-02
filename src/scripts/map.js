@@ -4,6 +4,7 @@ export default class Map{
     this.cols = 50
     this.rows = 30
     this.tileSize = 16
+
     //dino size is prob 64
     this.tiles = [[
     206, 206, 206, 206, 54, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 41, 192, 191, 41, 191, 53, 191, 192, 191, 192, 
@@ -99,17 +100,23 @@ export default class Map{
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2684354746, 2684354732, 2684354718, 2684354704, 2684354690]]
    }
 
+   draw(ctx){
+       const map = new Image()
+    //    ctx.clearRect(0, 0, 800, 480)
+       map.addEventListener('load', ()=> {
+        
+        ctx.clearRect(0, 0, 800, 480)
+       ctx.drawImage(
+           map, 0, 0, 800, 480, 0, 0, 800, 480
+       )})
+       map.src = "src/assets/Tiles.png";
+   } 
+   
+    
+
   
 };
-console.log("in the map")
 
 
-
-function handleCollision(){
-    const obstaclesContainer = document.createElement('div') 
-    Map.tiles.forEach((square)=>{
-
-    })
-}
 
 
