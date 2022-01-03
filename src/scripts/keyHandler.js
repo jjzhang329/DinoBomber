@@ -6,11 +6,13 @@ export default class KeyHandler {
         this.keys = [];
         window.addEventListener("keydown", (e)=>{
             this.keys[e.key] = true;
+           
             this.player.moving = true;
         })
         window.addEventListener("keyup", (e) => {
             delete this.keys[e.key];
             this.player.moving = false;
+      
         })
     }
 }

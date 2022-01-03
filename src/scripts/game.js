@@ -8,9 +8,11 @@ export default class Game{
         this.end = false;
         this.map = new Map();
         this.dino = new Dino();
-        this.KeyHandler = new KeyHandler(this.dino);
-        
+        this.key = new KeyHandler(this.dino).keys;
+        console.log(this.map.obstacles())
+        // console.log(this.map.emptyTile(45, 25))
         this.startAnimating(8);
+
     }
     
     start(){
@@ -31,15 +33,17 @@ export default class Game{
        elapsed = now - then;    
         if (elapsed > fpsInterval) {    
             then = now - (elapsed % fpsInterval);
-            let key = this.KeyHandler.keys
-            
+            // console.log(this.dino.x)
+            // console.log(this.dino.y)
             this.map.draw(this.ctx)
             this.dino.draw(this.ctx)
-            this.dino.move(key);
+            // if(!this.collisionDetection()){
+                
+                this.dino.move(this.key)
+            // };
             this.handlePlayerFrame()
             
-        };
-       
+        };   
         
     }
     handlePlayerFrame() {
@@ -50,6 +54,29 @@ export default class Game{
     
     collisionDetection(){
         
+        let dinoX = this.dino.x;
+        let dinoY = this.dino.y;
+        // console.log(dinoX)=>430
+        // console.log(dinoY)=>160
+        //rows object
+        let tileX = this.map.getXY()[0];
+        //cols object
+        let tileY = this.map.getXY()[1];
+       let collide = false;
+       if (tileX[dinoY-4]){
+           let posArr = tileX[dinoY - 4]
+         
+           if (posArr.includes(dinoX+60)|| posArr.includes(dinoX))
+               
+           {
+               collide = true;
+           }
+       }
+        // console.log(tileX[464])
+    //    if(dinoX > tileY[dinoY + 44])
+       
+        return collide;
+      
     }
 
     

@@ -102,7 +102,7 @@ export default class Map{
 
    draw(ctx){
        const map = new Image()
-    //    ctx.clearRect(0, 0, 800, 480)
+
        map.addEventListener('load', ()=> {
         
         ctx.clearRect(0, 0, 800, 480)
@@ -112,9 +112,48 @@ export default class Map{
        map.src = "src/assets/Tiles.png";
    } 
    
-    
+   obstacles(){
+       let obstacles = [];
+       
+       this.tiles[1].filter((ele, i)=>{
+           if(ele !== 0)obstacles.push(i)
+       })
+       return obstacles;
 
-  
+       //rowNumber = i / this.col + 1 => x
+        //colNumber = i % this.col + 1 => y
+   }
+
+   getRow(pos){
+       //takes in this.y
+       //420 will be on row 26
+       return Math.floor(pos / this.tileSize);
+       
+   }
+    getCol(pos) {
+        //takes in this.x
+        //660 will be on col 41
+        return Math.floor(pos / this.tileSize);
+
+    }
+
+    emptyTile(x, y){
+        let idx =  y * this.cols + x;
+        if(this.tiles[1][idx] === 0){
+            return true
+        } else{
+            return false;
+        }
+    }
+
+
+
+   //if dino is moving upwards, check if dino top collide with tile bottom
+   //if dino is moving downwards, chekck if dino bottom collide with tile top
+   //if dino is moving left, check if dino left collide with tile right
+   //if dino is moving right, check if dino right collide with tile left
+   
+
 };
 
 
