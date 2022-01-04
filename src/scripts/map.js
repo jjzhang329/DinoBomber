@@ -118,7 +118,9 @@ export default class Map{
        this.tiles[1].filter((ele, i)=>{
            if(ele !== 0)obstacles.push(i)
        })
+       
        return obstacles;
+       
 
        //rowNumber = i / this.col + 1 => x
         //colNumber = i % this.col + 1 => y
@@ -136,10 +138,17 @@ export default class Map{
         return Math.floor(pos / this.tileSize);
 
     }
+    getIndex(posX, posY){
+        let row = this.getRow(posY);
+        let col = this.getCol(posX);
+        return col * this.cols + row;
+        
+    }
 
-    emptyTile(x, y){
-        let idx =  y * this.cols + x;
+    emptyTile(colX, rowY){
+        let idx =  rowY * this.cols + colX;
         if(this.tiles[1][idx] === 0){
+           
             return true
         } else{
             return false;

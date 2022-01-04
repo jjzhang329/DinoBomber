@@ -1,11 +1,12 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 export default class Bomb{
-    constructor(x, y){
+    constructor(x, y, game){
         //x, y is the previous bomb location, 
         //wont change until the second bomb set
         this.x = x;
         this.y = y;
+        this.game = game;
         this.width= 16;
         this.height= 18;
         this.sourceX= 0;
@@ -24,15 +25,20 @@ export default class Bomb{
             this.width, this.height,
             this.x, this.y, this.width * 2, this.height * 2))
         bombSprite.src = this.src;
-        //16*18 and 16*18
+        //16*18 => 32*36 when rendered
+
+       
     }
 
+ 
     fire(){
         if(this.timer === 0){
             //fire animation here 
             this.timer = 5;
         }
     }
+
+    
 
     fireZone(){
         //calculate the file zone 

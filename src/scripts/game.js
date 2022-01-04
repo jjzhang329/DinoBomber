@@ -8,12 +8,15 @@ export default class Game{
         this.ctx = ctx;
         this.end = false;
         this.map = new Map();
-        this.dino = new Dino({x:600, y:420});
-        this.enemies = new Enemy({x:0, y:200})
+        this.dino = new Dino({x:600, y:420, game: this});
+        this.enemies = new Enemy({x:0, y:200, game:this})
+        //maybe after Dino move, add enemies?
         this.key = new KeyHandler(this.dino).keys;
      
         this.startAnimating(6);
-
+        console.log(this.map.obstacles().length)
+        
+       
     }
     
     start(){
@@ -39,13 +42,16 @@ export default class Game{
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
             this.enemies.draw(this.ctx)
-            this.enemies.randomMove()       
+            // this.enemies.randomMove()       
             this.dino.move(this.key);
+           
             if(this.dino.bomb.length){
                 
                 this.dino.setBomb()
             }
+            // console.log(this.map.obstacles().length)
             this.handlePlayerFrame();
+
             
         };   
         

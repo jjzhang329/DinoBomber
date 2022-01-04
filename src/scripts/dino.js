@@ -8,6 +8,8 @@ export default class Dino extends MovingObjects {
         super(object)
         this.width = 24;
         this.height = 28;
+        
+        this.game = object.game;
         this.bomb = [];
         //reset width and heigh when moving
       ;
@@ -29,6 +31,7 @@ export default class Dino extends MovingObjects {
     move(key){
       
         if (key['ArrowUp']&& this.moveUp()) {    
+            
             this.y -= this.speed;      
             this.width = 21;
             this.height = 29;
@@ -53,23 +56,32 @@ export default class Dino extends MovingObjects {
             this.frameY = 1.93;
         }
         if (key['Space'] && this.emptyTile(this.x, this.y)) {
-            let newBomb = new Bomb(this.x-this.width, this.y+this.width)
+            let newBomb = new Bomb(this.x-this.width, this.y+this.width, this.game)
             this.bomb.push(newBomb)
+
 
         }
         
     }
 
     setBomb(){
+        console.log(this.bomb)
         let egg = this.bomb[0]
         egg.dropBomb()
+        let idx = this.game.map.getIndex(egg.x, egg.y)
+        this.game.map.tiles[1][idx] = 1
+        
+        console.log(this.bomb)
         if(egg.sourceX < egg.width) egg.sourceX += egg.width
         else{egg.sourceX = 0};
+
+        
         setTimeout(()=>{
             this.bomb.shift()
+            this.game.map.tiles[1][idx] = 0;
             egg.timer = 0
+            
         }, egg.timer*1000)
-
     
     }
 
