@@ -9,12 +9,13 @@ export default class Enemy extends MovingObjects{
 
     constructor(object){
         super(object)
-        this.speed = 8;
+        this.speed = 6;
         this.moving = true;
+        this.width = 25;
+        this.height = 27;
         //moving down, right, up, left
         //[0, 1], [1, 0], [0, -1], [-1, 0]
       this.counter = 3;
-      
         this.currentDir = 1;
     }
 
@@ -25,7 +26,7 @@ export default class Enemy extends MovingObjects{
                 this.width, this.height,
                 this.x, this.y, this.width*2, this.height*2)  
         })
-        enemySprite.src = 'src/assets/Enemies.png'
+        enemySprite.src = 'src/assets/enemies.png'
     }
   
     randomMove(){
@@ -35,24 +36,28 @@ export default class Enemy extends MovingObjects{
 
         if (this.currentDir === Direction.up && this.moveUp()){
             this.y -= this.speed;
-            console.log('moving up')
-            // this.swithDir()
-
+            this.width = 25;
+            this.height = 27;
+            this.frameY = 0;
         };
         if (this.currentDir === Direction.down && this.moveDown()){
             this.y += this.speed;
-            console.log('moving down')
-            // this.swithDir()
+            this.width = 25;
+            this.height = 27;
+            this.frameY = 0;
+ 
         };
         if (this.currentDir === Direction.left && this.moveLeft()){
             this.x -= this.speed;
-            console.log('moving left')
-            // this.swithDir()
+            this.width = 25;
+            this.height = 27;
+            this.frameY = 0;
         }; 
-        if (this.currentDir === Direction.right && this.moveRight()){
-            console.log('moving right')
+        if (this.currentDir === Direction.right && this.moveRight()){  
             this.x += this.speed;
-            // this.swithDir()
+            this.width = 26;
+            this.height = 27;
+            this.frameY = 1;
         } 
       
     }
@@ -61,7 +66,7 @@ export default class Enemy extends MovingObjects{
 
         if(this.counter === 0){
             this.currentDir = this.getRandomInt(0, 4)
-           this.counter = 5;
+           this.counter = 4;
             
         }else{
             

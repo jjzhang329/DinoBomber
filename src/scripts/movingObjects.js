@@ -3,9 +3,7 @@ let map = new Map();
 export default class MovingObjects{
     constructor(object){
         this.x = object.x;
-        this.y = object.y;
-        this.width = 32;
-        this.height = 32;
+        this.y = object.y;  
         this.frameX = 0;
         this.frameY = 0;
         this.speed = 12;
@@ -16,12 +14,9 @@ export default class MovingObjects{
 
     moveUp() {
 
-        let i = map.getRow(this.y);
-        
+        let i = map.getRow(this.y);      
         let j = map.getCol(this.x);
-        // hardcoded to 12 so that dino can reach the top edge
-        if(this.y < 12)return false;
-
+        if(this.y < this.speed)return false;
         if (map.emptyTile(j, i)&&map.emptyTile(j + 2, i)) {
             return true
         }
@@ -33,7 +28,7 @@ export default class MovingObjects{
         let j = map.getCol(this.x);
         if(this.y > canvas.height - this.height*2)return false;
 
-        if (map.emptyTile(j, i) && map.emptyTile(j + 3, i)) {
+        if (map.emptyTile(j, i) && map.emptyTile(j + 2, i)) {
             return true
         }
         return false;
@@ -42,10 +37,9 @@ export default class MovingObjects{
     moveLeft() {
    
         let i = map.getRow(this.y);
-        let j = map.getCol(this.x);
-         // hardcoded to 12 so that dino can reach the top edge
-        if(this.x < 12)return false;
-        if (map.emptyTile(j, i) && map.emptyTile(j, i + 2) && map.emptyTile(j, i + 2)) {
+        let j = map.getCol(this.x)-1; 
+        if(this.x < this.speed)return false;
+        if (map.emptyTile(j, i) && map.emptyTile(j, i+3) && map.emptyTile(j, i + 2)) {
             return true
         }
         return false;
@@ -54,12 +48,17 @@ export default class MovingObjects{
     moveRight() {
         if(this.x > canvas.width - this.width*2)return false;
         let i = map.getRow(this.y);
-        let j = map.getCol(this.x) + 4;
+        let j = map.getCol(this.x) + 3;
         if (map.emptyTile(j, i) && map.emptyTile(j, i + 3) && map.emptyTile(j, i + 2)) {
 
             return true
         }
         return false;
 
+    }
+    emptyTile(x, y){
+        let i = map.getRow(x)
+        let j = map.getCol(y)
+        return map.emptyTile(i, j)
     }
 }

@@ -1,12 +1,16 @@
 
+import Bomb from './bomb';
 import MovingObjects from './movingObjects';
 
 export default class Dino extends MovingObjects {
 
     constructor(object){
         super(object)
- 
-      
+        this.width = 24;
+        this.height = 28;
+        this.bomb = [];
+        //reset width and heigh when moving
+      ;
     }
  
 
@@ -15,82 +19,63 @@ export default class Dino extends MovingObjects {
         //  ctx.clearRect(0, 0, 800, 480)
         dinoSprite.addEventListener('load', () =>        
             ctx.drawImage(dinoSprite, 
-            this.width * this.frameX, this.height* this.frameY, 
+            this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
             this.x, this.y, this.width * 2, this.height * 2))
-        dinoSprite.src = "src/assets/DinoSheet.png"
+        dinoSprite.src = "src/assets/dinoSprite.png"
+
     }
 
     move(key){
       
         if (key['ArrowUp']&& this.moveUp()) {    
-            this.y -= this.speed;
-            this.frameY = 3;
-            
+            this.y -= this.speed;      
+            this.width = 21;
+            this.height = 29;
+            this.frameY = 2.93;
         }
-        if (key['ArrowLeft'] && this.moveLeft()) {
-           
+        if (key['ArrowLeft'] && this.moveLeft()) {        
             this.x -= this.speed;
+            this.width = 24;
+            this.height = 28;
             this.frameY = 0;
-        }
-        if (key['ArrowRight'] && this.moveRight()) {
-           
-            
+        } 
+        if (key['ArrowRight'] && this.moveRight()) {    
             this.x += this.speed;
-            this.frameY = 2;
-
-        }
+            this.width = 24;
+            this.height = 28;
+            this.frameY = 1;
+        }      
         if (key['ArrowDown'] && this.moveDown()) {
             this.y += this.speed
-            this.frameY = 1;
+            this.width = 21;
+            this.height = 29;
+            this.frameY = 1.93;
         }
+        if (key['Space'] && this.emptyTile(this.x, this.y)) {
+            let newBomb = new Bomb(this.x-this.width, this.y+this.width)
+            this.bomb.push(newBomb)
+
+        }
+        
     }
 
-    // moveUp(){
-        
-    //     let i = map.getRow(this.y) - 1;
-        
-    //    let j = map.getCol(this.x);
-      
+    setBomb(){
+        let egg = this.bomb[0]
+        egg.dropBomb()
+        if(egg.sourceX < egg.width) egg.sourceX += egg.width
+        else{egg.sourceX = 0};
+        setTimeout(()=>{
+            this.bomb.shift()
+            egg.timer = 0
+        }, egg.timer*1000)
 
-    //    if(map.emptyTile(j, i) && map.emptyTile(j+3, i)){
-    //        return true
-    //    }
-    //    return false;
-    // }
+    
+    }
 
-    // moveDown(){
-    //     let i = map.getRow(this.y) + 4;
-    //     let j = map.getCol(this.x);
-        
-    //     if (map.emptyTile(j, i) && map.emptyTile(j + 3, i)) {
-    //         return true
-    //     }
-    //     return false;
-        
-    // }
-    // moveLeft() {
-    //     let i = map.getRow(this.y) ;
-    //     let j = map.getCol(this.x) - 1;
-    //     console.log([j, i])
-    //     console.log([j, i+3])
-    //     if (map.emptyTile(j, i) && map.emptyTile(j, i + 3) && map.emptyTile(j, i + 2)) {
-    //         return true
-    //     }
-    //     return false;
+    explosion(){
 
-    // }
-    // moveRight() {
-    //     let i = map.getRow(this.y);
-    //     let j = map.getCol(this.x)+4;
-    //     if (map.emptyTile(j, i) && map.emptyTile(j, i + 3) && map.emptyTile(j, i + 2)) {
-            
-    //         return true
-    //     }
-    //     return false;
-
-    // }
-
+    }
    
 }
 

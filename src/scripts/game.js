@@ -12,7 +12,7 @@ export default class Game{
         this.enemies = new Enemy({x:0, y:200})
         this.key = new KeyHandler(this.dino).keys;
      
-        this.startAnimating(8);
+        this.startAnimating(6);
 
     }
     
@@ -39,10 +39,12 @@ export default class Game{
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
             this.enemies.draw(this.ctx)
-            // this.enemies.validDir()
-            this.enemies.randomMove()
-            
+            this.enemies.randomMove()       
             this.dino.move(this.key);
+            if(this.dino.bomb.length){
+                
+                this.dino.setBomb()
+            }
             this.handlePlayerFrame();
             
         };   
@@ -52,15 +54,24 @@ export default class Game{
         if (this.dino.frameX < 1 && this.dino.moving) {
             this.dino.frameX++
         } else { this.dino.frameX = 0 }
+        if(this.enemies.frameX < 1){
+            this.enemies.frameX++
+        }else{this.enemies.frameX = 0}
     }
     
-    collisionDetection(){
-        
-        
+    collision(){
+        if (this.enemies.x > this.dino.x + this.dino.width ||
+            this.enemies + this.enemies.width < this.dino.x ||
+            this.enemies.y > this.dino.y + this.dino.height ||
+            this.enemies.y + this.enemies.height < this.dino.y){
+            return false;
+        }else{
+            return true;
+        }   
       
     }
 
-    
+  
     
 
 }
