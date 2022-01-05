@@ -36,14 +36,14 @@ export default class Enemy extends MovingObjects{
         this.swithDir()
         
         if (this.currentDir === Direction.up && this.moveUp()){
-            console.log('moving up')
+            // console.log('moving up')
             this.y -= this.speed;
             this.width = 25;
             this.height = 27;
             this.frameY = 0;
         };
         if (this.currentDir === Direction.down && this.moveDown()){
-            console.log('moving down')
+            // console.log('moving down')
             this.y += this.speed;
             this.width = 25;
             this.height = 27;
@@ -51,14 +51,14 @@ export default class Enemy extends MovingObjects{
  
         };
         if (this.currentDir === Direction.left && this.moveLeft()){
-            console.log('moving left')
+            // console.log('moving left')
             this.x -= this.speed;
             this.width = 25;
             this.height = 27;
             this.frameY = 0;
         }; 
         if (this.currentDir === Direction.right && this.moveRight()){ 
-            console.log('moving right') 
+            // console.log('moving right') 
             this.x += this.speed;
             this.width = 26;
             this.height = 27;

@@ -2,6 +2,7 @@ import Map from './map';
 import Dino from './dino';
 import KeyHandler from './keyHandler';
 import Enemy from './enemy';
+import Bomb from './bomb';
 let fps, fpsInterval, startTime, now, then, elapsed;
 export default class Game{
     constructor(ctx){
@@ -42,14 +43,13 @@ export default class Game{
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
             this.enemies.draw(this.ctx)
-            // this.enemies.randomMove()       
+            this.enemies.randomMove()       
             this.dino.move(this.key);
-           
-            if(this.dino.bomb.length){
-                
-                this.dino.setBomb()
-            }
-            // console.log(this.map.obstacles().length)
+           if(this.dino.bomb){
+               this.dino.newBomb
+
+           }
+            this.new
             this.handlePlayerFrame();
 
             
