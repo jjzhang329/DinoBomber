@@ -57,43 +57,33 @@ export default class Dino extends MovingObjects {
             this.frameY = 1.93;
         }
         if (key['Space'] && this.emptyTile(this.x, this.y)) {
-            this.newBomb.push(new Bomb(this.x-this.width, this.y+this.width, this.game));
+            this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
-            // this.bomb.push(newBomb)
-
         }
         
     }
 
-    // setBomb(){
-    //     console.log(this.bomb)
-    //     let i = this.bomb - 1
-    //     // this.newBomb[idx].dropBomb()
-    //     let egg = this.newBomb[i]
-    //     Bomb.dropBomb(egg)
-    //     let idx = this.game.map.getIndex(egg.x, egg.y)
-    //     this.game.map.tiles[1][idx] = 1
-        
-     
-    //     if(egg.sourceX < egg.width) egg.sourceX += egg.width
-    //     else{egg.sourceX = 0};
-
-  
-    
-    // }
-
-    clearBomb(){
-        console.log(this.newBomb[0].timer)
+    clearBomb(bomb){
        
-        if (this.newBomb[0].timer=== 0){
-            this.newBomb.shift()
+ 
+        if(bomb.timer === 0){
+        //    console.log(bomb.blastLeft())
+            // console.log(bomb.blastRight()) 
+            // console.log(bomb.blastUp())
+            // console.log(bomb.blastDown())
+            this.game.explosion.push(bomb)
+            console.log(bomb)
+            bomb.blastZone()
+            let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
+            this.game.map.tiles[1][idx] = 0;
+            this.newBomb.shift();
             this.bomb -= 1;
-        } else { this.newBomb[0].timer--}
+
+
+        }else(bomb.timer--)
     }
 
-    explosion(){
-
-    }
+   
    
 }
 
