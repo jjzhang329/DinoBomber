@@ -9,19 +9,30 @@ export default class Game{
     constructor(ctx){
         this.ctx = ctx;
         this.end = false;
+        this.paused = false;
         this.map = new Map();
         this.dino = new Dino({x:600, y:420, game: this});
         this.enemies = new Enemy({x:0, y:200, game:this})
         //maybe after Dino move, add enemies?
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
-        this.startAnimating(6);
+        // this.startAnimating(6);
         // console.log(this.map.getIndex())
         console.log(this.map.obstacles())
        
     }
     
     start(){
+
+    }
+    update(){
+        if(this.paused)return;
+    }
+    paused(){
+        // add an eventlistener
+        if(this.paused){
+            this.paused = false;
+        }else this.paused = true;
 
     }
     startAnimating(fps) {

@@ -1,18 +1,40 @@
+@import "./styles/reset.css";
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+HTML * {
+    font-family: 'Cabin Sketch', cursive;
+}
+
+
 .title{
     display: flex;  
     justify-content: center;
     font-weight: bold;
     font-size: 50px;
     color: rgb(99, 143, 55);
+
    
 }
 #canvas{ 
+    position: absolute;
+    border-radius: 3%;
     height: 480px;
     width: 800px;
     border: 2px solid gray;
+    background: green($color: #9cce89);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
    
+}
+
+li {
+    list-style: none;
 }

@@ -21,6 +21,7 @@ export default class Enemy extends MovingObjects{
     }
 
     draw(ctx){
+      
         const enemySprite = new Image();
         enemySprite.addEventListener('load', ()=>{
             ctx.drawImage(enemySprite, this.width * this.frameX, this.height * this.frameY,
