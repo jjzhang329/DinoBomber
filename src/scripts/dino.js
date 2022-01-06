@@ -12,7 +12,7 @@ export default class Dino extends MovingObjects {
         this.game = object.game;
         // this.bomb = [];
         this.newBomb = [];
-        this.status = 'burned';
+        this.status = 'live';
         //reset width and heigh when moving
       ;
     }
