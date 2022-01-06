@@ -13,55 +13,68 @@ export default class Game{
         this.map = new Map();
         this.dino = new Dino({x:600, y:420, game: this});
         this.enemies = new Enemy({x:0, y:200, game:this})
-        //maybe after Dino move, add enemies?
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
-        this.startAnimating(6);
-        // setTimeout(this.gameOver(), 1000) 
-        // this.gameOver()
+        
     }
     
    start(){
-        // this.startAnimating(6)
+       this.startAnimating(6)
     }
+    // gameUpdate(){
+    //     let pause = document.getElementById('pause');
+       
+    //     pause.addEventListener('click', ()=>{
+    //         this.paused()
+    //     })
+         
+    // }
+    // paused(){
+    //     if(this.paused){
+    //         this.paused === false;
+    //     }else{
+    //         this.paused === true;
+    //     }
+    // }
+
 
    gameOver(){
-
-      this.ctx.fillStyle = 'white';
-      this.ctx.font = '50px cabin catch';
-      if(this.dino.status === 'burned'){
+       //use a modal or run cancelanimationrequest
+        if(this.end){
+    
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = '50px cabin catch';
+        if(this.dino.status === 'burned'){
           this.ctx.fillText('Burned! Game Over!', 200, 200)
-       
-      } else { this.ctx.fillText('Game Over T_T!', 250, 240)} 
+          this.dino.draw(this.ctx)
+        
+        } else { this.ctx.fillText('Game Over T_T!', 250, 240)}
+    
+     }
    
    }
-    paused(){
-        // add an eventlistener
-        if(this.paused){
-            this.paused = false;
-        }else this.paused = true;
-
-    }
+ 
     startAnimating(fps) {
         fpsInterval = 1000 / fps;    
         then = Date.now();
         startTime = then;
-        this.animate();
+            this.animate()
     }
 
     animate(){
-        
-        requestAnimationFrame(this.animate.bind(this))   
+        if(!this.end){
+            requestAnimationFrame(this.animate.bind(this))
+        }
+          
+        this.gameOver() 
         // this.ctx.clearRect(0, 0, 800, 480)
         now = Date.now();
        elapsed = now - then;    
         if (elapsed > fpsInterval) {    
             then = now - (elapsed % fpsInterval);
-            // console.log(this.dino.x)
-            // console.log(this.dino.y)
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
-            this.enemies.draw(this.ctx);
+            if (!this.end) { this.enemies.draw(this.ctx)};
             this.enemies.randomMove();      
             this.dino.move(this.key);
             this.collision(this.enemies, this.dino)
@@ -81,12 +94,9 @@ export default class Game{
                
                 this.explosion[0].explode()
             }
-            // console.log(this.map.obstacles().length)
            
             this.handlePlayerFrame();
-
-
-            
+           
         };   
         
     }
@@ -101,15 +111,7 @@ export default class Game{
 
     
     collision(object1, object2){
-        //object should have location x and y, and size
-        // if (this.enemies.x > this.dino.x + this.dino.width ||
-        //     this.enemies + this.enemies.width < this.dino.x ||
-        //     this.enemies.y > this.dino.y + this.dino.height ||
-        //     this.enemies.y + this.enemies.height < this.dino.y){
-        //     return false;
-        // }else{
-        //     return true;
-        // }   
+
         
         if(object1.x > object2.x + object2.width||
             object1.x + object1.width < object2.x ||

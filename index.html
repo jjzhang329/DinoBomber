@@ -7,31 +7,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link
        <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Corinthia:wght@700&family=Redacted+Script:wght@300&family=Rock+3D&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./dist/main.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+       <link rel="stylesheet" href="./dist/main.css" />
+
     <script src="./dist/main.js" defer></script>
     <title>DinoBomber</title>
 </head>
 
 <body>
+    <p class="title">DinoBomber</p>
     <div id="nav-bar">
         <ul>
             <li class="github">
-                <i class="fab fa-github"></i>
                 <a href="https://github.com/jjzhang329" target="_blank">Github</a>
+            </li>
+            <li class="linkedIn">
+                <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank">LinkedIn</a>
             </li>
         </ul>
     </div>
-    <p class= "title">DinoBomber</p>
+ 
     
     <div class="buttons">
        
-        <button id="start" onclick="">Start Game</button>
-        <!-- <button class="pause">Pause Game</button>
-        <button class="restart">Restart</button> -->
+        <button id="start">Start Game</button>
+         <!-- <button id="pause">Pause Game</button>
+        <button id="restart">Restart</button> -->
       
     </div>
-    <canvas id="canvas"></canvas>
-    <img src='src/assets/deadDino.png'>
+    <!-- <img src='src/assets/deadDino.png'> -->
+    <canvas id="canvas">
+        
+    </canvas>
+    <div class="startscreen">
+        <img src="src/assets/tiles.png">
+    </div>
+  
     
 </body>
 

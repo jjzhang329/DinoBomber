@@ -83,20 +83,24 @@ body {
   height: 480px;
   width: 800px;
   border: 2px solid gray;
-  background-color: #9cce89;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-li {
-  list-style: none;
+#nav-bar ul {
+  display: flex;
+  flex-direction: row;
 }
 
-.img {
-  object-fit: none;
-  object-position: 0 0;
-  width: 42px;
-  height: 58;
+li {
+  list-style: none;
+  padding: 5px;
+}
+
+.startscreen {
+  display: flex;
+  position: absolute;
+  top: 26.5%;
 }

@@ -47,7 +47,6 @@ export default class Bomb{
             this.drawExplosionLeft()          
             this.drawExplosionRight()
             this.blast.time--
-            console.log(this.game.end)
         } else {
             this.game.explosion.shift()
         }
@@ -262,8 +261,6 @@ export default class Bomb{
                     this.game.dino.status = 'burned'}//drawing down end
             }
            
-            //if we have 7cols in total, then we crop from (0, 64*2)
-            // this.frameX += (cols * 16) / 64
     
             
         } else {
