@@ -14,7 +14,7 @@ export default class Bomb{
         this.sourceX= 0;
         this.sourceY= 162;
         this.src= 'src/assets/Enemies.png';   
-        this.timer =30;
+        this.timer =20;
         //explode 64*64 which means takes 4rows and 4cols
         this.blast = {
             up:[], 
@@ -68,9 +68,10 @@ export default class Bomb{
         let y = this.game.map.getCol(this.dinoY)*16
         this.fire(1,64,64, x, y)
         if (this.game.collision({ x: x, y: y, width: 64, height: 64 }, this.game.dino)) {
-            this.game.end = true
+            this.game.gameOver()
             this.game.dino.status = 'burned'
         }
+       
       
     }
     drawExplosionLeft(){
@@ -90,7 +91,8 @@ export default class Bomb{
             let h = 64
             this.fire(2, w, h, dX, dY);//drawing connection piece
             if(this.game.collision({x:dX, y:dY, width:w, height:h}, this.game.dino))
-            {this.game.end = true;
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}
             //take the xy on last col, draw frame2
             dX = (left[cols-1][0][0]+1)*16;
@@ -102,7 +104,8 @@ export default class Bomb{
             frameY += (rows/4+1)     
             this.fire(frameY, w, h, dX, dY);//drawing left end
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino))
-             { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}
         } else {
             //only need to draw frame1
@@ -115,8 +118,10 @@ export default class Bomb{
             frameY += (rows / 4)
             this.fire(frameY, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h}, this.game.dino)) 
-            {this.game.end = true
-                this.game.dino.status = 'burned'}//drawing connection
+            {
+                this.game.gameOver()
+                this.game.dino.status = 'burned'}
+            //drawing connection
         };   
       
     }
@@ -137,7 +142,8 @@ export default class Bomb{
             let h = 64;
             this.fire(2, w, h, dX, dY);//drawing connection piece
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-            { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}
             //take the xy on last col, draw frame2
             dX = (right[cols-4][0][0]) * 16;
@@ -150,8 +156,10 @@ export default class Bomb{
          
             this.fire(frameY, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino))
-             { this.game.end = true 
-                this.game.dino.status = 'burned'}//drawing left end
+            {
+                this.game.gameOver()
+                this.game.dino.status = 'burned'}
+            //drawing left end
         } else {
             //only need to draw frame1
             let dX = (right[0][0][0]) * 16;
@@ -160,10 +168,13 @@ export default class Bomb{
             let h = rows * 16
             this.frameX += ((4 - (4-cols)) * 16) / 64
             frameY += (rows/4)
+            
             this.fire(frameY, w, h, dX, dY);//drawing connection
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino))
-             { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}
+            
         };
       
 
@@ -195,8 +206,11 @@ export default class Bomb{
             let h = 64;       
             this.fire(5, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-            { this.game.end = true 
-                this.game.dino.status = 'burned'}//drawing connection piece
+            {
+                this.game.gameOver()
+                this.game.dino.status = 'burned'}
+            
+            //drawing connection piece
            
             if(rows > 4){            
                 dX = (up[0][rows-1][0]) * 16;
@@ -206,10 +220,12 @@ export default class Bomb{
                 frameY += ((rows/4) -1)
                 this.fire(frameY, w, h, dX, dY)
                 if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-                { this.game.end = true 
+                {
+                    this.game.gameOver()
                     this.game.dino.status = 'burned'}
+               
             }
-            ;//drawing upper end
+            //drawing upper end
         } else {
            
           
@@ -220,8 +236,10 @@ export default class Bomb{
             frameY += rows/4
             this.fire(frameY, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-            { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}
+           
             //drawing connection
         };
 
@@ -237,7 +255,6 @@ export default class Bomb{
             return;
         }
         let frameY = 5
-
         if (rows >= 4) {
             let dX = (down[0][0][0]) * 16
             let dY = (down[0][0][1]) * 16
@@ -245,20 +262,26 @@ export default class Bomb{
             let h = 64;
             this.fire(5, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-            { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}//drawing connection piece
             //take the xy on last col, draw frame2
             
+            
             if(rows > 4){
                 h = (rows - 4)*16
-                dX = (down[4][0][0]) * 16;
-                dY = (down[4][0][1]) * 16;
+                dX = (down[0][4][0]) * 16;
+                dY = (down[0][4][1]) * 16;
                 w = cols * 16
-                frameY += (((rows - 4) / 4) + 2) 
+                if(rows === 8)frameY = 7;
+                else frameY += (((rows - 4) / 4) + 2);
+                console.log(frameY, w, h, dX, dY)
                 this.fire(frameY, w, h, dX, dY)
                 if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-                { this.game.end = true 
+                {
+                    this.game.gameOver()
                     this.game.dino.status = 'burned'}//drawing down end
+                
             }
            
     
@@ -277,8 +300,10 @@ export default class Bomb{
    
             this.fire(frameY, w, h, dX, dY);
             if (this.game.collision({ x: dX, y: dY, width: w, height: h }, this.game.dino)) 
-            { this.game.end = true 
+            {
+                this.game.gameOver()
                 this.game.dino.status = 'burned'}//drawing connection
+           
         };
 
     }

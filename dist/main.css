@@ -71,22 +71,19 @@ body {
 }
 
 .title {
-  margin-top: 150px;
+  margin-top: 80px;
   font-weight: bold;
   font-size: 50px;
   color: #638f37;
 }
 
 #canvas {
-  position: absolute;
   border-radius: 3%;
   height: 480px;
   width: 800px;
   border: 2px solid gray;
-  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 #nav-bar ul {
@@ -94,13 +91,69 @@ body {
   flex-direction: row;
 }
 
+.keyboard {
+  position: relative;
+  height: 30%;
+  width: 40%;
+  padding: 0;
+  margin-top: 0;
+}
+
+.space {
+  position: relative;
+  padding: 0;
+  margin-top: 0;
+  top: -20px;
+  height: 100px;
+  width: 40%;
+}
+
 li {
   list-style: none;
   padding: 5px;
 }
 
-.startscreen {
-  display: flex;
-  position: absolute;
-  top: 26.5%;
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 200px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+}
+
+.modal-content {
+  color: green;
+  font-size: larger;
+  background-color: #d4e4d4;
+  margin: auto;
+  padding: 20px;
+  top: 10%;
+  border: 1px solid #888;
+  width: 30%;
+  opacity: 0.8;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }

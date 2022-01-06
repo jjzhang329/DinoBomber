@@ -6,7 +6,7 @@ export default class MovingObjects{
         this.y = object.y;  
         this.frameX = 0;
         this.frameY = 0;
-        this.speed = 12;
+        this.speed = 13;
         this.game = object.game;
         this.moving = false;
         

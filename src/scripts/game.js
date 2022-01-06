@@ -49,7 +49,8 @@ export default class Game{
           this.dino.draw(this.ctx)
         
         } else { this.ctx.fillText('Game Over T_T!', 250, 240)}
-    
+            const start = document.getElementById('start')
+            start.style.display = 'flex'
      }
    
    }

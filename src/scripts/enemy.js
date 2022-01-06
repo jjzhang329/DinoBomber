@@ -9,7 +9,7 @@ export default class Enemy extends MovingObjects{
 
     constructor(object){
         super(object)
-        this.speed = 8;
+        this.speed = 10;
         this.moving = true;
         this.width = 25;
         this.height = 27;
