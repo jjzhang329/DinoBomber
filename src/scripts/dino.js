@@ -12,6 +12,7 @@ export default class Dino extends MovingObjects {
         this.game = object.game;
         // this.bomb = [];
         this.newBomb = [];
+        this.status = 'burned';
         //reset width and heigh when moving
       ;
     }
@@ -20,13 +21,17 @@ export default class Dino extends MovingObjects {
     draw(ctx){
         const dinoSprite = new Image();
         //  ctx.clearRect(0, 0, 800, 480)
+        if(this.status === 'burned'){
+            this.width = 21;
+            this.height = 29;
+            dinoSprite.src = 'src/assets/deadDino.png'
+        } else { dinoSprite.src = "src/assets/dinoSprite.png"}
         dinoSprite.addEventListener('load', () =>        
             ctx.drawImage(dinoSprite, 
             this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
             this.x, this.y, this.width * 2, this.height * 2))
-        dinoSprite.src = "src/assets/dinoSprite.png"
-
+        
     }
 
     move(key){

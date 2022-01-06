@@ -17,23 +17,23 @@ export default class Game{
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
         this.startAnimating(6);
-          
+        // setTimeout(this.gameOver(), 1000) 
+        // this.gameOver()
     }
     
-    start(){
-
+   start(){
+        // this.startAnimating(6)
     }
 
    gameOver(){
-        this.collision(this.enemies, this.dino)
-        if (this.end){
-            console.log('end')
-            this.ctx.fillStyle = 'black';
-            this.ctx.font = '50px cabin catch';
-            this.ctx.fillText('Game over!', 300, 240);
-          
 
-        }
+      this.ctx.fillStyle = 'white';
+      this.ctx.font = '50px cabin catch';
+      if(this.dino.status === 'burned'){
+          this.ctx.fillText('Burned! Game Over!', 200, 200)
+       
+      } else { this.ctx.fillText('Game Over T_T!', 250, 240)} 
+   
    }
     paused(){
         // add an eventlistener
@@ -59,14 +59,12 @@ export default class Game{
             then = now - (elapsed % fpsInterval);
             // console.log(this.dino.x)
             // console.log(this.dino.y)
-            this.gameOver()
-            
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
             this.enemies.draw(this.ctx);
             this.enemies.randomMove();      
             this.dino.move(this.key);
-            
+            this.collision(this.enemies, this.dino)
            if(this.dino.bomb){
                this.dino.newBomb.forEach(egg =>{
                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
@@ -119,6 +117,7 @@ export default class Game{
             object1.y+ object1.height < object2.height
         ){return false;}
         else{
+            this.dino.status = 'killed'
             this.end = true;
             return true;
             }

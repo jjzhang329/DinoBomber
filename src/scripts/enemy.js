@@ -28,7 +28,7 @@ export default class Enemy extends MovingObjects{
                 this.width, this.height,
                 this.x, this.y, this.width*2, this.height*2)  
         })
-        enemySprite.src = 'src/assets/enemies.png'
+        enemySprite.src = 'src/assets/Enemies.png'
     }
   
     randomMove(){
