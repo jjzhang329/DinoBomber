@@ -141,7 +141,7 @@ export default class Map{
     getIndex(posX, posY){
         let row = this.getRow(posY);
         let col = this.getCol(posX);
-        return col * this.cols + row;
+        return row * this.cols + col;
         
     }
 

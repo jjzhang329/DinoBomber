@@ -16,7 +16,7 @@ export default class Game{
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
         this.startAnimating(6);
-    
+        // console.log(this.map.getIndex())
         console.log(this.map.obstacles())
        
     }
@@ -43,9 +43,10 @@ export default class Game{
             // console.log(this.dino.y)
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
-            this.enemies.draw(this.ctx)
-            this.enemies.randomMove()       
+            this.enemies.draw(this.ctx);
+            this.enemies.randomMove();      
             this.dino.move(this.key);
+            // this.collision(this.enemies, this.dino)
            if(this.dino.bomb){
                this.dino.newBomb.forEach(egg =>{
                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
@@ -62,10 +63,6 @@ export default class Game{
                
                 this.explosion[0].explode()
             }
-           
-
-         
-  
             // console.log(this.map.obstacles().length)
            
             this.handlePlayerFrame();
@@ -82,29 +79,30 @@ export default class Game{
             this.enemies.frameX++
         }else{this.enemies.frameX = 0}
     }
-    handleExplosionFrame(){
 
-    }
     
-    collision(){
-        if (this.enemies.x > this.dino.x + this.dino.width ||
-            this.enemies + this.enemies.width < this.dino.x ||
-            this.enemies.y > this.dino.y + this.dino.height ||
-            this.enemies.y + this.enemies.height < this.dino.y){
-            return false;
-        }else{
+    collision(object1, object2){
+        //object should have location x and y, and size
+        // if (this.enemies.x > this.dino.x + this.dino.width ||
+        //     this.enemies + this.enemies.width < this.dino.x ||
+        //     this.enemies.y > this.dino.y + this.dino.height ||
+        //     this.enemies.y + this.enemies.height < this.dino.y){
+        //     return false;
+        // }else{
+        //     return true;
+        // }   
+        
+        if(object1.x > object2.x + object2.width||
+            object1.x + object1.width < object2.x ||
+            object1.y > object2.y + object2.height ||
+            object1.y+ object1.height < object2.height
+        ){return false;}
+        else{
             return true;
-        }   
-      
+            }
+              
     }
 
   
-    // bombTest(){
-    //     const bombSprite = new Image();
-    //     bombSprite.addEventListener('load', ()=>{
-    //         this.ctx.drawImage(bombSprite, 0, 64, 64, 64, 0, 0 , 64, 64)
-    //     })
-    //     bombSprite.src = 'src/assets/bomb.png'
-    // }
 
 }

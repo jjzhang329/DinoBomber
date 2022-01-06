@@ -72,8 +72,7 @@ export default class Dino extends MovingObjects {
             // console.log(bomb.blastUp())
             // console.log(bomb.blastDown())
             this.game.explosion.push(bomb)
-            console.log(bomb)
-            bomb.blastZone()
+            bomb.boom()
             let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
             this.game.map.tiles[1][idx] = 0;
             this.newBomb.shift();
