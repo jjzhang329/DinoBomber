@@ -1,4 +1,4 @@
-@import "./styles/reset.css";
+@import "./reset.css";
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -11,10 +11,16 @@ HTML * {
     font-family: 'Cabin Sketch', cursive;
 }
 
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .title{
-    display: flex;  
-    justify-content: center;
+     
+    margin: auto;
     font-weight: bold;
     font-size: 50px;
     color: rgb(99, 143, 55);
