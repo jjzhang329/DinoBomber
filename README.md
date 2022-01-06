@@ -13,6 +13,8 @@ In DinoBomber, users will be able to:
 - Hide behind obstacles to protect dino from exposion
 
 ## To do:
+- Add pause, restart option
+- Make page pretty (Nav-link, game menu etc)
 - Add more soldiers
 - Add power-up items
 - Dry up the code
