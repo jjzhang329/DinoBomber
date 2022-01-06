@@ -9,10 +9,13 @@ In DinoBomber, users will be able to:
 - Control dino to move around using keyboard(up/down/left/right)
 - Drop an egg using keyboard(space)
   - Egg will explode in 3s  
-- Use power-up item (maybe an apple)
-  - Rendered every 10 seconds at a radom position
 - Trap soldiers in your explosion zone to kill them  
 - Hide behind obstacles to protect dino from exposion
+
+## To do:
+- Add more soldiers
+- Add power-up items
+- Dry up the code
 
 ## Wireframes
 ![wireframe](wireframe.png)
@@ -50,7 +53,8 @@ In DinoBomber, users will be able to:
 - 1/7 Friday: Presentaion Date!
 
 ## Bonus Features:
-Potential add-on features:
+Potential add-on:
 - Adding more maps and game characters to choose from
 - Adding battle version (player1 vs player2 or player vs AI)
 - Adding differnet levels
+
