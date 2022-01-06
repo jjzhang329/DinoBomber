@@ -8,7 +8,6 @@ In DinoBomber, users will be able to:
 - Start, pause, and reset the game board
 - Control dino to move around using keyboard(up/down/left/right)
 - Drop an egg using keyboard(space)
-  - Egg will explode in 3s  
 - Trap soldiers in your explosion zone to kill them  
 - Hide behind obstacles to protect dino from exposion
 
