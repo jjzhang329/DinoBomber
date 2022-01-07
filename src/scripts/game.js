@@ -79,6 +79,7 @@ export default class Game{
             this.enemies.randomMove();      
             this.dino.move(this.key);
             this.collision(this.enemies, this.dino)
+            console.log(this.enemies, this.dino)
            if(this.dino.bomb){
                this.dino.newBomb.forEach(egg =>{
                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
