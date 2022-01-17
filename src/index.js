@@ -3,11 +3,11 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const startscreen = new Image()
 startscreen.addEventListener('load', ()=>{
-    ctx.drawImage(startscreen,0,0, 800, 480)
+    ctx.drawImage(startscreen,0,0, 960, 704)
 })
 startscreen.src = 'src/assets/Tiles.png'
-canvas.width = 800;
-canvas.height = 480;
+canvas.width = 960;
+canvas.height = 704;
 
 const start = document.getElementById('start');
 

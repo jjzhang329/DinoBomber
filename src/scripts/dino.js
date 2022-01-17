@@ -20,7 +20,6 @@ export default class Dino extends MovingObjects {
 
     draw(ctx){
         const dinoSprite = new Image();
-        //  ctx.clearRect(0, 0, 800, 480)
         if(this.status === 'burned'){
             this.width = 21;
             this.height = 29;
@@ -30,7 +29,7 @@ export default class Dino extends MovingObjects {
             ctx.drawImage(dinoSprite, 
             this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
-            this.x, this.y, this.width * 2, this.height * 2))
+            this.x,this.y, 60, 64))
         
     }
 
@@ -79,7 +78,7 @@ export default class Dino extends MovingObjects {
             this.game.explosion.push(bomb)
             bomb.boom()
             let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
-            this.game.map.tiles[1][idx] = 0;
+            this.game.map.tiles[idx] = 0;
             this.newBomb.shift();
             this.bomb -= 1;
 

@@ -11,31 +11,17 @@ export default class Game{
         this.end = false;
         this.paused = false;
         this.map = new Map();
-        this.dino = new Dino({x:600, y:420, game: this});
+        this.dino = new Dino({x:832, y:576, game: this});
         this.enemies = new Enemy({x:0, y:200, game:this})
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
+        console.log(this.map.obstacles())
         
     }
     
    start(){
        this.startAnimating(6)
     }
-    // gameUpdate(){
-    //     let pause = document.getElementById('pause');
-       
-    //     pause.addEventListener('click', ()=>{
-    //         this.paused()
-    //     })
-         
-    // }
-    // paused(){
-    //     if(this.paused){
-    //         this.paused === false;
-    //     }else{
-    //         this.paused === true;
-    //     }
-    // }
 
 
    gameOver(){
@@ -75,15 +61,15 @@ export default class Game{
             then = now - (elapsed % fpsInterval);
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
-            if (!this.end) { this.enemies.draw(this.ctx)};
-            this.enemies.randomMove();      
+            // if (!this.end) { this.enemies.draw(this.ctx)};
+            // this.enemies.randomMove();      
             this.dino.move(this.key);
             this.collision(this.enemies, this.dino)
-            console.log(this.enemies, this.dino)
+            
            if(this.dino.bomb){
                this.dino.newBomb.forEach(egg =>{
                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
-                   this.map.tiles[1][idx] = 1
+                   this.map.tiles[idx] = 1
                     Bomb.dropBomb(egg);
                     if(egg.sourceX < egg.width) egg.sourceX += egg.width
                      else{egg.sourceX = 0};
