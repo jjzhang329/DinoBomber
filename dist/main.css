@@ -68,20 +68,31 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: #d3bb8d;
+}
+
+.game-container {
+  position: absolute;
+  top: 45%;
+  transform: translate(0, -50%);
+}
+
+.title-row {
+  display: flex;
+  justify-content: center;
 }
 
 .title {
-  margin-top: 80px;
   font-weight: bold;
   font-size: 50px;
   color: #638f37;
 }
 
 #canvas {
-  border-radius: 3%;
+  border-radius: 1%;
   height: 704px;
   width: 960px;
-  border: 2px solid gray;
+  border: 1px solid gray;
   top: 50%;
   left: 50%;
 }
@@ -91,21 +102,59 @@ body {
   flex-direction: row;
 }
 
-.keyboard {
-  position: relative;
-  height: 30%;
-  width: 40%;
-  padding: 0;
-  margin-top: 0;
+.buttons {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 400px;
+  top: 65%;
+  height: 40px;
+  left: 29%;
+}
+
+button {
+  transition: all 0.5s ease;
+  color: #F5F5F5;
+  border: 2px solid #F5F5F5;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  font-size: 12px;
+  background-color: transparent;
+  padding: 10px;
+  outline: none;
+  border-radius: 6px;
+  width: 30%;
+}
+
+button:hover {
+  color: #001F3F;
+  background-color: #F5F5F5;
+}
+
+.instruction-row {
+  padding: 10px 15px 15px 0;
+  font-size: 25px;
+}
+
+.arrow-keys {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-keys > img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .space {
   position: relative;
-  padding: 0;
-  margin-top: 0;
-  top: -20px;
-  height: 100px;
-  width: 40%;
+  height: 50px;
+  width: 150px;
 }
 
 li {
@@ -135,13 +184,15 @@ li {
 .modal-content {
   color: green;
   font-size: larger;
-  background-color: #d4e4d4;
+  background-color: #EAE7D8;
   margin: auto;
   padding: 20px;
   top: 10%;
   border: 1px solid #888;
-  width: 30%;
-  opacity: 0.8;
+  width: 80%;
+  height: 50%;
+  opacity: 0.9;
+  border-radius: 8px;
 }
 
 .close {

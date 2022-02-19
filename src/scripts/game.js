@@ -28,7 +28,7 @@ export default class Game{
        //use a modal or run cancelanimationrequest
         if(this.end){
     
-        this.ctx.fillStyle = 'white';
+        this.ctx.fillStyle = '#F5F5F5';
         this.ctx.font = '50px cabin catch';
         if(this.dino.status === 'burned'){
           this.ctx.fillText('Burned! Game Over!', 200, 200)

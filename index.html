@@ -15,47 +15,54 @@
 </head>
 
 <body>
-    <p class="title">DinoBomber</p>
-    <div id="nav-bar">
-        <ul>
-            <li class="github">
-                <a href="https://github.com/jjzhang329" target="_blank">Github</a>
-            </li>
-            <li class="linkedIn">
-                <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank">LinkedIn</a>
-            </li>
-        </ul>
-    </div>
- 
-    
-    <div class="buttons">
-       
-        <button id="start">Start Game</button>
-         <!-- <button id="pause">Pause Game</button>
-        <button id="restart">Restart</button> -->
-        <button id='myBtn'>Instruction</button>
-        <div id="myModal" class="modal">
+    <div class = "game-container">
+        <div class="title-row"><h1 class="title">DinoBomber</h1></div>
         
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                
-                <li>Control the Dino</li>
-                    <img class="keyboard" src="src/assets/keyboard.png">
-                <li>Set the Bomb</li>
-                    <img class="space" src="src/assets/spacebar.png">
-                
-            </div>
-        
+        <div id="nav-bar">
+            <ul>
+                <li class="github">
+                    <a href="https://github.com/jjzhang329" target="_blank">Github</a>
+                </li>
+                <li class="linkedIn">
+                    <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank">LinkedIn</a>
+                </li>
+            </ul>
         </div>
-     
-      
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+            <div class="buttons">
+            
+                <button id="start">Start Game</button>
+                <!-- <button id="pause">Pause Game</button>
+                     <button id="restart">Restart</button> -->
+                <button id='myBtn'>Instruction</button>
+                <div id="myModal" class="modal">
+            
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+            
+                        <div class="instruction-row">Control the Dino</div>
+                        <div class="arrow-keys">
+                            <img class="upArrow" src="src/assets/upArrow.png">
+                            <img class="downArrow" src="src/assets/downArrow.png">
+                            <img class="leftArrow" src="src/assets/leftArrow.png">
+                            <img class="rightArrow" src="src/assets/rightArrow.png">
+                        </div>
+                        <div class="instruction-row">Set the Bomb</div>
+                        <img class="space" src="src/assets/spacebar.png">
+            
+                    </div>
+            
+                </div>
+            
+            
+            </div>
+        </div>
+       
+       
+        
     </div>
-    <!-- <img src='src/assets/deadDino.png'> -->
-    <canvas id="canvas"></canvas>
-
-    
-    <!-- <img class="startscren" src="src/assets/tiles.png"> -->
     
   
     
