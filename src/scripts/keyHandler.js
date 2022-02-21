@@ -1,5 +1,3 @@
-
-
 export default class KeyHandler {
     constructor(player){
         this.player = player;

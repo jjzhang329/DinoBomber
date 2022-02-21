@@ -6,9 +6,10 @@ export default class MovingObjects{
         this.y = object.y;  
         this.frameX = 0;
         this.frameY = 0;
-        this.speed = 13;
+        this.speed = 16;
         this.game = object.game;
         this.moving = false;
+        this.status = true;
         
     }
 
@@ -20,7 +21,7 @@ export default class MovingObjects{
      
             if (i <= 4) {
                 return false
-            } else if (this.game.map.emptyTile(j, i)&&this.game.map.emptyTile(j+3, i)){
+            } else if (this.game.map.emptyTile(j, i-1)&&this.game.map.emptyTile(j+3, i-1)){
                 return true
             }
         
@@ -30,10 +31,10 @@ export default class MovingObjects{
         
         let i = this.game.map.getRow(this.y)
         let j = this.game.map.getCol(this.x);
- 
+        console.log(i, j)
             if (i >= canvas.height/16 - 8) {
                 return false
-            } else if (this.game.map.emptyTile(j, i)&&this.game.map.emptyTile(j+3, i)){
+            } else if (this.game.map.emptyTile(j, i+4)&&this.game.map.emptyTile(j+3, i+4)){
                 return true
             }   
 
@@ -42,10 +43,10 @@ export default class MovingObjects{
 
         let i = this.game.map.getRow(this.y);
         let j = this.game.map.getCol(this.x); 
-        console.log(i, j)
+  
             if(j <= 4) {
                 return false
-            } else if (this.game.map.emptyTile(j-1, i+1)&&this.game.map.emptyTile(j-1, i+3)){
+            } else if (this.game.map.emptyTile(j-1, i)&&this.game.map.emptyTile(j-1, i+3)){
         
                 return true         
             }
@@ -57,11 +58,10 @@ export default class MovingObjects{
    
         let i = this.game.map.getRow(this.y);
         let j = this.game.map.getCol(this.x);
-
+        
             if (j >= canvas.width/16 - 8) {
                 return false
-            } else if (this.game.map.emptyTile(j+3, i+1)&&this.game.map.emptyTile(j+3, i+3)){
-           
+            } else if (this.game.map.emptyTile(j+4, i)&&this.game.map.emptyTile(j+4, i+3)){
                 return true
             }
 

@@ -98,7 +98,7 @@ export default class Map{
        ctx.drawImage(
            map, 0, 0, 960, 704, 0, 0, 960, 704
        )})
-       map.src = "src/assets/newMap.png";
+       map.src = "src/assets/newMap2.png";
    } 
    
    obstacles(){
@@ -118,7 +118,7 @@ export default class Map{
    getRow(pos){
        //takes in this.y
        //420 will be on row 26
-       console.log(pos)
+       
        return Math.floor(pos / this.tileSize);
        
    }
@@ -141,8 +141,7 @@ export default class Map{
            
             return true
         } else{
-            console.log(rowY,colX)
-            console.log(this.tiles[idx])
+          
             return false;
         }
     }
