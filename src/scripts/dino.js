@@ -61,6 +61,7 @@ export default class Dino extends MovingObjects {
             this.frameY = 1.93;
         }
         if (key['Space'] && this.emptyTile(this.x, this.y)) {
+            console.log(this.x, this.y)
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
@@ -71,12 +72,9 @@ export default class Dino extends MovingObjects {
        
  
         if(bomb.timer === 0){
-        //    console.log(bomb.blastLeft())
-            // console.log(bomb.blastRight()) 
-            // console.log(bomb.blastUp())
-            // console.log(bomb.blastDown())
+       
             this.game.explosion.push(bomb)
-            bomb.boom()
+            // bomb.explode()
             let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
             this.game.map.tiles[idx] = 0;
             this.newBomb.shift();

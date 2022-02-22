@@ -137,22 +137,17 @@ export default class Map{
 
     emptyTile(colX, rowY){
         let idx =  rowY * this.cols + colX;
-        if(this.tiles[idx] === 0){
-           
+        // console.log(colX < 4, colX > 56, rowY < 4, rowY > 40)
+       
+        if(colX < 4 || colX > 56 || rowY <4 || rowY >40)return false
+        if(this.tiles[idx] === 0){   
+                
             return true
-        } else{
-          
+        }else{      
+           
             return false;
         }
-    }
-
-
-
-   //if dino is moving upwards, check if dino top collide with tile bottom
-   //if dino is moving downwards, chekck if dino bottom collide with tile top
-   //if dino is moving left, check if dino left collide with tile right
-   //if dino is moving right, check if dino right collide with tile left
-   
+    }  
 
 };
 
