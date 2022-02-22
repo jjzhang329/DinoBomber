@@ -39,28 +39,42 @@ export default class Bomb{
 
     emptyLeftCol(x, y){
         let column = 0
-        for(let i = 1; i<= 8; i++){
-          
-            if (!this.game.map.emptyTile(x-i, y) || !this.game.map.emptyTile(x-i, y+4))return column
-
-            
+        for(let i = 1; i<= 8; i++){      
+            if (!this.game.map.emptyTile(x-i, y) || !this.game.map.emptyTile(x-i, y+3))return column    
             column += 1
         }
        return column
     }
-    emptyRow(x, y) {
+    emptyRightCol(x, y) {
+        let column = 0
+        for (let i = 1; i <= 8; i++) {
+            if (!this.game.map.emptyTile(x + i, y) || !this.game.map.emptyTile(x + i, y+3)) return column
+            column += 1
+        }
+        return column
+    }
+    emptyUpRow(x, y) {
         let row = 0
-        for (let i = 0; i < 8; i++) {
-            if (!this.game.map.emptyTile(x, y+i)) return row
+        for (let i = 1; i <= 8; i++) {
+            if (!this.game.map.emptyTile(x, y-i)|| !this.game.map.emptyTile(x+3, y-i)) return row
+            row += 1
+        }
+        return row
+    }
+    emptyDownRow(x, y) {
+        let row = 0
+        for (let i = 1; i <= 8; i++) {
+            if (!this.game.map.emptyTile(x, y+i) || !this.game.map.emptyTile(x+3, y+i)) return row
             row += 1
         }
         return row
     }
 
+
     explode() {
 
         if ( Math.floor(this.blast.frameX) < 3) {     
-           this.blast.frameX ++            
+           this.blast.frameX += 1           
         }
         if (this.blast.time > 0) {
             this.boom()                 
@@ -73,18 +87,27 @@ export default class Bomb{
 
         this.drawCenter()
         let leftCol = this.emptyLeftCol(this.col, this.row)
-        if(leftCol)this.drawHConnection(leftCol)
+        if(leftCol)this.drawLeftConnection(leftCol)
         if(leftCol > 4) this.drawLeft(leftCol)
-        console.log(leftCol)
+        let rightCol = this.emptyRightCol(this.col+3, this.row)
+        if(rightCol)this.drawRightConnection(rightCol)
+        if(rightCol > 4)this.drawRight(rightCol)
+        let upRow = this.emptyUpRow(this.col,this.row) 
+        if(upRow)this.drawUpConnection(upRow)
+        if(upRow > 4)this.drawUp(upRow)
+        let downRow = this.emptyDownRow(this.col, this.row+3)
+        if(downRow)this.drawDownConnection(downRow)
+        if(downRow > 4)this.drawDown(downRow)
      
     }
 
-    fire(frameY,w, h,dX, dY){
+    fire(frameY, w, h, dX, dY,ratio=0){
+        
         const explosion = new Image();
-        console.log(frameY, w, h, dX, dY, this.blast.frameX)
+        // console.log(frameY, w, h, dX, dY, this.blast.frameX, ratio)
         explosion.addEventListener('load', () => {
 
-            ctx.drawImage(explosion, 64*this.blast.frameX,
+            ctx.drawImage(explosion, 64*(this.blast.frameX+ratio),
                 64*frameY, w, h, dX, dY, w,h
             )
         })   
@@ -96,34 +119,66 @@ export default class Bomb{
         this.fire(1, 64, 64,this.dinoX, this.dinoY)      
     }   
 
-    drawHConnection(col){
+    drawLeftConnection(col){
         if(col < 4){
             this.fire(2, col*16, 64, (this.col - col) * 16, this.row * 16)
         }else if(col >= 4){
             this.fire(2, 64, 64, (this.col - 4) * 16, this.row * 16)
-        }
-       
+        }   
     }
-    drawLeft(col){
-        if(col < 8){
-            Math.floor(this.blast.frameX) > 3 ? this.blast.frameX = 1 - ((col - 4) / 4) : this.blast.frameX += 1- ((col-4)/4)
-            this.fire(3, (col-4)*16, 64, (this.col - col) * 16, this.row * 16) 
-        }else if(col === 8){
-            this.fire(3, 64, 64, (this.col - 8) * 16, this.row * 16) 
+    drawLeft(col) {
+        if (col < 8) {
+            let ratio = 1 - ((col - 4) / 4)
+            this.fire(3, (col - 4) * 16, 64, (this.col - col) * 16, this.row * 16, ratio)
+        } else if (col === 8) {
+            this.fire(3, 64, 64, (this.col - 8) * 16, this.row * 16)
         }
-            
+    }
+    drawRightConnection(col) {
+        if (col < 4) {
+            this.fire(2, col * 16, 64, (this.col+ col-1) * 16, this.row * 16)
+        } else if (col >= 4) {
+            this.fire(2, 64, 64, (this.col+3) * 16, this.row * 16)
+        }
     }
 
-    drawRight() {
-        this.fire(2, (this.col + 4) * 16, this.row*16)
-        this.fire(4, (this.col + 8) * 16, this.row*16)
+    drawRight(col){
+        if (col < 8) {    
+            this.fire(4, (col - 4) * 16, 64, (this.col+7) * 16, this.row * 16)
+        } else if (col === 8) {
+            this.fire(4, 64, 64, (this.col+7) * 16, this.row * 16)
+        }
     }
-    drawUp() {
-        this.fire(5, this.col*16,(this.row - 4) * 16)
-        this.fire(6, this.col*16,(this.row - 8) * 16 )
+    
+    drawUpConnection(row){
+        if(row < 4){
+            this.fire(5, 64, row*16, this.col*16, (this.row - row)*16)
+        }else if (row >= 4){
+            this.fire(5, 64, 64, this.col*16, (this.row-4)*16)
+        }
     }
-    drawDown() {
-        this.fire(5, this.col*16, (this.row + 4) * 16)
-        this.fire(7, this.col*16, (this.row + 8) * 16)
+
+    drawUp(row) {
+        if(row < 8){
+            let y = 7- (row-4)/4
+            this.fire(y, 64, row*16, this.col*16, (this.row-4)*16)
+        }else if (row === 8){
+            this.fire(6,64,64,this.col*16,(this.row-8)*16)
+        }
+    }
+    drawDownConnection(row){
+        if (row < 4) {
+            this.fire(5, 64, row * 16, this.col * 16, (this.row + row) * 16)
+        } else if (row >= 4) {
+            this.fire(5, 64, 64, this.col * 16, (this.row + 4) * 16)
+        }
+    }
+    drawDown(row) {
+        if (row < 8) {
+            this.fire(7,64, (row-4)*16, this.col*16, (this.row+row)*16)
+        } else if (row === 8) {
+            this.fire(7, 64, 64, this.col*16, (this.row+8)*16)
+        }
+        
     }
 }
