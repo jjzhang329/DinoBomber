@@ -1,5 +1,3 @@
-
-
 export default class MovingObjects{
     constructor(object){
         this.x = object.x;
@@ -19,11 +17,11 @@ export default class MovingObjects{
         let i = this.game.map.getRow(this.y) 
         let j = this.game.map.getCol(this.x);
      
-            if (i <= 4) {
-                return false
-            } else if (this.game.map.emptyTile(j, i-1)&&this.game.map.emptyTile(j+3, i-1)){
-                return true
-            }
+        if (i <= 4) {
+            return false
+        } else if (this.game.map.emptyTile(j, i-1)&&this.game.map.emptyTile(j+3, i-1)){
+            return true
+        }
         
     }
 
@@ -31,12 +29,12 @@ export default class MovingObjects{
         
         let i = this.game.map.getRow(this.y)
         let j = this.game.map.getCol(this.x);
-        console.log(i, j)
-            if (i >= canvas.height/16 - 8) {
-                return false
-            } else if (this.game.map.emptyTile(j, i+4)&&this.game.map.emptyTile(j+3, i+4)){
-                return true
-            }   
+        
+        if (i >= canvas.height/16 - 8) {
+            return false
+        } else if (this.game.map.emptyTile(j, i+4)&&this.game.map.emptyTile(j+3, i+4)){
+            return true
+        }   
 
     }
     moveLeft() {
@@ -44,12 +42,12 @@ export default class MovingObjects{
         let i = this.game.map.getRow(this.y);
         let j = this.game.map.getCol(this.x); 
   
-            if(j <= 4) {
-                return false
-            } else if (this.game.map.emptyTile(j-1, i)&&this.game.map.emptyTile(j-1, i+3)){
-        
-                return true         
-            }
+        if(j <= 4) {
+            return false
+        } else if (this.game.map.emptyTile(j-1, i)&&this.game.map.emptyTile(j-1, i+3)){
+    
+            return true         
+        }
      
 
     }
@@ -59,11 +57,11 @@ export default class MovingObjects{
         let i = this.game.map.getRow(this.y);
         let j = this.game.map.getCol(this.x);
         
-            if (j >= canvas.width/16 - 8) {
-                return false
-            } else if (this.game.map.emptyTile(j+4, i)&&this.game.map.emptyTile(j+4, i+3)){
-                return true
-            }
+        if (j >= canvas.width/16 - 8) {
+            return false
+        } else if (this.game.map.emptyTile(j+4, i)&&this.game.map.emptyTile(j+4, i+3)){
+            return true
+        }
 
     }
     emptyTile(x, y){

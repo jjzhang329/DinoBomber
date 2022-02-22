@@ -81,13 +81,16 @@ export default class Game{
             if(this.explosion.length){
                
                 this.explosion[0].explode()
+               
             }
            
             this.handlePlayerFrame();
+            
            
         };   
         
     }
+
     handlePlayerFrame() {
         if (this.dino.frameX < 1 && this.dino.moving) {
             this.dino.frameX++
@@ -97,7 +100,7 @@ export default class Game{
         }else{this.enemies.frameX = 0}
     }
 
-    
+   
     collision(object1, object2){
 
         
