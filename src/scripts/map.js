@@ -144,8 +144,7 @@ export default class Map{
                 
             return true
         }else{      
-            console.log(colX, rowY)
-           console.log(idx)
+           
             return false;
         }
     }  

@@ -61,7 +61,7 @@ export default class Dino extends MovingObjects {
             this.frameY = 1.93;
         }
         if (key['Space'] && this.emptyTile(this.x, this.y)) {
-            console.log(this.x, this.y)
+          
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
