@@ -5,10 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-       <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Corinthia:wght@700&family=Redacted+Script:wght@300&family=Rock+3D&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-       <link rel="stylesheet" href="./dist/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Corinthia:wght@700&family=Redacted+Script:wght@300&family=Rock+3D&display=swap" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+    <link rel="stylesheet" href="./dist/main.css" />
 
     <script src="./dist/main.js" defer></script>
     <title>DinoBomber</title>
@@ -18,18 +17,17 @@
     <div class = "game-container">
         <div class="title-row"><h1 class="title">DinoBomber</h1></div>
         
-        <div id="nav-bar">
-            <ul>
-                <li class="github">
-                    <a href="https://github.com/jjzhang329" target="_blank">Github</a>
-                </li>
-                <li class="linkedIn">
-                    <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank">LinkedIn</a>
-                </li>
-            </ul>
+        <div id="side-bar">
+
+            <a href="https://github.com/jjzhang329"><img src='src/assets/githubSquare.png'></a>
+            <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"><img src='src/assets/linkedlnSquare.png'></a>
+            <a href="https://angel.co/u/jing-jing-zhang"><img src='src/assets/angelist.png'></a>        
+ 
         </div>
         <div class="canvas-container">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas">
+                
+            </canvas>
             <div class="buttons">
             
                 <button id="start">Start Game</button>
@@ -40,13 +38,17 @@
             
                     <!-- Modal content -->
                     <div class="modal-content">
-                        <span class="close">&times;</span>
+                        <span id='close1' class="close">&times;</span>
             
                         <div class="instruction-row">Control the Dino</div>
                         <div class="arrow-keys">
+                            <img id="dinoUp" src='src/assets/dinoSprite.png'>
                             <img class="upArrow" src="src/assets/upArrow.png">
+                            <img id="dinoDown" src='src/assets/dinoSprite.png'>
                             <img class="downArrow" src="src/assets/downArrow.png">
+                            <img id="dinoLeft" src='src/assets/dinoSprite.png'>
                             <img class="leftArrow" src="src/assets/leftArrow.png">
+                            <img id="dinoRight" src='src/assets/dinoSprite.png'>
                             <img class="rightArrow" src="src/assets/rightArrow.png">
                         </div>
                         <div class="instruction-row">Set the Bomb</div>
@@ -55,9 +57,40 @@
                     </div>
             
                 </div>
+                
+             
+            </div>
+            <div class="nav-bar">
             
+                <a href="https://github.com/jjzhang329"><img src='src/assets/githubSquare.png'></a>
+                <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"><img src='src/assets/linkedlnSquare.png'></a>
+                <a href="https://angel.co/u/jing-jing-zhang"><img src='src/assets/angelist.png'></a>
             
             </div>
+            <div id="winModal" class="modal">
+            
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span id="close2" class="close">&times;</span>
+            
+                    <div class="game-message"></div>
+                    <div class="show-links">
+                        <span>Check out my other cool projects</span>
+                        
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/jjzhang329"><img src='src/assets/githubSquare.png'></a>
+                        <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"><img src='src/assets/linkedlnSquare.png'></a>
+                        <a href="https://angel.co/u/jing-jing-zhang"><img src='src/assets/angelist.png'></a>
+                      
+                    </div>
+                    <button class="playagain">Play Again</button>
+            
+                </div>
+            
+            </div>
+           
+
         </div>
        
        

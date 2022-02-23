@@ -10,9 +10,7 @@ export default class Dino extends MovingObjects {
         this.height = 28;
         this.bomb = 0;
         this.game = object.game;
-        // this.bomb = [];
         this.newBomb = [];
-        this.status = 'live';
         //reset width and heigh when moving
       ;
     }
@@ -25,12 +23,13 @@ export default class Dino extends MovingObjects {
             this.height = 29;
             dinoSprite.src = 'src/assets/deadDino.png'
         } else { dinoSprite.src = "src/assets/dinoSprite.png"}
-        dinoSprite.addEventListener('load', () =>        
+        dinoSprite.addEventListener('load', () => 
+            // ctx.clearRect(0, 0, 960,740),   
             ctx.drawImage(dinoSprite, 
             this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
             this.x,this.y, 60, 64))
-        
+               
     }
 
     move(key){
@@ -61,7 +60,7 @@ export default class Dino extends MovingObjects {
             this.frameY = 1.93;
         }
         if (key['Space'] && this.emptyTile(this.x, this.y)) {
-            console.log(this.x, this.y)
+          
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
@@ -69,8 +68,7 @@ export default class Dino extends MovingObjects {
     }
 
     clearBomb(bomb){
-       
- 
+   
         if(bomb.timer === 0){
        
             this.game.explosion.push(bomb)

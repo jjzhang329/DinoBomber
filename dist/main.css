@@ -73,7 +73,7 @@ body {
 
 .game-container {
   position: absolute;
-  top: 45%;
+  top: 50%;
   transform: translate(0, -50%);
 }
 
@@ -86,6 +86,24 @@ body {
   font-weight: bold;
   font-size: 50px;
   color: #638f37;
+  margin-bottom: 10px;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 70%;
+  left: 35%;
+  width: 30%;
+}
+
+.nav-bar > a > img {
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 5px;
 }
 
 #canvas {
@@ -97,8 +115,8 @@ body {
   left: 50%;
 }
 
-#nav-bar ul {
-  display: flex;
+#nav-bar {
+  display: none;
   flex-direction: row;
 }
 
@@ -108,7 +126,7 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   width: 400px;
-  top: 65%;
+  top: 60%;
   height: 40px;
   left: 29%;
 }
@@ -135,8 +153,9 @@ button:hover {
 }
 
 .instruction-row {
-  padding: 10px 15px 15px 0;
+  padding: 15px 15px 15px 0;
   font-size: 25px;
+  margin-top: 5px;
 }
 
 .arrow-keys {
@@ -147,7 +166,7 @@ button:hover {
 .arrow-keys > img {
   width: 40px;
   height: 40px;
-  margin-right: 10px;
+  margin-right: 15px;
   margin-bottom: 5px;
 }
 
@@ -164,21 +183,14 @@ li {
 
 .modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   padding-top: 200px;
-  /* Location of the box */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: auto;
-  /* Enable scroll if needed */
 }
 
 .modal-content {
@@ -198,7 +210,7 @@ li {
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 40px;
   font-weight: bold;
 }
 
@@ -207,4 +219,86 @@ li {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.game-message {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 35px;
+  margin-top: 20px;
+}
+
+.show-links {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.links > a > img {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+
+.playagain {
+  position: relative;
+  left: 35%;
+  top: 5%;
+  background-color: #638f37;
+}
+
+.playagain:hover {
+  cursor: pointer;
+  background-color: green;
+}
+
+#dinoUp {
+  object-fit: none;
+  object-position: 0 -85px;
+  width: 21px;
+  height: 29px;
+}
+
+#dinoDown {
+  object-fit: none;
+  object-position: 0 -56px;
+  width: 21px;
+  height: 29px;
+}
+
+#dinoLeft {
+  object-fit: none;
+  object-position: 0 0;
+  width: 24px;
+  height: 28px;
+}
+
+#dinoRight {
+  object-fit: none;
+  object-position: 0 -28px;
+  width: 24px;
+  height: 28px;
+}
+
+#side-bar {
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  left: -8%;
+}
+
+#side-bar > a > img {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
 }

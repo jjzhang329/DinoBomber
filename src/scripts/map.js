@@ -137,15 +137,13 @@ export default class Map{
 
     emptyTile(colX, rowY){
         let idx =  rowY * this.cols + colX;
-        
-       
+      
         if(colX < 4 || colX > 56 || rowY < 4 || rowY >40)return false
         if(this.tiles[idx] === 0){   
                 
             return true
         }else{      
-            console.log(colX, rowY)
-           console.log(idx)
+           
             return false;
         }
     }  
