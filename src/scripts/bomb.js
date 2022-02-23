@@ -16,12 +16,12 @@ export default class Bomb{
         this.sourceX= 0;
         this.sourceY= 162;
         this.src= 'src/assets/Enemies.png';   
-        this.timer =20;
+        this.timer =15;
         //explode 64*64 which means takes 4rows and 4cols
         this.blast = {
            
             frameX:0,
-            time:10,
+            time:5,
 
         }      
     }
@@ -61,40 +61,40 @@ export default class Bomb{
             if ([this.game.dino.x, this.game.dino.y].toString() === [(x + i) * 16, y * 16].toString()) {
                 this.game.dino.status = 'burned'
                 this.game.end = true
-            } else if ([this.game.enemies.x, this.game.enemies.y].toString() === [(x + i) * 16, y * 16].toString()) {
+            } else if ([this.game.enemies.x+16, this.game.enemies.y].toString() === [(x + i) * 16, y * 16].toString()) {
                 this.game.enemies.status = false
                 this.game.end = true
             }
-
-
         }
         return column
     }
     emptyUpRow(x, y) {
         let row = 0
         for (let i = 1; i <= 8; i++) {
-            console.log([this.game.enemies.x, this.game.enemies.y + 64].toString(), [x * 16, (y - i) * 16].toString())
+            // console.log([this.game.enemies.x, this.game.enemies.y + 16].toString(), [x * 16, (y - i) * 16].toString())
             if (!this.game.map.emptyTile(x, y-i)|| !this.game.map.emptyTile(x+3, y-i)) return row
-            row += 1
-            if ([this.game.dino.x, this.game.dino.y+64].toString() === [x * 16, (y-i) * 16].toString()) {
+                row += 1
+            if ([this.game.dino.x, this.game.dino.y].toString() === [x * 16, (y-i) * 16].toString()) {
                 this.game.dino.status = 'burned'
                 this.game.end = true
-            } else if ([this.game.enemies.x, this.game.enemies.y+64].toString() === [x*16, (y-i) * 16].toString()) {
+            } else if ([this.game.enemies.x, this.game.enemies.y].toString() === [x*16, (y-i) * 16].toString()) {
                 this.game.enemies.status = false
                 this.game.end = true
             }
         }
+        console.log(row)
         return row
     }
     emptyDownRow(x, y) {
         let row = 0
         for (let i = 1; i <= 8; i++) {
+           
             if (!this.game.map.emptyTile(x, y+i) || !this.game.map.emptyTile(x+3, y+i)) return row
             row += 1
             if ([this.game.dino.x, this.game.dino.y].toString() === [x * 16, (y + i) * 16].toString()) {
                 this.game.dino.status = 'burned'
                 this.game.end = true
-            } else if ([this.game.enemies.x, this.game.dino.y].toString() === [x * 16, (y + i) * 16].toString()) {
+            } else if ([this.game.enemies.x, this.game.enemies.y].toString() === [x * 16, (y + i) * 16].toString()) {
                 this.game.enemies.status = false
                 this.game.end = true
             }
@@ -129,7 +129,7 @@ export default class Bomb{
         let upRow = this.emptyUpRow(this.col,this.row) 
         if(upRow)this.drawUpConnection(upRow)
         if(upRow > 4)this.drawUp(upRow)
-        let downRow = this.emptyDownRow(this.col, this.row+3)
+        let downRow = this.emptyDownRow(this.col, this.row+4)
         if(downRow)this.drawDownConnection(downRow)
         if(downRow > 4)this.drawDown(downRow)
      
@@ -193,9 +193,10 @@ export default class Bomb{
     }
 
     drawUp(row) {
+        console.log(row)
         if(row < 8){
             let y = 7- (row-4)/4
-            this.fire(y, 64, row*16, this.col*16, (this.row-4)*16)
+            this.fire(y, 64, (row-4)*16, this.col*16, (this.row-row)*16)
         }else if (row === 8){
             this.fire(6,64,64,this.col*16,(this.row-8)*16)
         }
@@ -209,7 +210,7 @@ export default class Bomb{
     }
     drawDown(row) {
         if (row < 8) {
-            this.fire(7,64, (row-4)*16, this.col*16, (this.row+row)*16)
+            this.fire(7,64, (row-4)*16, this.col*16, (this.row+8)*16)
         } else if (row === 8) {
             this.fire(7, 64, 64, this.col*16, (this.row+8)*16)
         }

@@ -68,8 +68,7 @@ export default class Dino extends MovingObjects {
     }
 
     clearBomb(bomb){
-       
- 
+   
         if(bomb.timer === 0){
        
             this.game.explosion.push(bomb)

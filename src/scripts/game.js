@@ -20,6 +20,8 @@ export default class Game{
     }
     
    start(){
+       const sideBar = document.getElementById('side-bar')
+       sideBar.style.display = 'flex'  
        this.startAnimating(6)
     }
 
@@ -34,13 +36,12 @@ export default class Game{
             let message
             if(this.dino.status === 'burned'){
                 message = 'Game Over! You are burned!'
-                this.dino.draw(this.ctx)
             
             }else if(!this.enemies.status){
                 message = 'You Win! You are unbeatable!'
 
             }else{ 
-                message = 'Game Over! play again?'    
+                message = 'Game Over! Soldier stabbed you, play again?'    
             }
             gameMessage.innerHTML = message
 
