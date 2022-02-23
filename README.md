@@ -1,23 +1,16 @@
 # DinoBomber
-Live Link [DinoBomber](https://jjzhang329.github.io/DinoBomber/)
+Live here => [DinoBomber](https://jjzhang329.github.io/DinoBomber/)
+
 ## Background
 DinoBomber is a 2D javascript game, it is designed based on the concept of the classic Bobmberman game. Game will be played on a grid based map with obstacles. 
 If soldiers all killed, player win. If soldier catched dino, or if dino killed itself(standing in the explosion zone) by acident, player lose. 
 
 ## Functionality & MVPs
 In DinoBomber, users will be able to:
-- Start, pause, and reset the game board
 - Control dino to move around using keyboard(up/down/left/right)
 - Drop an egg using keyboard(space)
 - Trap soldiers in your explosion zone to kill them  
 - Hide behind obstacles to protect dino from exposion
-
-## To do:
-- Add pause, restart option
-- Make page pretty (Nav-link, game menu etc)
-- Add more soldiers
-- Add power-up items
-- Dry up the code
 
 ## Wireframes
 ![wireframe](wireframe.png)
@@ -46,12 +39,14 @@ In DinoBomber, users will be able to:
 - 1/4 Tuesday:
   1. Create the move function
   2. Setup the collision detection!
-  3. Setup the explosion zone and safe zone
+  3. Calculate the explosion zone
 - 1/5 Wednesday:
-  1. Add and render the game over page
-  2. Add the power-up function
-  3. Render the count of power-up on top
+  1. Create the AI enemy's random move function
+  2. Collision detection between enemy and dino
+  3. Check if enemy is in the blast zone
 - 1/6 Thursday: 
+  1. Add and render the game over page
+  2. Style the page
 - 1/7 Friday: Presentaion Date!
 
 ## Bonus Features:
