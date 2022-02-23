@@ -45,7 +45,7 @@ export default class Game{
         fpsInterval = 1000 / fps;    
         then = Date.now();
         startTime = then;
-            this.animate()
+        this.animate()
     }
 
     animate(){
@@ -78,14 +78,8 @@ export default class Game{
                     }
                 )
             }
-            if(this.explosion.length){
-               
-                this.explosion[0].explode()
-               
-            }
-           
+            if(this.explosion.length)this.explosion[0].explode()    
             this.handlePlayerFrame();
-            
            
         };   
         

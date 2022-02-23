@@ -12,7 +12,6 @@ export default class Dino extends MovingObjects {
         this.game = object.game;
         // this.bomb = [];
         this.newBomb = [];
-        this.status = 'live';
         //reset width and heigh when moving
       ;
     }
@@ -25,11 +24,13 @@ export default class Dino extends MovingObjects {
             this.height = 29;
             dinoSprite.src = 'src/assets/deadDino.png'
         } else { dinoSprite.src = "src/assets/dinoSprite.png"}
-        dinoSprite.addEventListener('load', () =>        
+        dinoSprite.addEventListener('load', () => 
+            // ctx.clearRect(0, 0, 960,740),   
             ctx.drawImage(dinoSprite, 
             this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
             this.x,this.y, 60, 64))
+           
         
     }
 

@@ -19,10 +19,7 @@ export default class Bomb{
         this.timer =20;
         //explode 64*64 which means takes 4rows and 4cols
         this.blast = {
-            up:[], 
-            down:[], 
-            left:[], 
-            right:[],
+           
             frameX:0,
             time:10,
 
@@ -42,6 +39,10 @@ export default class Bomb{
         for(let i = 1; i<= 8; i++){      
             if (!this.game.map.emptyTile(x-i, y) || !this.game.map.emptyTile(x-i, y+3))return column    
             column += 1
+            if(this.game.dino.x === (x-i)*16 || this.game.dino.y === y*16){
+                this.game.dino.status = 'burned'
+                this.game.end = true
+            }
         }
        return column
     }
@@ -50,6 +51,10 @@ export default class Bomb{
         for (let i = 1; i <= 8; i++) {
             if (!this.game.map.emptyTile(x + i, y) || !this.game.map.emptyTile(x + i, y+3)) return column
             column += 1
+            if (this.game.dino.x === (x+i) * 16 || this.game.dino.y === y * 16) {
+                this.game.dino.status = 'burned'
+                this.game.end = true
+            }
         }
         return column
     }
@@ -58,6 +63,10 @@ export default class Bomb{
         for (let i = 1; i <= 8; i++) {
             if (!this.game.map.emptyTile(x, y-i)|| !this.game.map.emptyTile(x+3, y-i)) return row
             row += 1
+            if (this.game.dino.x === x * 16 || this.game.dino.y === (y-i)* 16) {
+                this.game.dino.status = 'burned'
+                this.game.end = true
+            }
         }
         return row
     }
@@ -66,7 +75,13 @@ export default class Bomb{
         for (let i = 1; i <= 8; i++) {
             if (!this.game.map.emptyTile(x, y+i) || !this.game.map.emptyTile(x+3, y+i)) return row
             row += 1
+            if (this.game.dino.x === x * 16 || this.game.dino.y === (y+i) * 16) {
+                this.game.dino.status = 'burned'
+                this.game.end = true
+            }
+           
         }
+       
         return row
     }
 
