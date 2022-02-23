@@ -13,7 +13,7 @@ In DinoBomber, users will be able to:
 - Hide behind obstacles to protect dino from exposion
 
 ## Wireframes
-![wireframe](wireframe.png)
+![wireframe](newwireframe.png)
 - Nav links include links to this project's Github repo, my LinkedIn and AngelList, and the About modal
 - Game controls will include Start, Stop, and Reset buttons as well as a slider to control the speed
 - (optional)On the right, there will be clickable rectangles used to toggle between color schemes
