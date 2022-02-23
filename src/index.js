@@ -30,7 +30,6 @@ startbutton.addEventListener('click', ()=>{
    game.start()
    
    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
     startbutton.style.display = 'none'
     instructionbutton.style.display = 'none'
 })
@@ -46,16 +45,19 @@ startbutton.addEventListener('click', ()=>{
 // })
 
 const modal = document.getElementById('myModal')
-
+const winModal = document.getElementById('winModal')
 const span = document.getElementsByClassName("close")[0];
+
 instructionbutton.onclick = function () {
     modal.style.display = "block";
 }
 span.onclick = function () {
     modal.style.display = "none";
+    winModal.style.display = "none";
 }
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        winModal.style.display = "none"
     }
 }

@@ -10,7 +10,6 @@ export default class Dino extends MovingObjects {
         this.height = 28;
         this.bomb = 0;
         this.game = object.game;
-        // this.bomb = [];
         this.newBomb = [];
         //reset width and heigh when moving
       ;
@@ -30,8 +29,7 @@ export default class Dino extends MovingObjects {
             this.width*this.frameX, this.height*this.frameY, 
             this.width, this.height,
             this.x,this.y, 60, 64))
-           
-        
+               
     }
 
     move(key){

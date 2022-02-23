@@ -36,13 +36,20 @@ export default class Bomb{
 
     emptyLeftCol(x, y){
         let column = 0
-        for(let i = 1; i<= 8; i++){      
+        for(let i = 1; i<= 8; i++){  
+            
             if (!this.game.map.emptyTile(x-i, y) || !this.game.map.emptyTile(x-i, y+3))return column    
             column += 1
-            if(this.game.dino.x === (x-i)*16 || this.game.dino.y === y*16){
+            if([this.game.dino.x+64, this.game.dino.y].toString() === [(x-i)*16, y*16].toString()){
                 this.game.dino.status = 'burned'
                 this.game.end = true
+            } else if ([this.game.enemies.x+64, this.game.enemies.y].toString() === [(x - i) * 16, y * 16].toString()) {
+                
+                this.game.enemies.status = false
+                this.game.end = true
             }
+           
+        
         }
        return column
     }
@@ -51,20 +58,29 @@ export default class Bomb{
         for (let i = 1; i <= 8; i++) {
             if (!this.game.map.emptyTile(x + i, y) || !this.game.map.emptyTile(x + i, y+3)) return column
             column += 1
-            if (this.game.dino.x === (x+i) * 16 || this.game.dino.y === y * 16) {
+            if ([this.game.dino.x, this.game.dino.y].toString() === [(x + i) * 16, y * 16].toString()) {
                 this.game.dino.status = 'burned'
                 this.game.end = true
+            } else if ([this.game.enemies.x, this.game.enemies.y].toString() === [(x + i) * 16, y * 16].toString()) {
+                this.game.enemies.status = false
+                this.game.end = true
             }
+
+
         }
         return column
     }
     emptyUpRow(x, y) {
         let row = 0
         for (let i = 1; i <= 8; i++) {
+            console.log([this.game.enemies.x, this.game.enemies.y + 64].toString(), [x * 16, (y - i) * 16].toString())
             if (!this.game.map.emptyTile(x, y-i)|| !this.game.map.emptyTile(x+3, y-i)) return row
             row += 1
-            if (this.game.dino.x === x * 16 || this.game.dino.y === (y-i)* 16) {
+            if ([this.game.dino.x, this.game.dino.y+64].toString() === [x * 16, (y-i) * 16].toString()) {
                 this.game.dino.status = 'burned'
+                this.game.end = true
+            } else if ([this.game.enemies.x, this.game.enemies.y+64].toString() === [x*16, (y-i) * 16].toString()) {
+                this.game.enemies.status = false
                 this.game.end = true
             }
         }
@@ -75,8 +91,11 @@ export default class Bomb{
         for (let i = 1; i <= 8; i++) {
             if (!this.game.map.emptyTile(x, y+i) || !this.game.map.emptyTile(x+3, y+i)) return row
             row += 1
-            if (this.game.dino.x === x * 16 || this.game.dino.y === (y+i) * 16) {
+            if ([this.game.dino.x, this.game.dino.y].toString() === [x * 16, (y + i) * 16].toString()) {
                 this.game.dino.status = 'burned'
+                this.game.end = true
+            } else if ([this.game.enemies.x, this.game.dino.y].toString() === [x * 16, (y + i) * 16].toString()) {
+                this.game.enemies.status = false
                 this.game.end = true
             }
            

@@ -12,7 +12,7 @@ export default class Game{
         this.paused = false;
         this.map = new Map();
         this.dino = new Dino({x:832, y:576, game: this});
-        this.enemies = new Enemy({x:0, y:200, game:this})
+        this.enemies = new Enemy({x:64, y:64, game:this})
         this.key = new KeyHandler(this.dino).keys;
         this.explosion = [];
         console.log(this.map.obstacles())
@@ -27,19 +27,28 @@ export default class Game{
    gameOver(){
        //use a modal or run cancelanimationrequest
         if(this.end){
-    
-        this.ctx.fillStyle = '#F5F5F5';
-        this.ctx.font = '50px cabin catch';
-        if(this.dino.status === 'burned'){
-          this.ctx.fillText('Burned! Game Over!', 200, 200)
-          this.dino.draw(this.ctx)
+            const winModal = document.getElementById('winModal')
+            const gameMessage = document.getElementsByClassName('game-message')[0]
+            winModal.style.display = 'block'
+
+            let message
+            if(this.dino.status === 'burned'){
+                message = 'Game Over! You are burned!'
+                this.dino.draw(this.ctx)
+            
+            }else if(!this.enemies.status){
+                message = 'You Win! You are unbeatable!'
+
+            }else{ 
+                message = 'Game Over! play again?'    
+            }
+            gameMessage.innerHTML = message
+
         
-        } else { this.ctx.fillText('Game Over T_T!', 250, 240)}
-            const start = document.getElementById('start')
-            start.style.display = 'flex'
-     }
+        }
+    }
    
-   }
+   
  
     startAnimating(fps) {
         fpsInterval = 1000 / fps;    
@@ -61,10 +70,13 @@ export default class Game{
             then = now - (elapsed % fpsInterval);
             this.map.draw(this.ctx);
             this.dino.draw(this.ctx);
-            // if (!this.end) { this.enemies.draw(this.ctx)};
-            // this.enemies.randomMove();      
-            this.dino.move(this.key);
-            this.collision(this.enemies, this.dino)
+            if (!this.end) { 
+                this.enemies.draw(this.ctx)
+                this.enemies.randomMove();     
+                this.dino.move(this.key);
+                this.collision(this.enemies, this.dino) 
+            };
+            
             
            if(this.dino.bomb){
                this.dino.newBomb.forEach(egg =>{
@@ -96,18 +108,20 @@ export default class Game{
 
    
     collision(object1, object2){
-
-        
-        if(object1.x > object2.x + object2.width||
-            object1.x + object1.width < object2.x ||
-            object1.y > object2.y + object2.height ||
-            object1.y+ object1.height < object2.height
-        ){return false;}
-        else{
-            this.dino.status = 'killed'
-            this.end = true;
-            return true;
+        if(object1.x === object2.x){
+            if(Math.abs(object1.y - object2.y) <= 64){                
+               
+                object2.status = false;
+                this.end = true;
             }
+        }else if(object1.y === object2.y){
+            if(Math.abs(object1.x - object2.x) <= 60){                
+                
+                object2.status = false;
+                this.end = true;
+            }
+        }
+
               
     }
 

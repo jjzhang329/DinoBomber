@@ -9,14 +9,12 @@ export default class Enemy extends MovingObjects{
 
     constructor(object){
         super(object)
-        this.speed = 10;
+        this.speed = 16;
         this.moving = true;
         this.width = 25;
         this.height = 27;
         this.game = object.game;
-        //moving down, right, up, left
-        //[0, 1], [1, 0], [0, -1], [-1, 0]
-      this.counter = 3;
+        this.counter = 3;
         this.currentDir = 1;
     }
 
@@ -26,7 +24,7 @@ export default class Enemy extends MovingObjects{
         enemySprite.addEventListener('load', ()=>{
             ctx.drawImage(enemySprite, this.width * this.frameX, this.height * this.frameY,
                 this.width, this.height,
-                this.x, this.y, this.width*2, this.height*2)  
+                this.x, this.y, 60, 64)  
         })
         enemySprite.src = 'src/assets/Enemies.png'
     }
