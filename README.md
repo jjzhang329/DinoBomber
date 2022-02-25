@@ -5,6 +5,7 @@ Live here => [DinoBomber](https://jjzhang329.github.io/DinoBomber/)
 DinoBomber is a 2D javascript game, it is designed based on the concept of the classic Bobmberman game. Game will be played on a grid based map with obstacles. 
 If soldiers all killed, player win. If soldier catched dino, or if dino killed itself(standing in the explosion zone) by acident, player lose. 
 
+![Game](https://mamazon-seeds.s3.us-west-1.amazonaws.com/ezgif.com-gif-maker+(10).gif)
 ## Functionality & MVPs
 In DinoBomber, users will be able to:
 - Control dino to move around using keyboard(up/down/left/right)
