@@ -6,7 +6,7 @@ const startscreen = new Image()
 const dino = new Image()
 dino.src = 'src/assets/dinoSprite.png'
 const soldier = new Image ()
-soldier.src = 'src/assets/Enemies.png'
+soldier.src = 'src/assets/soldierAndBomb.png'
 startscreen.addEventListener('load', ()=>{
     ctx.fillStyle = 'white';
     ctx.font = '50px cabin catch';
@@ -14,7 +14,7 @@ startscreen.addEventListener('load', ()=>{
     ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84),
     ctx.fillText('VS', 450, 330)
     ctx.fillText('Ready to Play ?', 330, 200)
-    ctx.drawImage(soldier, 25, 27, 29, 26, 330, 270, 87, 84)
+    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84)
 
 })
 startscreen.src = 'src/assets/startMap.png'
