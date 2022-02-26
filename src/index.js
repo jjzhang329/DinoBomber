@@ -24,7 +24,7 @@ canvas.height = 704;
 const startbutton = document.getElementById('start');
 const instructionbutton = document.getElementById('myBtn');
 const navBar = document.getElementsByClassName('nav-bar')[0]
-const sideBar = document.getElementById('sideBar')
+const sideBar = document.getElementById('side-bar')
 
 startbutton.addEventListener('click', ()=>{
    const game = new Game(ctx)
@@ -72,7 +72,7 @@ span2.onclick = function(){
     ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84),
     ctx.fillText('VS', 450, 330)
     ctx.fillText('Ready to Play ?', 330, 200)
-    ctx.drawImage(soldier, 25, 27, 29, 26, 330, 270, 87, 84)
+    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84)
     startbutton.style.display = 'block'
     instructionbutton.style.display = 'block'
     navBar.style.display = 'flex';

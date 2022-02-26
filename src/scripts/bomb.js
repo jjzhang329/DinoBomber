@@ -43,7 +43,7 @@ export default class Bomb{
             if([this.game.dino.x+64, this.game.dino.y].toString() === [(x-i)*16, y*16].toString()){
                 this.game.dino.status = 'burned'
                 this.game.end = true
-            } else if ([this.game.enemies.x+64, this.game.enemies.y].toString() === [(x - i) * 16, y * 16].toString()) {
+            } else if ([this.game.enemies.x+60, this.game.enemies.y].toString() === [(x - i) * 16, y * 16].toString()) {
                 
                 this.game.enemies.status = false
                 this.game.end = true
