@@ -1,12 +1,5 @@
 import MovingObjects from "./movingObjects";
-const Direction= {
-    up: 0,
-    down: 1,
-    left: 2,
-    right: 3,
-}
-export default class Enemy extends MovingObjects{
-
+export default class Enemy extends MovingObjects {
     constructor(object){
         super(object)
         this.speed = 16;
@@ -18,85 +11,75 @@ export default class Enemy extends MovingObjects{
         this.currentDir = 2;
     }
 
-    draw(ctx){
-      
+    draw(ctx) {
         const enemySprite = new Image();
         enemySprite.addEventListener('load', ()=>{
             ctx.drawImage(enemySprite, this.width * this.frameX, this.height * this.frameY,
                 this.width, this.height,
-                this.x, this.y, 60, 64)  
+                this.x, this.y, 60, 64)
         })
         enemySprite.src = 'src/assets/soldierAndBomb.png'
     }
-  
-    randomMove(){
-        //sometimtes it will stuck for a few sec, need to fix later
-    
-        this.swithDir()
-       
-        
-        if (this.currentDir === Direction.up && this.moveUp()){
-            // console.log('moving up')
+
+    randomMove() {
+        const nextDir = this.getNextDirection()
+
+        if (this.cannotMove(nextDir)) return
+
+        this.currentDir = nextDir
+
+        switch (this.currentDir) {
+        case Enemy.Direction.up:
             this.y -= this.speed;
             this.width = 22;
             // this.height = 27;
             this.frameY = 3;
-        };
-        if (this.currentDir === Direction.down && this.moveDown()){
-            // console.log('moving down')
+            break;
+        case Enemy.Direction.down:
             this.y += this.speed;
             this.width = 22;
             // this.height = 27;
             this.frameY = 2;
- 
-        };
-        if (this.currentDir === Direction.left && this.moveLeft()){
-            // console.log('moving left')
+            break;
+        case Enemy.Direction.left:
             this.x -= this.speed;
             this.width = 25;
             // this.height = 27;
             this.frameY = 0;
-        }; 
-        if (this.currentDir === Direction.right && this.moveRight()){ 
-            // console.log('moving right') 
+            break;
+        case Enemy.Direction.right:
             this.x += this.speed;
             this.width = 26;
             // this.height = 27;
             this.frameY = 1;
-        } 
-      
-    }
-
-    swithDir() {
-
-        const dir = this.availableMove()
-        if(this.counter === 0){
-            this.currentDir = dir[this.getRandomInt(0, dir.length)]
-           this.counter = 4;
-            
-        }else{
-            
-            this.counter -= 1;
+            break;
         }
-
     }
- 
+
+    getNextDirection() {
+        const moves = this.availableMoves()
+        if (this.counter === 0) {
+           this.counter = 4
+           return moves[this.getRandomInt(0, moves.length)]
+        } else {
+           this.counter -= 1
+           return this.currentDir
+        }
+    }
 
    getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); 
+        return Math.floor(Math.random() * (max - min) + min);
         //The maximum is exclusive and the minimum is inclusive
     }
-   
-    availableMove(){
+
+    availableMoves() {
         const moves = []
-        if(this.moveUp()){moves.push(0)}
-        if (this.moveDown()) {moves.push(1)}
-        if(this.moveLeft()) {moves.push(2)}
-        if (this.moveRight()) {moves.push(3)}
+        if (this.canMoveUp()) {moves.push(Enemy.Direction.up)}
+        if (this.canMoveDown()) {moves.push(Enemy.Direction.down)}
+        if (this.canMoveLeft()) {moves.push(Enemy.Direction.left)}
+        if (this.canMoveRight()) {moves.push(Enemy.Direction.right)}
         return moves
     }
-
-
 }
