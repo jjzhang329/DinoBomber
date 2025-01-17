@@ -7,22 +7,13 @@ const dino = new Image()
 dino.src = 'src/assets/dinoSprite.png'
 const soldier = new Image ()
 soldier.src = 'src/assets/soldierAndBomb.png'
-startscreen.addEventListener('load', ()=>{
-    ctx.fillStyle = 'white';
-    ctx.font = '50px cabin catch';
-    ctx.drawImage(startscreen,0, 0, 960, 704),
-    ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84),
-    ctx.fillText('VS', 450, 330)
-    ctx.fillText('Ready to Play ?', 330, 200)
-    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84)
-
-})
+startscreen.addEventListener('load', initMainMenu)
 startscreen.src = 'src/assets/startMap.png'
 canvas.width = 960;
 canvas.height = 704;
 
 const startbutton = document.getElementById('start');
-const instructionbutton = document.getElementById('myBtn');
+const instrOpenBtn = document.getElementById('instructions-open');
 const navBar = document.getElementsByClassName('nav-bar')[0]
 const sideBar = document.getElementById('side-bar')
 
@@ -32,7 +23,7 @@ startbutton.addEventListener('click', () => {
     // TODO: might not be necessary
     // ctx.clearRect(0, 0, canvas.width, canvas.height)
     startbutton.style.display = 'none'
-    instructionbutton.style.display = 'none'
+    instrOpenBtn.style.display = 'none'
     navBar.style.display = 'none'
 })
 
@@ -45,14 +36,18 @@ startbutton.addEventListener('click', () => {
 //     start.style.display = 'none'
 // })
 
-const instructionsModal = document.getElementById('instructions-modal')
+const instrModal = document.getElementById('instructions-modal')
+const instrClose = instrModal.querySelector(".close");
 const winModal = document.getElementById('winModal')
-const span1 = document.getElementById("close1");
-const span2 = document.getElementById("close2")
-const playAgain = document.getElementsByClassName('playagain')[0]
+const winClose = winModal.querySelector(".close")
+const playAgain = winModal.querySelector(".playagain")
 
-instructionbutton.onclick = function () {
-    instructionsModal.style.display = "block";
+instrOpenBtn.onclick = function() {
+    instrModal.style.display = "block";
+}
+
+instrClose.onclick = function() {
+    instrModal.style.display = "none"
 }
 
 playAgain.onclick = function(){
@@ -61,30 +56,29 @@ playAgain.onclick = function(){
     game.start()
 }
 
-span1.onclick = function () {
-    instructionsModal.style.display = "none"
-}
-span2.onclick = function(){
+winClose.onclick = function(){
     winModal.style.display = "none";
     ctx.clearRect(0, 0, 960, 704)
-
-    ctx.fillStyle = 'white';
-    ctx.font = '50px cabin catch';
-    ctx.drawImage(startscreen, 0, 0, 960, 704),
-    ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84),
-    ctx.fillText('VS', 450, 330)
-    ctx.fillText('Ready to Play ?', 330, 200)
-    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84)
-    startbutton.style.display = 'block'
-    instructionbutton.style.display = 'block'
-    navBar.style.display = 'flex';
-    sideBar.style.display ='none'
-
+    initMainMenu();
 }
 
 window.onclick = function (event) {
-    if (event.target == instructionsModal) {
-        instructionsModal.style.display = "none";
+    if (event.target == instrModal) {
+        instrModal.style.display = "none";
         winModal.style.display = "none"
     }
+}
+
+function initMainMenu() {
+    ctx.fillStyle = 'white';
+    ctx.font = '50px cabin catch';
+    ctx.drawImage(startscreen,0, 0, 960, 704);
+    ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84);
+    ctx.fillText('VS', 450, 330);
+    ctx.fillText('Ready to Play ?', 330, 200);
+    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84);
+    startbutton.style.display = 'block';
+    instrOpenBtn.style.display = 'block';
+    navBar.style.display = 'flex';
+    sideBar.style.display ='none';
 }

@@ -1,4 +1,6 @@
 @import "./reset.css";
+@import "./base.css";
+
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -49,15 +51,15 @@ body{
     margin-right: 20px;
     margin-bottom: 5px;
 }
-#canvas{ 
-    
+#canvas{
+
     border-radius: 1%;
     height: 704px;
     width: 960px;
     border: 1px solid gray;
     // background-color:  #d3bb8d;
     top: 50%;
-    left: 50%; 
+    left: 50%;
 }
 #nav-bar {
     display: none;
@@ -128,18 +130,18 @@ li {
 
 .modal {
   display: none;
-  position: fixed; 
-  z-index: 1; 
-  padding-top: 200px; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 200px;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 
 }
 .modal-content {
-    
+
   color: green;
   font-size: larger;
   background-color: #EAE7D8;
@@ -151,7 +153,7 @@ li {
   height: 50%;
   opacity: 0.9;
   border-radius: 8px;
-  
+
 }
 
 .close {
