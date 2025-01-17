@@ -22,7 +22,7 @@
     <div class = "game-container">
         <div class="title-row"><h1 class="title">DinoBomber</h1></div>
 
-        <div id="side-bar">
+        <div id="side-bar" class="side-bar hidden">
             <a href="https://github.com/jjzhang329" target="_blank" ><img src='src/assets/githubSquare.png'></a>
             <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
             <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
@@ -30,14 +30,14 @@
 
         <div class="canvas-container">
             <canvas id="canvas"></canvas>
-            <div class="buttons">
+            <div id="main-menu-buttons" class="buttons">
 
                 <button id="start">Start Game</button>
                 <!-- <button id="pause">Pause Game</button> -->
                 <!-- <button id="restart">Restart</button> -->
                 <button id='instructions-open'>Instruction</button>
 
-                <div id="instructions-modal" class="modal">
+                <div id="instructions-modal" class="modal hidden">
                     <div class="modal-content">
                         <span class="close">&times;</span>
 
@@ -58,13 +58,13 @@
                 </div>
             </div>
 
-            <div class="nav-bar">
+            <div id="nav-bar" class="nav-bar">
                 <a href="https://github.com/jjzhang329"target="_blank"><img src='src/assets/githubSquare.png'></a>
                 <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
                 <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
             </div>
 
-            <div id="winModal" class="modal">
+            <div id="winModal" class="modal hidden">
                 <div class="modal-content">
                     <span class="close">&times;</span>
 

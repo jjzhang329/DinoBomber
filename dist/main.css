@@ -104,6 +104,9 @@ body {
   left: 35%;
   width: 30%;
 }
+.nav-bar.hidden {
+  display: none;
+}
 
 .nav-bar > a > img {
   width: 40px;
@@ -120,11 +123,6 @@ body {
   border: 1px solid gray;
   top: 50%;
   left: 50%;
-}
-
-#nav-bar {
-  display: none;
-  flex-direction: row;
 }
 
 .buttons {
@@ -189,7 +187,6 @@ li {
 }
 
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   padding-top: 200px;
@@ -297,14 +294,16 @@ li {
   height: 28px;
 }
 
-#side-bar {
-  display: none;
+.side-bar {
+  display: flex;
   position: absolute;
   flex-direction: column;
   left: -8%;
 }
-
-#side-bar > a > img {
+.side-bar.hidden {
+  display: none;
+}
+.side-bar > a > img {
   width: 40px;
   height: 40px;
   margin: 10px;

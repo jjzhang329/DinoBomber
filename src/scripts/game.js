@@ -19,16 +19,16 @@ export default class Game{
 
     start(){
        const sideBar = document.getElementById('side-bar')
-       sideBar.style.display = 'flex'
+       sideBar.classList.remove("hidden");
        this.startAnimating(6)
     }
 
    gameOver(){
        //use a modal or run cancelanimationrequest
-        if(this.end){
+        if(this.end) {
             const winModal = document.getElementById('winModal')
             const gameMessage = document.getElementsByClassName('game-message')[0]
-            winModal.style.display = 'block'
+            winModal.classList.remove("hidden");
 
             let message
             if(this.dino.status === 'burned'){

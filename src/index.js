@@ -12,9 +12,10 @@ startscreen.src = 'src/assets/startMap.png'
 canvas.width = 960;
 canvas.height = 704;
 
+const mainMenuButtons = document.querySelectorAll("#main-menu-buttons button")
 const startbutton = document.getElementById('start');
 const instrOpenBtn = document.getElementById('instructions-open');
-const navBar = document.getElementsByClassName('nav-bar')[0]
+const navBar = document.getElementById('nav-bar')
 const sideBar = document.getElementById('side-bar')
 
 startbutton.addEventListener('click', () => {
@@ -22,9 +23,8 @@ startbutton.addEventListener('click', () => {
     game.start()
     // TODO: might not be necessary
     // ctx.clearRect(0, 0, canvas.width, canvas.height)
-    startbutton.style.display = 'none'
-    instrOpenBtn.style.display = 'none'
-    navBar.style.display = 'none'
+    mainMenuButtons.forEach((btn) => { btn.classList.add("hidden") });
+    navBar.classList.add("hidden");
 })
 
 // let restart = document.getElementById('restart')
@@ -32,8 +32,8 @@ startbutton.addEventListener('click', () => {
 
 //     const game = new Game(ctx);
 //     game.start();
-//     startscreen[0].style.display = 'none'
-//     start.style.display = 'none'
+//     startscreen[0].classList.add("hidden");
+//     start.classList.add("hidden");
 // })
 
 const instrModal = document.getElementById('instructions-modal')
@@ -43,29 +43,29 @@ const winClose = winModal.querySelector(".close")
 const playAgain = winModal.querySelector(".playagain")
 
 instrOpenBtn.onclick = function() {
-    instrModal.style.display = "block";
+    instrModal.classList.remove("hidden");
 }
 
 instrClose.onclick = function() {
-    instrModal.style.display = "none"
+    instrModal.classList.add("hidden");
 }
 
 playAgain.onclick = function(){
     const game = new Game(ctx)
-    winModal.style.display = "none";
+    winModal.classList.add("hidden")
     game.start()
 }
 
 winClose.onclick = function(){
-    winModal.style.display = "none";
+    winModal.classList.add("hidden")
     ctx.clearRect(0, 0, 960, 704)
     initMainMenu();
 }
 
 window.onclick = function (event) {
     if (event.target == instrModal) {
-        instrModal.style.display = "none";
-        winModal.style.display = "none"
+        instrModal.classList.add("hidden")
+        winModal.classList.add("hidden")
     }
 }
 
@@ -77,8 +77,7 @@ function initMainMenu() {
     ctx.fillText('VS', 450, 330);
     ctx.fillText('Ready to Play ?', 330, 200);
     ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84);
-    startbutton.style.display = 'block';
-    instrOpenBtn.style.display = 'block';
-    navBar.style.display = 'flex';
-    sideBar.style.display ='none';
+    mainMenuButtons.forEach((btn) => { btn.classList.remove("hidden") });
+    navBar.classList.remove("hidden");
+    sideBar.classList.add("hidden");
 }
