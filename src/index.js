@@ -26,15 +26,15 @@ const instructionbutton = document.getElementById('myBtn');
 const navBar = document.getElementsByClassName('nav-bar')[0]
 const sideBar = document.getElementById('side-bar')
 
-startbutton.addEventListener('click', ()=>{
-   const game = new Game(ctx)
-   game.start()   
-   ctx.clearRect(0, 0, canvas.width, canvas.height)
+startbutton.addEventListener('click', () => {
+    const game = new Game(ctx)
+    game.start()
+    // TODO: might not be necessary
+    // ctx.clearRect(0, 0, canvas.width, canvas.height)
     startbutton.style.display = 'none'
     instructionbutton.style.display = 'none'
     navBar.style.display = 'none'
 })
-
 
 // let restart = document.getElementById('restart')
 // restart.addEventListener('click', () => {
@@ -45,27 +45,29 @@ startbutton.addEventListener('click', ()=>{
 //     start.style.display = 'none'
 // })
 
-const modal = document.getElementById('myModal')
+const instructionsModal = document.getElementById('instructions-modal')
 const winModal = document.getElementById('winModal')
 const span1 = document.getElementById("close1");
 const span2 = document.getElementById("close2")
 const playAgain = document.getElementsByClassName('playagain')[0]
+
 instructionbutton.onclick = function () {
-    modal.style.display = "block";
+    instructionsModal.style.display = "block";
 }
+
 playAgain.onclick = function(){
     const game = new Game(ctx)
     winModal.style.display = "none";
-    game.start() 
-   
+    game.start()
 }
+
 span1.onclick = function () {
-    modal.style.display = "none"
+    instructionsModal.style.display = "none"
 }
 span2.onclick = function(){
     winModal.style.display = "none";
     ctx.clearRect(0, 0, 960, 704)
-    
+
     ctx.fillStyle = 'white';
     ctx.font = '50px cabin catch';
     ctx.drawImage(startscreen, 0, 0, 960, 704),
@@ -81,8 +83,8 @@ span2.onclick = function(){
 }
 
 window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == instructionsModal) {
+        instructionsModal.style.display = "none";
         winModal.style.display = "none"
     }
 }

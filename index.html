@@ -21,30 +21,26 @@
 <body>
     <div class = "game-container">
         <div class="title-row"><h1 class="title">DinoBomber</h1></div>
-        
-        <div id="side-bar">
 
+        <div id="side-bar">
             <a href="https://github.com/jjzhang329" target="_blank" ><img src='src/assets/githubSquare.png'></a>
             <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
-            <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>        
- 
+            <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
         </div>
+
         <div class="canvas-container">
-            <canvas id="canvas">
-                
-            </canvas>
+            <canvas id="canvas"></canvas>
             <div class="buttons">
-            
+
                 <button id="start">Start Game</button>
-                <!-- <button id="pause">Pause Game</button>
-                     <button id="restart">Restart</button> -->
+                <!-- <button id="pause">Pause Game</button> -->
+                <!-- <button id="restart">Restart</button> -->
                 <button id='myBtn'>Instruction</button>
-                <div id="myModal" class="modal">
-            
+                <div id="instructions-modal" class="modal">
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span id='close1' class="close">&times;</span>
-            
+
                         <div class="instruction-row">Control the Dino</div>
                         <div class="arrow-keys">
                             <img id="dinoUp" src='src/assets/dinoSprite.png'>
@@ -58,52 +54,37 @@
                         </div>
                         <div class="instruction-row">Set the Bomb</div>
                         <img class="space" src="src/assets/spacebar.png">
-            
                     </div>
-            
                 </div>
-                
-             
             </div>
+
             <div class="nav-bar">
-            
                 <a href="https://github.com/jjzhang329"target="_blank"><img src='src/assets/githubSquare.png'></a>
                 <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
                 <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
-            
             </div>
+
             <div id="winModal" class="modal">
-            
+
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span id="close2" class="close">&times;</span>
-            
+
                     <div class="game-message"></div>
                     <div class="show-links">
                         <span>Check out my other cool projects</span>
-                        
                     </div>
+
                     <div class="links">
                         <a href="https://github.com/jjzhang329" target="_blank"><img src='src/assets/githubSquare.png'></a>
                         <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/" target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
                         <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
-                      
                     </div>
                     <button class="playagain">Play Again</button>
-            
+
                 </div>
-            
             </div>
-           
-
         </div>
-       
-       
-        
     </div>
-    
-  
-    
 </body>
-
 </html>
