@@ -30,38 +30,39 @@
 
         <div class="canvas-container">
             <canvas id="canvas"></canvas>
-            <div id="main-menu-buttons" class="buttons">
+            <div id="main-menu" class="main-menu">
+                <div id="main-menu-buttons" class="buttons">
+                    <button class="start" data-game-mode="classic">Start Game</button>
+                    <!-- <button id="pause">Pause Game</button> -->
+                    <button class="start" data-game-mode="demo">Demo</button>
+                    <button id='instructions-open'>Instruction</button>
 
-                <button id="start">Start Game</button>
-                <!-- <button id="pause">Pause Game</button> -->
-                <!-- <button id="restart">Restart</button> -->
-                <button id='instructions-open'>Instruction</button>
+                    <div id="instructions-modal" class="modal hidden">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
 
-                <div id="instructions-modal" class="modal hidden">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-
-                        <div class="instruction-row">Control the Dino</div>
-                        <div class="arrow-keys">
-                            <img id="dinoUp" src='src/assets/dinoSprite.png'>
-                            <img class="upArrow" src="src/assets/upArrow.png">
-                            <img id="dinoDown" src='src/assets/dinoSprite.png'>
-                            <img class="downArrow" src="src/assets/downArrow.png">
-                            <img id="dinoLeft" src='src/assets/dinoSprite.png'>
-                            <img class="leftArrow" src="src/assets/leftArrow.png">
-                            <img id="dinoRight" src='src/assets/dinoSprite.png'>
-                            <img class="rightArrow" src="src/assets/rightArrow.png">
+                            <div class="instruction-row">Control the Dino</div>
+                            <div class="arrow-keys">
+                                <img id="dinoUp" src='src/assets/dinoSprite.png'>
+                                <img class="upArrow" src="src/assets/upArrow.png">
+                                <img id="dinoDown" src='src/assets/dinoSprite.png'>
+                                <img class="downArrow" src="src/assets/downArrow.png">
+                                <img id="dinoLeft" src='src/assets/dinoSprite.png'>
+                                <img class="leftArrow" src="src/assets/leftArrow.png">
+                                <img id="dinoRight" src='src/assets/dinoSprite.png'>
+                                <img class="rightArrow" src="src/assets/rightArrow.png">
+                            </div>
+                            <div class="instruction-row">Set the Bomb</div>
+                            <img class="space" src="src/assets/spacebar.png">
                         </div>
-                        <div class="instruction-row">Set the Bomb</div>
-                        <img class="space" src="src/assets/spacebar.png">
                     </div>
                 </div>
-            </div>
 
-            <div id="nav-bar" class="nav-bar">
-                <a href="https://github.com/jjzhang329"target="_blank"><img src='src/assets/githubSquare.png'></a>
-                <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
-                <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
+                <div id="nav-bar" class="nav-bar">
+                    <a href="https://github.com/jjzhang329"target="_blank"><img src='src/assets/githubSquare.png'></a>
+                    <a href="https://www.linkedin.com/in/jing-jing-zhang-888a05a5/"target="_blank"><img src='src/assets/linkedlnSquare.png'></a>
+                    <a href="https://angel.co/u/jing-jing-zhang" target="_blank"><img src='src/assets/angelist.png'></a>
+                </div>
             </div>
 
             <div id="winModal" class="modal hidden">

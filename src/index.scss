@@ -39,10 +39,8 @@ body{
 .nav-bar {
     display: flex;
     justify-content: center;
-    position: absolute;
-    top: 70%;
-    left: 35%;
     width: 30%;
+    margin: 20px auto 0 auto;
 
     &.hidden {
         display: none;
@@ -57,29 +55,35 @@ body{
     margin-bottom: 5px;
 }
 #canvas{
-
     border-radius: 1%;
     height: 704px;
     width: 960px;
     border: 1px solid gray;
-    // background-color:  #d3bb8d;
     top: 50%;
     left: 50%;
 }
 
-.buttons{
+.main-menu {
     position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 400px;
     top: 60%;
-    height: 40px;
     left: 29%;
+    width: 400px;
+    height: 240px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    button {
+        width: 240px;
+    }
 }
 
 button {
-    transition: all .5s ease;
+    transition: background-color .5s ease, color .5s ease;
     color: #F5F5F5;
     border: 2px solid #F5F5F5;
     font-family:'Montserrat', sans-serif;

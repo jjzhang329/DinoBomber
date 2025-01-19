@@ -12,19 +12,18 @@ startscreen.src = 'src/assets/startMap.png'
 canvas.width = 960;
 canvas.height = 704;
 
-const mainMenuButtons = document.querySelectorAll("#main-menu-buttons button")
-const startbutton = document.getElementById('start');
+const mainMenu = document.getElementById("main-menu")
 const instrOpenBtn = document.getElementById('instructions-open');
-const navBar = document.getElementById('nav-bar')
 const sideBar = document.getElementById('side-bar')
 
-startbutton.addEventListener('click', () => {
-    const game = new Game(ctx)
-    game.start()
-    // TODO: might not be necessary
-    // ctx.clearRect(0, 0, canvas.width, canvas.height)
-    mainMenuButtons.forEach((btn) => { btn.classList.add("hidden") });
-    navBar.classList.add("hidden");
+mainMenu.querySelectorAll("button.start").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const game = new Game(ctx)
+        game.start()
+        // TODO: might not be necessary
+        // ctx.clearRect(0, 0, canvas.width, canvas.height)
+        mainMenu.classList.add("hidden");
+    })
 })
 
 // let restart = document.getElementById('restart')
@@ -77,7 +76,6 @@ function initMainMenu() {
     ctx.fillText('VS', 450, 330);
     ctx.fillText('Ready to Play ?', 330, 200);
     ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84);
-    mainMenuButtons.forEach((btn) => { btn.classList.remove("hidden") });
-    navBar.classList.remove("hidden");
+    mainMenu.classList.remove("hidden")
     sideBar.classList.add("hidden");
 }
