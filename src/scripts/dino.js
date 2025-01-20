@@ -96,6 +96,12 @@ export default class Dino extends MovingObjects {
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
+
+        if (this.frameX < 1 && this.moving) {
+            this.frameX++
+        } else {
+            this.frameX = 0
+        }
     }
 
     clearBomb(bomb) {
