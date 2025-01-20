@@ -13,7 +13,7 @@ export default class Game{
         this.map = new Map();
         this.dino = new Dino({x:832, y:576, game: this});
         this.enemy = new Enemy({x:64, y:64, game:this})
-        this.key = new KeyHandler(this.dino).keys;
+        this.key = new KeyHandler().keys;
         this.explosion = [];
     }
 
@@ -91,10 +91,9 @@ export default class Game{
     handlePlayerFrame() {
         if (this.dino.frameX < 1 && this.dino.moving) {
             this.dino.frameX++
-        } else { this.dino.frameX = 0 }
-        if(this.enemy.frameX < 1){
-            this.enemy.frameX++
-        }else{this.enemy.frameX = 0}
+        } else {
+            this.dino.frameX = 0
+        }
     }
 
     collision(object1, object2) {
