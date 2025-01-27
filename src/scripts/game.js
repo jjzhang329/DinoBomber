@@ -5,25 +5,42 @@ import Enemy from './enemy';
 import Bomb from './bomb';
 
 let fps, fpsInterval, startTime, now, then, elapsed;
-export default class Game{
-    constructor(ctx){
+export default class Game {
+    constructor(ctx, gameMode) {
         this.ctx = ctx;
         this.end = false;
         this.paused = false;
         this.map = new Map();
-        this.dino = new Dino({x:832, y:576, game: this});
-        this.enemy = new Enemy({x:64, y:64, game:this})
         this.key = new KeyHandler().keys;
         this.explosion = [];
+
+        switch (gameMode) {
+        case "classic":
+            Game.classicGame(this);
+            break;
+        case "demo":
+            Game.demoGame(this);
+            break;
+        }
     }
 
-    start(){
+    static classicGame(game) {
+        game.dino = new Dino({x: 832, y: 576, game: game});
+        game.enemy = new Enemy({x: 64, y: 64, game: game});
+    }
+
+    static demoGame(game) {
+        game.dino = new Dino({x: 448, y: 320, game: game});
+        game.enemy = new Enemy({x: 320, y: 320, game: game});
+    }
+
+    start() {
        const sideBar = document.getElementById('side-bar')
        sideBar.classList.remove("hidden");
        this.startAnimating(6)
     }
 
-   gameOver(){
+    gameOver() {
        //use a modal or run cancelanimationrequest
         if(this.end) {
             const winModal = document.getElementById('winModal')
@@ -83,7 +100,9 @@ export default class Game{
                     }
                 )
             }
-            if(this.explosion.length)this.explosion[0].explode()
+            if (this.explosion.length) {
+                this.explosion[0].process()
+            }
         };
     }
 

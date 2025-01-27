@@ -18,7 +18,7 @@ const sideBar = document.getElementById('side-bar')
 
 mainMenu.querySelectorAll("button.start").forEach(btn => {
     btn.addEventListener("click", () => {
-        const game = new Game(ctx)
+        const game = new Game(ctx, btn.dataset.gameMode)
         game.start()
         // TODO: might not be necessary
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -50,7 +50,7 @@ instrClose.onclick = function() {
 }
 
 playAgain.onclick = function(){
-    const game = new Game(ctx)
+    const game = new Game(ctx, "classic")
     winModal.classList.add("hidden")
     game.start()
 }
