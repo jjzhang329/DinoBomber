@@ -4,7 +4,7 @@ import KeyHandler from './keyHandler';
 import Enemy from './enemy';
 import Bomb from './bomb';
 
-let fps, fpsInterval, startTime, now, then, elapsed;
+let secondsPassed, oldTimestamp, fps;
 export default class Game {
     constructor(ctx, gameMode) {
         this.ctx = ctx;
@@ -37,7 +37,7 @@ export default class Game {
     start() {
        const sideBar = document.getElementById('side-bar')
        sideBar.classList.remove("hidden");
-       this.startAnimating(6)
+       requestAnimationFrame(this.animate.bind(this));
     }
 
     gameOver() {
@@ -61,49 +61,43 @@ export default class Game {
         }
     }
 
-    startAnimating(fps) {
-        fpsInterval = 1000 / fps;
-        then = Date.now();
-        startTime = then;
-        this.animate()
-    }
+    animate(timestamp) {
+        if (this.end) this.gameOver();
 
-    animate(){
-        if(!this.end){
-            requestAnimationFrame(this.animate.bind(this))
+        secondsPassed = (timestamp - oldTimestamp) / 1000;
+        oldTimestamp = timestamp;
+
+        fps = Math.round(1 / secondsPassed);
+
+        // console.log(fps)
+
+        this.map.draw(this.ctx);
+        this.dino.draw(this.ctx);
+        if (!this.end) {
+            this.enemy.draw(this.ctx)
+            this.enemy.randomMove();
+            this.dino.move(this.key);
+            this.collision(this.enemy, this.dino)
+        };
+
+        if (this.dino.bomb){
+           this.dino.newBomb.forEach(egg =>{
+               let idx = this.map.getIndex(egg.bombX, egg.bombY)
+               this.map.tiles[idx] = 1
+                Bomb.dropBomb(egg);
+                if(egg.sourceX < egg.width) egg.sourceX += egg.width
+                 else{egg.sourceX = 0};
+                this.dino.clearBomb(egg)
+
+                }
+            )
         }
 
-        this.gameOver()
-        // this.ctx.clearRect(0, 0, 800, 480)
-        now = Date.now();
-        elapsed = now - then;
-        if (elapsed > fpsInterval) {
-            then = now - (elapsed % fpsInterval);
-            this.map.draw(this.ctx);
-            this.dino.draw(this.ctx);
-            if (!this.end) {
-                this.enemy.draw(this.ctx)
-                this.enemy.randomMove();
-                this.dino.move(this.key);
-                this.collision(this.enemy, this.dino)
-            };
+        if (this.explosion.length) {
+            this.explosion[0].process()
+        }
 
-           if(this.dino.bomb){
-               this.dino.newBomb.forEach(egg =>{
-                   let idx = this.map.getIndex(egg.bombX, egg.bombY)
-                   this.map.tiles[idx] = 1
-                    Bomb.dropBomb(egg);
-                    if(egg.sourceX < egg.width) egg.sourceX += egg.width
-                     else{egg.sourceX = 0};
-                    this.dino.clearBomb(egg)
-
-                    }
-                )
-            }
-            if (this.explosion.length) {
-                this.explosion[0].process()
-            }
-        };
+        requestAnimationFrame(this.animate.bind(this));
     }
 
     collision(object1, object2) {

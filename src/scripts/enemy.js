@@ -1,5 +1,7 @@
 import MovingObjects from "./movingObjects";
 export default class Enemy extends MovingObjects {
+    static spriteSheet = null;
+
     constructor(object){
         super(object)
         this.speed = 16;
@@ -9,16 +11,22 @@ export default class Enemy extends MovingObjects {
         this.game = object.game;
         this.counter = 4;
         this.currentDir = 2;
+
+        this.loadSpriteSheet();
+    }
+
+    loadSpriteSheet() {
+        if (Enemy.spriteSheet) return;
+
+        Enemy.spriteSheet = new Image();
+        Enemy.spriteSheet.src = "src/assets/soldierAndBomb.png";
     }
 
     draw(ctx) {
-        const enemySprite = new Image();
-        enemySprite.addEventListener('load', ()=>{
-            ctx.drawImage(enemySprite, this.width * this.frameX, this.height * this.frameY,
-                this.width, this.height,
-                this.x, this.y, 60, 64)
-        })
-        enemySprite.src = 'src/assets/soldierAndBomb.png'
+        ctx.drawImage(Enemy.spriteSheet, this.width * this.frameX, this.height * this.frameY,
+            this.width, this.height,
+            this.x, this.y, 60, 64
+        )
     }
 
     randomMove() {
