@@ -1,3 +1,6 @@
+import HitBox from "./hitBox.js";
+import * as Lib from "./lib.js";
+
 export default class MovingObjects{
     static Direction = {
         up: 0,
@@ -6,53 +9,58 @@ export default class MovingObjects{
         right: 3,
     }
 
-    constructor(object){
+    constructor(object) {
         this.x = object.x;
         this.y = object.y;
+        this.width = object.width || 24;
+        this.height = object.height || 28;
         this.frameX = 0;
         this.frameY = 0;
-        this.speed = 16;
+        this.spriteSheetConfig = new Lib.SpriteSheetConfig()
+        this.speed = 96;
         this.game = object.game;
         this.moving = false;
         this.status = true;
+        this.hitBox = new HitBox(this.x, this.y, this.width, this.height);
     }
 
-    canMove(direction) {
-        let i = this.game.map.getRow(this.y)
-        let j = this.game.map.getCol(this.x)
-
+    canMove(direction, moveAmount) {
         switch (direction) {
         case MovingObjects.Direction.up:
-            return this.game.map.emptyTile(j, i-1) && this.game.map.emptyTile(j+3, i-1)
+            return this.emptyTile(this.x,              this.y - moveAmount) &&
+                   this.emptyTile(this.x + this.width, this.y - moveAmount)
         case MovingObjects.Direction.down:
-            return this.game.map.emptyTile(j, i+4) && this.game.map.emptyTile(j+3, i+4)
+            return this.emptyTile(this.x,              this.y + this.height + moveAmount) &&
+                   this.emptyTile(this.x + this.width, this.y + this.height + moveAmount)
         case MovingObjects.Direction.left:
-            return this.game.map.emptyTile(j-1, i) && this.game.map.emptyTile(j-1, i+3)
+            return this.emptyTile(this.x - moveAmount, this.y) &&
+                   this.emptyTile(this.x - moveAmount, this.y + this.height)
         case MovingObjects.Direction.right:
-            return this.game.map.emptyTile(j+4, i) && this.game.map.emptyTile(j+4, i+3)
+            return this.emptyTile(this.x + this.width + moveAmount, this.y) &&
+                   this.emptyTile(this.x + this.width + moveAmount, this.y + this.height)
         }
 
         return false
     }
 
-    cannotMove(direction) {
-        return !this.canMove(direction)
+    cannotMove(direction, moveAmount) {
+        return !this.canMove(direction, moveAmount)
     }
 
-    canMoveUp() {
-        return this.canMove(MovingObjects.Direction.up)
+    canMoveUp(moveAmount) {
+        return this.canMove(MovingObjects.Direction.up, moveAmount || 2)
     }
 
-    canMoveDown() {
-        return this.canMove(MovingObjects.Direction.down)
+    canMoveDown(moveAmount) {
+        return this.canMove(MovingObjects.Direction.down, moveAmount || 2)
     }
 
-    canMoveLeft() {
-        return this.canMove(MovingObjects.Direction.left)
+    canMoveLeft(moveAmount) {
+        return this.canMove(MovingObjects.Direction.left, moveAmount || 2)
     }
 
-    canMoveRight() {
-        return this.canMove(MovingObjects.Direction.right)
+    canMoveRight(moveAmount) {
+        return this.canMove(MovingObjects.Direction.right, moveAmount || 2)
     }
 
     emptyTile(x, y){

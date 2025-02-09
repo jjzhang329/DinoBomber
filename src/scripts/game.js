@@ -69,14 +69,12 @@ export default class Game {
 
         fps = Math.round(1 / secondsPassed);
 
-        // console.log(fps)
-
         this.map.draw(this.ctx);
         this.dino.draw(this.ctx);
         if (!this.end) {
             this.enemy.draw(this.ctx)
-            this.enemy.randomMove();
-            this.dino.move(this.key);
+            this.enemy.randomMove(secondsPassed);
+            this.dino.move(this.key, secondsPassed);
             this.collision(this.enemy, this.dino)
         };
 

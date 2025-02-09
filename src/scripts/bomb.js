@@ -2,7 +2,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-class HitBox {
+class BombHitBox {
     // Attributes mirror CanvasRenderingContext2D rect()
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rect
     constructor(x, y, width, height) {
@@ -119,25 +119,25 @@ export default class Bomb{
         if (leftCol) this.drawLeftConnection(leftCol);
         if (leftCol > 4) this.drawLeft(leftCol);
 
-        this.checkEntityCollisions(new HitBox(this.col * 16, this.row * 16, leftCol * -16, 64));
+        this.checkEntityCollisions(new BombHitBox(this.col * 16, this.row * 16, leftCol * -16, 64));
 
         const rightCol = this.emptyRightCol(this.col + 3, this.row)
         if (rightCol) this.drawRightConnection(rightCol);
         if (rightCol > 4) this.drawRight(rightCol);
 
-        this.checkEntityCollisions(new HitBox(this.col * 16, this.row * 16, rightCol * 16, 64));
+        this.checkEntityCollisions(new BombHitBox(this.col * 16, this.row * 16, rightCol * 16, 64));
 
         const upRow = this.emptyUpRow(this.col, this.row)
         if (upRow) this.drawUpConnection(upRow);
         if (upRow > 4) this.drawUp(upRow);
 
-        this.checkEntityCollisions(new HitBox(this.col * 16, this.row * 16, 64, upRow * -16));
+        this.checkEntityCollisions(new BombHitBox(this.col * 16, this.row * 16, 64, upRow * -16));
 
         const downRow = this.emptyDownRow(this.col, this.row + 4);
         if (downRow) this.drawDownConnection(downRow);
         if (downRow > 4) this.drawDown(downRow);
 
-        this.checkEntityCollisions(new HitBox(this.col * 16, this.row * 16, 64, downRow * 16));
+        this.checkEntityCollisions(new BombHitBox(this.col * 16, this.row * 16, 64, downRow * 16));
     }
 
     checkEntityCollisions(hitBox) {

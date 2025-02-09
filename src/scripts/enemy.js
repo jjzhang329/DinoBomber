@@ -1,13 +1,14 @@
 import MovingObjects from "./movingObjects";
+import * as Lib from "./lib.js";
 export default class Enemy extends MovingObjects {
     static spriteSheet = null;
 
     constructor(object){
-        super(object)
-        this.speed = 16;
+        object.width = 60;
+        object.height = 60;
+        super(object);
+        this.spriteSheetConfig = new Lib.SpriteSheetConfig(0, 0, 25, 28);
         this.moving = true;
-        this.width = 25;
-        this.height = 28;
         this.game = object.game;
         this.counter = 4;
         this.currentDir = 2;
@@ -23,43 +24,59 @@ export default class Enemy extends MovingObjects {
     }
 
     draw(ctx) {
-        ctx.drawImage(Enemy.spriteSheet, this.width * this.frameX, this.height * this.frameY,
-            this.width, this.height,
+        ctx.drawImage(
+            Enemy.spriteSheet,
+            // this.width * this.frameX, this.height * this.frameY,
+            // this.width, this.height,
+            ...this.spriteSheetConfig.toArgs(),
             this.x, this.y, 60, 64
         )
     }
 
-    randomMove() {
+    randomMove(secondsPassed) {
         const nextDir = this.getNextDirection()
+        const moveAmount = Math.round(this.speed * secondsPassed);
 
-        if (this.cannotMove(nextDir)) return
+        if (this.cannotMove(nextDir, moveAmount)) return
 
         this.currentDir = nextDir
 
         switch (this.currentDir) {
         case Enemy.Direction.up:
-            this.y -= this.speed;
-            this.width = 22;
-            // this.height = 27;
-            this.frameY = 3;
+            this.y -= moveAmount;
+            // this.width = 22;
+            // this.frameY = 3;
+
+            this.spriteSheetConfig.sy = 84;
+            this.spriteSheetConfig.sWidth = 22;
+
             break;
         case Enemy.Direction.down:
-            this.y += this.speed;
-            this.width = 22;
-            // this.height = 27;
-            this.frameY = 2;
+            this.y += moveAmount;
+            // this.width = 22;
+            // this.frameY = 2;
+
+            this.spriteSheetConfig.sy = 56;
+            this.spriteSheetConfig.sWidth = 22;
+
             break;
         case Enemy.Direction.left:
-            this.x -= this.speed;
-            this.width = 25;
-            // this.height = 27;
-            this.frameY = 0;
+            this.x -= moveAmount;
+            // this.width = 25;
+            // this.frameY = 0;
+
+            this.spriteSheetConfig.sy = 0;
+            this.spriteSheetConfig.sWidth = 25;
+
             break;
         case Enemy.Direction.right:
-            this.x += this.speed;
-            this.width = 26;
-            // this.height = 27;
-            this.frameY = 1;
+            this.x += moveAmount;
+            // this.width = 26;
+            // this.frameY = 1;
+
+            this.spriteSheetConfig.sy = 28;
+            this.spriteSheetConfig.sWidth = 26;
+
             break;
         }
     }
@@ -84,10 +101,10 @@ export default class Enemy extends MovingObjects {
 
     availableMoves() {
         const moves = []
-        if (this.canMoveUp()) {moves.push(Enemy.Direction.up)}
-        if (this.canMoveDown()) {moves.push(Enemy.Direction.down)}
-        if (this.canMoveLeft()) {moves.push(Enemy.Direction.left)}
-        if (this.canMoveRight()) {moves.push(Enemy.Direction.right)}
+        if (this.canMoveUp(2)) {moves.push(Enemy.Direction.up)}
+        if (this.canMoveDown(2)) {moves.push(Enemy.Direction.down)}
+        if (this.canMoveLeft(2)) {moves.push(Enemy.Direction.left)}
+        if (this.canMoveRight(2)) {moves.push(Enemy.Direction.right)}
         return moves
     }
 }

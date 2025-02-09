@@ -1,5 +1,6 @@
 import Bomb from './bomb';
 import MovingObjects from './movingObjects';
+import * as Lib from "./lib.js";
 
 const STD_KEYMAP = {
     "up": "ArrowUp",
@@ -30,9 +31,10 @@ class KeyMap {
 
 export default class Dino extends MovingObjects {
     constructor(object) {
+        object.width = 60;
+        object.height = 60;
         super(object);
-        this.width = 24;
-        this.height = 28;
+        this.spriteSheetConfig = new Lib.SpriteSheetConfig(0, 0, 24, 28);
         this.keyMap = new KeyMap();
         this.bomb = 0;
         this.game = object.game;
@@ -40,67 +42,84 @@ export default class Dino extends MovingObjects {
         //reset width and heigh when moving
     }
 
-    draw(ctx){
+    draw(ctx) {
         const dinoSprite = new Image();
         if(this.status === 'burned'){
-            this.width = 21;
-            this.height = 29;
+            this.spriteSheetConfig.sy = 0;
+            this.spriteSheetConfig.sWidth = 21;
+            this.spriteSheetConfig.sHeight = 29;
             dinoSprite.src = 'src/assets/deadDino.png'
         } else { dinoSprite.src = "src/assets/dinoSprite.png"}
         dinoSprite.addEventListener('load', () =>{
             // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
             ctx.drawImage(
                 dinoSprite,
-                this.width * this.frameX, this.height * this.frameY,
-                this.width, this.height,
+                // this.width * this.frameX, this.height * this.frameY,
+                // this.width, this.height,
+                ...this.spriteSheetConfig.toArgs(),
                 this.x, this.y,
                 60, 64
             )
+            ctx.beginPath();
+            ctx.lineWidth = "1";
+            ctx.strokeStyle = "white";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = "1";
+            ctx.strokeStyle = "red";
+            ctx.rect(
+                this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height
+            )
+            ctx.stroke();
         })
     }
 
-    move(key) {
-        let moving = false
-        if (key[this.keyMap.up] && this.canMoveUp()) {
-            this.y -= this.speed;
-            this.width = 21;
-            this.height = 29;
-            this.frameY = 2.93;
+    move(key, secondsPassed) {
+        let moving = false;
+        const moveAmount = Math.round(this.speed * secondsPassed);
+
+        if (key[this.keyMap.up] && this.canMoveUp(moveAmount)) {
+            this.y -= moveAmount;
+            this.spriteSheetConfig.sy = 84.97;
+            this.spriteSheetConfig.sWidth = 21;
+            this.spriteSheetConfig.sHeight = 29;
             moving = true;
         }
-        if (key[this.keyMap.left] && this.canMoveLeft()) {
-            this.x -= this.speed;
-            this.width = 24;
-            this.height = 28;
-            this.frameY = 0;
+        if (key[this.keyMap.left] && this.canMoveLeft(moveAmount)) {
+            this.x -= moveAmount;
+            this.spriteSheetConfig.sy = 0;
+            this.spriteSheetConfig.sWidth = 24;
+            this.spriteSheetConfig.sHeight = 28;
             moving = true;
         }
-        if (key[this.keyMap.right] && this.canMoveRight()) {
-            this.x += this.speed;
-            this.width = 24;
-            this.height = 28;
-            this.frameY = 1;
+        if (key[this.keyMap.right] && this.canMoveRight(moveAmount)) {
+            this.x += moveAmount;
+            this.spriteSheetConfig.sy = 28;
+            this.spriteSheetConfig.sWidth = 24;
+            this.spriteSheetConfig.sHeight = 28;
             moving = true;
         }
-        if (key[this.keyMap.down] && this.canMoveDown()) {
-            this.y += this.speed
-            this.width = 21;
-            this.height = 29;
-            this.frameY = 1.93;
+        if (key[this.keyMap.down] && this.canMoveDown(moveAmount)) {
+            this.y += moveAmount
+            this.spriteSheetConfig.sy = 55.97;
+            this.spriteSheetConfig.sWidth = 21;
+            this.spriteSheetConfig.sHeight = 29;
             moving = true;
         }
 
-        this.moving = moving
+        this.moving = moving;
 
         if (key[this.keyMap.action] && this.emptyTile(this.x, this.y)) {
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
 
-        if (this.frameX < 1 && this.moving) {
-            this.frameX++
+        if (this.spriteSheetConfig.sx == 0 && this.moving) {
+            this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth
         } else {
-            this.frameX = 0
+            this.spriteSheetConfig.sx = 0
         }
     }
 
