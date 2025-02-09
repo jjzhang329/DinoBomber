@@ -4,8 +4,8 @@ export default class Enemy extends MovingObjects {
     static spriteSheet = null;
 
     constructor(object){
-        object.width = 60;
-        object.height = 60;
+        object.width = 63;
+        object.height = 63;
         super(object);
         this.spriteSheetConfig = new Lib.SpriteSheetConfig(0, 0, 25, 28);
         this.moving = true;
@@ -26,8 +26,6 @@ export default class Enemy extends MovingObjects {
     draw(ctx) {
         ctx.drawImage(
             Enemy.spriteSheet,
-            // this.width * this.frameX, this.height * this.frameY,
-            // this.width, this.height,
             ...this.spriteSheetConfig.toArgs(),
             this.x, this.y, 60, 64
         )
@@ -44,39 +42,23 @@ export default class Enemy extends MovingObjects {
         switch (this.currentDir) {
         case Enemy.Direction.up:
             this.y -= moveAmount;
-            // this.width = 22;
-            // this.frameY = 3;
-
             this.spriteSheetConfig.sy = 84;
             this.spriteSheetConfig.sWidth = 22;
-
             break;
         case Enemy.Direction.down:
             this.y += moveAmount;
-            // this.width = 22;
-            // this.frameY = 2;
-
             this.spriteSheetConfig.sy = 56;
             this.spriteSheetConfig.sWidth = 22;
-
             break;
         case Enemy.Direction.left:
             this.x -= moveAmount;
-            // this.width = 25;
-            // this.frameY = 0;
-
             this.spriteSheetConfig.sy = 0;
             this.spriteSheetConfig.sWidth = 25;
-
             break;
         case Enemy.Direction.right:
             this.x += moveAmount;
-            // this.width = 26;
-            // this.frameY = 1;
-
             this.spriteSheetConfig.sy = 28;
             this.spriteSheetConfig.sWidth = 26;
-
             break;
         }
     }
