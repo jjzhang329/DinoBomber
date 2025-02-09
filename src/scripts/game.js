@@ -22,16 +22,22 @@ export default class Game {
             Game.demoGame(this);
             break;
         }
+
+        this.dino ||= new Dino();
+        this.enemies ||= [];
     }
 
     static classicGame(game) {
         game.dino = new Dino({x: 832, y: 576, game: game});
-        game.enemy = new Enemy({x: 64, y: 64, game: game});
+        game.enemies = [new Enemy({x: 64, y: 64, game: game})];
     }
 
     static demoGame(game) {
         game.dino = new Dino({x: 448, y: 320, game: game});
-        game.enemy = new Enemy({x: 320, y: 320, game: game});
+        game.enemies = [
+            new Enemy({x: 320, y: 320, game: game}),
+            new Enemy({x: 64, y: 64, game: game})
+        ];
     }
 
     start() {
@@ -51,7 +57,7 @@ export default class Game {
             if(this.dino.status === 'burned'){
                 message = 'Game Over! You are burned!'
 
-            }else if(!this.enemy.status){
+            } else if (this.allEnemiesDefeated()){
                 message = 'You Win! You are unbeatable!'
 
             }else{
@@ -59,6 +65,13 @@ export default class Game {
             }
             gameMessage.innerHTML = message
         }
+    }
+
+    allEnemiesDefeated() {
+        this.enemies.forEach(enemy => {
+            if (enemy.isAlive()) return false;
+        })
+        return true;
     }
 
     animate(timestamp) {
@@ -72,10 +85,14 @@ export default class Game {
         this.map.draw(this.ctx);
         this.dino.draw(this.ctx);
         if (!this.end) {
-            this.enemy.draw(this.ctx)
-            this.enemy.randomMove(secondsPassed);
+            this.enemies.forEach(enemy => {
+                enemy.draw(this.ctx);
+                enemy.randomMove(secondsPassed);
+            })
             this.dino.move(this.key, secondsPassed);
-            this.collision(this.enemy, this.dino)
+            this.enemies.forEach(enemy => {
+                this.collision(enemy, this.dino)
+            })
         };
 
         if (this.dino.bomb){

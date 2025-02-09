@@ -12,6 +12,7 @@ export default class Enemy extends MovingObjects {
         this.game = object.game;
         this.counter = 4;
         this.currentDir = 2;
+        this.status = true;
 
         this.loadSpriteSheet();
     }
@@ -32,6 +33,7 @@ export default class Enemy extends MovingObjects {
     }
 
     randomMove(secondsPassed) {
+        if (this.isDead()) return;
         const nextDir = this.getNextDirection()
         const moveAmount = Math.round(this.speed * secondsPassed);
 
@@ -88,5 +90,13 @@ export default class Enemy extends MovingObjects {
         if (this.canMoveLeft(2)) {moves.push(Enemy.Direction.left)}
         if (this.canMoveRight(2)) {moves.push(Enemy.Direction.right)}
         return moves
+    }
+
+    isDead() {
+        return !this.status;
+    }
+
+    isAlive() {
+        return this.status;
     }
 }

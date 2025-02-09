@@ -144,10 +144,16 @@ export default class Bomb{
         if (hitBox.checkHitEntity(this.game.dino)) {
             this.game.dino.status = 'burned'
             this.game.end = true
-        } else if (hitBox.checkHitEntity(this.game.enemy)) {
-            this.game.enemy.status = false;
-            this.game.end = true;
+            return;
         }
+
+        let allEnemiesDefeated = true;
+        this.game.enemies.forEach(enemy => {
+            if (hitBox.checkHitEntity(enemy)) enemy.status = false;
+            if (enemy.isAlive()) allEnemiesDefeated = false;
+        })
+
+        if (allEnemiesDefeated) this.game.end = true;
     }
 
     fire(frameY, w, h, dX, dY,ratio=0){
