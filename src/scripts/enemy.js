@@ -1,6 +1,6 @@
 import MovingObjects from "./movingObjects";
-import * as Lib from "./lib.js";
 export default class Enemy extends MovingObjects {
+    "use strict";
     static spriteSheet = null;
     static sprites = {
         grey: {
@@ -29,6 +29,7 @@ export default class Enemy extends MovingObjects {
         this.currentDir = 2;
         this.status = true;
         this.skin = object.skin || "grey";
+        this.walkCycleTimeDelta = 0;
 
         Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].initial)
 
@@ -76,6 +77,17 @@ export default class Enemy extends MovingObjects {
             this.x += moveAmount;
             Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].right);
             break;
+        }
+
+        this.walkCycleTimeDelta += secondsPassed;
+
+        if (this.walkCycleTimeDelta >= 0.267) {
+            if (this.spriteSheetConfig.sx === 0) {
+                this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth;
+            } else {
+                this.spriteSheetConfig.sx = 0;
+            }
+            this.walkCycleTimeDelta = 0;
         }
     }
 

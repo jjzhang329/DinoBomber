@@ -39,6 +39,7 @@ export default class Dino extends MovingObjects {
         this.bomb = 0;
         this.game = object.game;
         this.newBomb = [];
+        this.walkCycleTimeDelta = 0;
         //reset width and heigh when moving
     }
 
@@ -110,16 +111,20 @@ export default class Dino extends MovingObjects {
         }
 
         this.moving = moving;
+        this.walkCycleTimeDelta += secondsPassed;
 
         if (key[this.keyMap.action] && this.emptyTile(this.x, this.y)) {
             this.newBomb.push(new Bomb(this.x, this.y, this.game));
             this.bomb += 1;
         }
 
-        if (this.spriteSheetConfig.sx == 0 && this.moving) {
-            this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth
-        } else {
-            this.spriteSheetConfig.sx = 0
+        if (this.moving && this.walkCycleTimeDelta >= 0.267) {
+            if (this.spriteSheetConfig.sx == 0) {
+                this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth
+            } else {
+                this.spriteSheetConfig.sx = 0
+            }
+            this.walkCycleTimeDelta = 0;
         }
     }
 

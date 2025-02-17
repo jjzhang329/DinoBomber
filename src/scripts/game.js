@@ -43,6 +43,7 @@ export default class Game {
     start() {
        const sideBar = document.getElementById('side-bar')
        sideBar.classList.remove("hidden");
+       oldTimestamp = document.timeline.currentTime;
        requestAnimationFrame(this.animate.bind(this));
     }
 
