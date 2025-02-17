@@ -2,17 +2,35 @@ import MovingObjects from "./movingObjects";
 import * as Lib from "./lib.js";
 export default class Enemy extends MovingObjects {
     static spriteSheet = null;
+    static sprites = {
+        grey: {
+            initial: { sx: 0, sy: 0, sWidth: 25, sHeight: 28 },
+            up:    { sy: 84, sWidth: 22 },
+            down:  { sy: 56, sWidth: 22 },
+            left:  { sy:  0, sWidth: 25 },
+            right: { sy: 28, sWidth: 26 },
+        },
+        red: {
+            initial: { sx: 54, sy: 0, sWidth: 25, sHeight: 28 },
+            up:    { sy: 84, sWidth: 22 },
+            down:  { sy: 56, sWidth: 22 },
+            left:  { sy:  0, sWidth: 25 },
+            right: { sy: 28, sWidth: 26 },
+        }
+    }
 
     constructor(object){
         object.width = 63;
         object.height = 63;
         super(object);
-        this.spriteSheetConfig = new Lib.SpriteSheetConfig(0, 0, 25, 28);
         this.moving = true;
         this.game = object.game;
         this.counter = 4;
         this.currentDir = 2;
         this.status = true;
+        this.skin = object.skin || "grey";
+
+        Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].initial)
 
         this.loadSpriteSheet();
     }
@@ -44,23 +62,19 @@ export default class Enemy extends MovingObjects {
         switch (this.currentDir) {
         case Enemy.Direction.up:
             this.y -= moveAmount;
-            this.spriteSheetConfig.sy = 84;
-            this.spriteSheetConfig.sWidth = 22;
+            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].up);
             break;
         case Enemy.Direction.down:
             this.y += moveAmount;
-            this.spriteSheetConfig.sy = 56;
-            this.spriteSheetConfig.sWidth = 22;
+            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].down);
             break;
         case Enemy.Direction.left:
             this.x -= moveAmount;
-            this.spriteSheetConfig.sy = 0;
-            this.spriteSheetConfig.sWidth = 25;
+            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].left);
             break;
         case Enemy.Direction.right:
             this.x += moveAmount;
-            this.spriteSheetConfig.sy = 28;
-            this.spriteSheetConfig.sWidth = 26;
+            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].right);
             break;
         }
     }

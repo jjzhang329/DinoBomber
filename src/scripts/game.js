@@ -35,8 +35,8 @@ export default class Game {
     static demoGame(game) {
         game.dino = new Dino({x: 448, y: 320, game: game});
         game.enemies = [
-            new Enemy({x: 320, y: 320, game: game}),
-            new Enemy({x: 64, y: 64, game: game})
+            new Enemy({x: 320, y: 320, game: game, skin: "grey"}),
+            new Enemy({x: 64, y: 64, game: game, skin: "red"})
         ];
     }
 
