@@ -42,13 +42,11 @@ export default class Bomb{
         this.sourceX= 0;
         this.sourceY= 162;
         this.src= 'src/assets/Enemies.png';
-        this.timer =15;
+        this.timer = 1.5;
         //explode 64*64 which means takes 4rows and 4cols
         this.blast = {
-
-            frameX:0,
-            time:5,
-
+            frameX: 0,
+            time: 0.5,
         }
     }
     static dropBomb(bomb) {
@@ -100,19 +98,21 @@ export default class Bomb{
         return row
     }
 
-    process() {
+    process(secondsPassed) {
+        // console.log("processing bomb...")
         if ( Math.floor(this.blast.frameX) < 3) {
            this.blast.frameX += 1
         }
         if (this.blast.time > 0) {
             this.drawAndCheckCollisions()
-            this.blast.time--
+            this.blast.time -= secondsPassed;
         } else {
             this.game.explosion.shift()
         }
     }
 
     drawAndCheckCollisions() {
+        // console.log("drawAndCheckCollisions bomb...")
         this.drawCenter();
 
         const leftCol = this.emptyLeftCol(this.col, this.row);

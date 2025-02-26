@@ -30,6 +30,7 @@ class KeyMap {
 }
 
 export default class Dino extends MovingObjects {
+    "use strict";
     constructor(object) {
         object.width = 60;
         object.height = 60;
@@ -40,6 +41,7 @@ export default class Dino extends MovingObjects {
         this.game = object.game;
         this.newBomb = [];
         this.walkCycleTimeDelta = 0;
+        this.throttledCreateBomb = Lib.throttle(this.createBomb, 200);
         //reset width and heigh when moving
     }
 
@@ -75,6 +77,11 @@ export default class Dino extends MovingObjects {
             )
             ctx.stroke();
         })
+    }
+
+    createBomb() {
+        this.newBomb.push(new Bomb(this.x, this.y, this.game));
+        this.bomb += 1;
     }
 
     move(key, secondsPassed) {
@@ -114,8 +121,7 @@ export default class Dino extends MovingObjects {
         this.walkCycleTimeDelta += secondsPassed;
 
         if (key[this.keyMap.action] && this.emptyTile(this.x, this.y)) {
-            this.newBomb.push(new Bomb(this.x, this.y, this.game));
-            this.bomb += 1;
+            this.throttledCreateBomb();
         }
 
         if (this.moving && this.walkCycleTimeDelta >= 0.267) {
@@ -127,15 +133,29 @@ export default class Dino extends MovingObjects {
             this.walkCycleTimeDelta = 0;
         }
     }
+    /* timer starts at 15
+     * once per frame decrement by 1
+     * old 6fps
+     * current 60fps
+     * 10x faster
+     * every 10nth frame at 60fps
+     * 1/10 of a second
+     * 1.5 seconds total
+     */
 
-    clearBomb(bomb) {
-        if(bomb.timer === 0){
+    clearBomb(bomb, secondsPassed) {
+        // console.log("clearing bomb...")
+        if(bomb.timer <= 0){
+            // console.log("bomb.timer === 0")
             this.game.explosion.push(bomb)
             // bomb.explode()
             let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
             this.game.map.tiles[idx] = 0;
             this.newBomb.shift();
             this.bomb -= 1;
-        } else(bomb.timer--)
+        } else {
+            // console.log(`bomb.timer ${bomb.timer} -= secondsPassed ${secondsPassed}`)
+            bomb.timer -= secondsPassed;
+        }
     }
 }

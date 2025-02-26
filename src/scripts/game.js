@@ -96,21 +96,25 @@ export default class Game {
             })
         };
 
-        if (this.dino.bomb){
-           this.dino.newBomb.forEach(egg =>{
-               let idx = this.map.getIndex(egg.bombX, egg.bombY)
-               this.map.tiles[idx] = 1
+        if (this.dino.bomb) {
+            this.dino.newBomb.forEach(egg => {
+                let idx = this.map.getIndex(egg.bombX, egg.bombY)
+                this.map.tiles[idx] = 1
                 Bomb.dropBomb(egg);
-                if(egg.sourceX < egg.width) egg.sourceX += egg.width
-                 else{egg.sourceX = 0};
-                this.dino.clearBomb(egg)
 
+                if (egg.sourceX < egg.width) {
+                    egg.sourceX += egg.width;
+                } else {
+                    egg.sourceX = 0;
                 }
-            )
+
+                this.dino.clearBomb(egg, secondsPassed);
+            })
         }
 
         if (this.explosion.length) {
-            this.explosion[0].process()
+            console.log("checked explosion.length")
+            this.explosion[0].process(secondsPassed);
         }
 
         requestAnimationFrame(this.animate.bind(this));
