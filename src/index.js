@@ -75,7 +75,7 @@ function initMainMenu() {
     ctx.drawImage(dino, 0, 0, 24, 28, 560, 270, 72, 84);
     ctx.fillText('VS', 450, 330);
     ctx.fillText('Ready to Play ?', 330, 200);
-    ctx.drawImage(soldier, 26, 29, 27, 27, 330, 270, 87, 84);
+    ctx.drawImage(soldier, 26, 28, 27, 27, 330, 270, 87, 84);
     mainMenu.classList.remove("hidden")
     sideBar.classList.add("hidden");
 }

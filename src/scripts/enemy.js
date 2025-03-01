@@ -4,18 +4,32 @@ export default class Enemy extends MovingObjects {
     static spriteSheet = null;
     static sprites = {
         grey: {
-            initial: { sx: 0, sy: 0, sWidth: 25, sHeight: 28 },
-            up:    { sy: 84, sWidth: 22 },
-            down:  { sy: 56, sWidth: 22 },
-            left:  { sy:  0, sWidth: 25 },
-            right: { sy: 28, sWidth: 26 },
+            one: {
+                [Enemy.Direction.left]:  { sx:  0, sy:  0, sWidth: 25, sHeight: 27 },
+                [Enemy.Direction.right]: { sx:  0, sy: 28, sWidth: 25, sHeight: 27 },
+                [Enemy.Direction.down]:  { sx:  0, sy: 56, sWidth: 22, sHeight: 27 },
+                [Enemy.Direction.up]:    { sx:  0, sy: 84, sWidth: 22, sHeight: 27 },
+            },
+            two: {
+                [Enemy.Direction.left]:  { sx: 26, sy:  0, sWidth: 27, sHeight: 27 },
+                [Enemy.Direction.right]: { sx: 26, sy: 28, sWidth: 27, sHeight: 27 },
+                [Enemy.Direction.down]:  { sx: 26, sy: 56, sWidth: 22, sHeight: 27 },
+                [Enemy.Direction.up]:    { sx: 26, sy: 84, sWidth: 22, sHeight: 27 },
+            },
         },
         red: {
-            initial: { sx: 54, sy: 0, sWidth: 25, sHeight: 28 },
-            up:    { sy: 84, sWidth: 22 },
-            down:  { sy: 56, sWidth: 22 },
-            left:  { sy:  0, sWidth: 25 },
-            right: { sy: 28, sWidth: 26 },
+            one: {
+                [Enemy.Direction.left]:  { sx: 54, sy:  0, sWidth: 25, sHeight: 27 },
+                [Enemy.Direction.right]: { sx: 54, sy: 28, sWidth: 25, sHeight: 27 },
+                [Enemy.Direction.down]:  { sx: 54, sy: 56, sWidth: 22, sHeight: 27 },
+                [Enemy.Direction.up]:    { sx: 54, sy: 84, sWidth: 22, sHeight: 27 },
+            },
+            two: {
+                [Enemy.Direction.left]:  { sx: 80, sy:  0, sWidth: 27, sHeight: 27 },
+                [Enemy.Direction.right]: { sx: 80, sy: 28, sWidth: 27, sHeight: 27 },
+                [Enemy.Direction.down]:  { sx: 80, sy: 56, sWidth: 22, sHeight: 27 },
+                [Enemy.Direction.up]:    { sx: 80, sy: 84, sWidth: 22, sHeight: 27 },
+            },
         }
     }
 
@@ -26,14 +40,19 @@ export default class Enemy extends MovingObjects {
         this.moving = true;
         this.game = object.game;
         this.counter = 4;
-        this.currentDir = 2;
+        this.changeDirectionTimeDelta = 0;
+        this.currentDir = Enemy.Direction.left;
         this.status = true;
         this.skin = object.skin || "grey";
+        this.walkCycle = "one";
         this.walkCycleTimeDelta = 0;
 
-        Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].initial)
-
+        this.updateSprite();
         this.loadSpriteSheet();
+    }
+
+    updateSprite() {
+        Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin][this.walkCycle][this.currentDir]);
     }
 
     loadSpriteSheet() {
@@ -51,48 +70,53 @@ export default class Enemy extends MovingObjects {
         )
     }
 
-    randomMove(secondsPassed) {
+    move(secondsPassed) {
         if (this.isDead()) return;
-        const nextDir = this.getNextDirection()
+
         const moveAmount = Math.round(this.speed * secondsPassed);
 
-        if (this.cannotMove(nextDir, moveAmount)) return
+        this.changeDirectionTimeDelta += secondsPassed;
 
-        this.currentDir = nextDir
+        if (this.cannotMove(this.currentDir, moveAmount) || this.changeDirectionTimeDelta >= 0.267) {
+            this.currentDir = this.getNextDirection(moveAmount);
+            this.changeDirectionTimeDelta = 0;
+        }
 
         switch (this.currentDir) {
         case Enemy.Direction.up:
             this.y -= moveAmount;
-            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].up);
+            this.updateSprite();
             break;
         case Enemy.Direction.down:
             this.y += moveAmount;
-            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].down);
+            this.updateSprite();
             break;
         case Enemy.Direction.left:
             this.x -= moveAmount;
-            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].left);
+            this.updateSprite();
             break;
         case Enemy.Direction.right:
             this.x += moveAmount;
-            Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin].right);
+            this.updateSprite();
             break;
         }
 
         this.walkCycleTimeDelta += secondsPassed;
 
         if (this.walkCycleTimeDelta >= 0.267) {
-            if (this.spriteSheetConfig.sx === 0) {
-                this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth;
+
+            if (this.walkCycle === "one") {
+                this.walkCycle = "two";
             } else {
-                this.spriteSheetConfig.sx = 0;
+                this.walkCycle = "one";
             }
+            this.updateSprite();
             this.walkCycleTimeDelta = 0;
         }
     }
 
-    getNextDirection() {
-        const moves = this.availableMoves()
+    getNextDirection(moveAmount) {
+        const moves = this.availableMoves(moveAmount)
         if (this.counter === 0) {
            this.counter = 4
            return moves[this.getRandomInt(0, moves.length)]

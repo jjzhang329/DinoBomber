@@ -1,6 +1,6 @@
 import Bomb from './bomb';
 import MovingObjects from './movingObjects';
-import * as Lib from "./lib.js";
+import * as lib from "./lib.js";
 
 const STD_KEYMAP = {
     "up": "ArrowUp",
@@ -35,13 +35,13 @@ export default class Dino extends MovingObjects {
         object.width = 60;
         object.height = 60;
         super(object);
-        this.spriteSheetConfig = new Lib.SpriteSheetConfig(0, 0, 24, 28);
+        this.spriteSheetConfig = new lib.SpriteSheetConfig(0, 0, 24, 28);
         this.keyMap = new KeyMap();
         this.bomb = 0;
         this.game = object.game;
         this.newBomb = [];
         this.walkCycleTimeDelta = 0;
-        this.throttledCreateBomb = Lib.throttle(this.createBomb, 200);
+        this.throttledCreateBomb = lib.throttle(this.createBomb, 200);
         //reset width and heigh when moving
     }
 

@@ -1,5 +1,5 @@
 import HitBox from "./hitBox.js";
-import * as Lib from "./lib.js";
+import * as lib from "./lib.js";
 
 export default class MovingObjects{
     static Direction = {
@@ -16,7 +16,7 @@ export default class MovingObjects{
         this.height = object.height || 28;
         this.frameX = 0;
         this.frameY = 0;
-        this.spriteSheetConfig = new Lib.SpriteSheetConfig()
+        this.spriteSheetConfig = new lib.SpriteSheetConfig()
         this.speed = 96;
         this.game = object.game;
         this.moving = false;

@@ -1,3 +1,10 @@
+export var direction = {
+    up: 0,
+    down: 1,
+    left: 2,
+    right: 3,
+}
+
 export class SpriteSheetConfig {
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage#parameters
     constructor(sx = 0, sy = 0, sWidth = 0, sHeight = 0) {

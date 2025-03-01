@@ -88,7 +88,7 @@ export default class Game {
         if (!this.end) {
             this.enemies.forEach(enemy => {
                 enemy.draw(this.ctx);
-                enemy.randomMove(secondsPassed);
+                enemy.move(secondsPassed);
             })
             this.dino.move(this.key, secondsPassed);
             this.enemies.forEach(enemy => {
