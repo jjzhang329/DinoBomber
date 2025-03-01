@@ -63,10 +63,13 @@ export default class Enemy extends MovingObjects {
     }
 
     draw(ctx) {
+        const dHeight = 64;
+        const dWidth = this.spriteSheetConfig.sWidth * (dHeight / this.spriteSheetConfig.sHeight);
+
         ctx.drawImage(
             Enemy.spriteSheet,
             ...this.spriteSheetConfig.toArgs(),
-            this.x, this.y, 60, 64
+            this.x, this.y, dWidth, dHeight
         )
     }
 
@@ -76,7 +79,6 @@ export default class Enemy extends MovingObjects {
         const moveAmount = Math.round(this.speed * secondsPassed);
 
         this.changeDirectionTimeDelta += secondsPassed;
-
         if (this.cannotMove(this.currentDir, moveAmount) || this.changeDirectionTimeDelta >= 0.267) {
             this.currentDir = this.getNextDirection(moveAmount);
             this.changeDirectionTimeDelta = 0;
@@ -85,24 +87,19 @@ export default class Enemy extends MovingObjects {
         switch (this.currentDir) {
         case Enemy.Direction.up:
             this.y -= moveAmount;
-            this.updateSprite();
             break;
         case Enemy.Direction.down:
             this.y += moveAmount;
-            this.updateSprite();
             break;
         case Enemy.Direction.left:
             this.x -= moveAmount;
-            this.updateSprite();
             break;
         case Enemy.Direction.right:
             this.x += moveAmount;
-            this.updateSprite();
             break;
         }
 
         this.walkCycleTimeDelta += secondsPassed;
-
         if (this.walkCycleTimeDelta >= 0.267) {
 
             if (this.walkCycle === "one") {
@@ -110,9 +107,10 @@ export default class Enemy extends MovingObjects {
             } else {
                 this.walkCycle = "one";
             }
-            this.updateSprite();
             this.walkCycleTimeDelta = 0;
         }
+
+        this.updateSprite();
     }
 
     getNextDirection(moveAmount) {
