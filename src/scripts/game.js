@@ -113,7 +113,6 @@ export default class Game {
         }
 
         if (this.explosion.length) {
-            console.log("checked explosion.length")
             this.explosion[0].process(secondsPassed);
         }
 

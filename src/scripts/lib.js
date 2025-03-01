@@ -33,15 +33,9 @@ export function throttle(func, delay) {
     let lastTime = 0;
     return function(...args) {
         const now = Date.now();
-        console.log(`${now} - ${lastTime}`)
-        console.log(`${now - lastTime} >= 100`)
         if (now - lastTime >= delay) {
-            console.log("sending signal to create bomb")
             func.apply(this, args);
             lastTime = now;
-            console.log("hi!")
-        } else {
-            // console.log("throttled input")
         }
     }
 }

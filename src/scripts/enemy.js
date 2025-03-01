@@ -131,12 +131,12 @@ export default class Enemy extends MovingObjects {
         //The maximum is exclusive and the minimum is inclusive
     }
 
-    availableMoves() {
+    availableMoves(moveAmount) {
         const moves = []
-        if (this.canMoveUp(2)) {moves.push(Enemy.Direction.up)}
-        if (this.canMoveDown(2)) {moves.push(Enemy.Direction.down)}
-        if (this.canMoveLeft(2)) {moves.push(Enemy.Direction.left)}
-        if (this.canMoveRight(2)) {moves.push(Enemy.Direction.right)}
+        if (this.canMoveUp(moveAmount)) {moves.push(Enemy.Direction.up)}
+        if (this.canMoveDown(moveAmount)) {moves.push(Enemy.Direction.down)}
+        if (this.canMoveLeft(moveAmount)) {moves.push(Enemy.Direction.left)}
+        if (this.canMoveRight(moveAmount)) {moves.push(Enemy.Direction.right)}
         return moves
     }
 

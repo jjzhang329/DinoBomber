@@ -57,25 +57,10 @@ export default class Dino extends MovingObjects {
             // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
             ctx.drawImage(
                 dinoSprite,
-                // this.width * this.frameX, this.height * this.frameY,
-                // this.width, this.height,
                 ...this.spriteSheetConfig.toArgs(),
                 this.x, this.y,
                 60, 64
             )
-            ctx.beginPath();
-            ctx.lineWidth = "1";
-            ctx.strokeStyle = "white";
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.lineWidth = "1";
-            ctx.strokeStyle = "red";
-            ctx.rect(
-                this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height
-            )
-            ctx.stroke();
         })
     }
 
@@ -133,28 +118,15 @@ export default class Dino extends MovingObjects {
             this.walkCycleTimeDelta = 0;
         }
     }
-    /* timer starts at 15
-     * once per frame decrement by 1
-     * old 6fps
-     * current 60fps
-     * 10x faster
-     * every 10nth frame at 60fps
-     * 1/10 of a second
-     * 1.5 seconds total
-     */
 
     clearBomb(bomb, secondsPassed) {
-        // console.log("clearing bomb...")
         if(bomb.timer <= 0){
-            // console.log("bomb.timer === 0")
             this.game.explosion.push(bomb)
-            // bomb.explode()
             let idx = this.game.map.getIndex(bomb.bombX, bomb.bombY)
             this.game.map.tiles[idx] = 0;
             this.newBomb.shift();
             this.bomb -= 1;
         } else {
-            // console.log(`bomb.timer ${bomb.timer} -= secondsPassed ${secondsPassed}`)
             bomb.timer -= secondsPassed;
         }
     }

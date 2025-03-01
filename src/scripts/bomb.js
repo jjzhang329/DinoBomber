@@ -99,7 +99,6 @@ export default class Bomb{
     }
 
     process(secondsPassed) {
-        // console.log("processing bomb...")
         if ( Math.floor(this.blast.frameX) < 3) {
            this.blast.frameX += 1
         }
@@ -112,7 +111,6 @@ export default class Bomb{
     }
 
     drawAndCheckCollisions() {
-        // console.log("drawAndCheckCollisions bomb...")
         this.drawCenter();
 
         const leftCol = this.emptyLeftCol(this.col, this.row);
@@ -159,7 +157,6 @@ export default class Bomb{
     fire(frameY, w, h, dX, dY,ratio=0){
 
         const explosion = new Image();
-        // console.log(frameY, w, h, dX, dY, this.blast.frameX, ratio)
         explosion.addEventListener('load', () => {
 
             ctx.drawImage(explosion, 64*(this.blast.frameX+ratio),
