@@ -5,6 +5,22 @@ export var direction = {
     right: 3,
 }
 
+export var STD_KEYMAP = {
+    "up": "ArrowUp",
+    "left": "ArrowLeft",
+    "right": "ArrowRight",
+    "down": "ArrowDown",
+    "action": "Space"
+}
+
+export var ALT_KEYMAP = {
+    "up": "KeyW",
+    "left": "KeyA",
+    "right": "KeyD",
+    "down": "KeyS",
+    "action": "KeyE"
+}
+
 export class SpriteSheetConfig {
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage#parameters
     constructor(sx = 0, sy = 0, sWidth = 0, sHeight = 0) {

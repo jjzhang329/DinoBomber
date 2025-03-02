@@ -139,19 +139,25 @@ export default class Bomb{
     }
 
     checkEntityCollisions(hitBox) {
-        if (hitBox.checkHitEntity(this.game.dino)) {
-            this.game.dino.status = 'burned'
-            this.game.end = true
-            return;
-        }
+
+        let allDinosDefeated = true;
+        this.game.dinos.forEach(dino => {
+            if (hitBox.checkHitEntity(dino)) dino.status = "burned";
+            if (dino.isAlive()) allDinosDefeated = false;
+        })
 
         let allEnemiesDefeated = true;
         this.game.enemies.forEach(enemy => {
-            if (hitBox.checkHitEntity(enemy)) enemy.status = false;
+            if (hitBox.checkHitEntity(enemy)) {
+                console.log(`${enemy.skin} enemy killed via bomb`);
+                enemy.status = false;
+            };
             if (enemy.isAlive()) allEnemiesDefeated = false;
         })
 
-        if (allEnemiesDefeated) this.game.end = true;
+        if (allDinosDefeated || allEnemiesDefeated) {
+            this.game.end = true
+        }
     }
 
     fire(frameY, w, h, dX, dY,ratio=0){

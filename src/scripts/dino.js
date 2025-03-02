@@ -2,33 +2,6 @@ import Bomb from './bomb';
 import MovingObjects from './movingObjects';
 import * as lib from "./lib.js";
 
-const STD_KEYMAP = {
-    "up": "ArrowUp",
-    "left": "ArrowLeft",
-    "right": "ArrowRight",
-    "down": "ArrowDown",
-    "action": "Space"
-}
-
-const ALT_KEYMAP = {
-    "up": "KeyW",
-    "left": "KeyA",
-    "right": "KeyD",
-    "down": "KeyS",
-    "action": "KeyE"
-}
-
-class KeyMap {
-    constructor(...kwargs) {
-        kwargs = {...STD_KEYMAP, ...kwargs}
-        this.up     = kwargs["up"]
-        this.left   = kwargs["left"]
-        this.right  = kwargs["right"]
-        this.down   = kwargs["down"]
-        this.action = kwargs["action"]
-    }
-}
-
 export default class Dino extends MovingObjects {
     "use strict";
     static spriteSheet = null;
@@ -55,9 +28,10 @@ export default class Dino extends MovingObjects {
         object.width = 60;
         object.height = 60;
         super(object);
-        this.keyMap = new KeyMap();
+        this.keyMap = object.keyMap || lib.STD_KEYMAP;
         this.bomb = 0;
         this.game = object.game;
+        this.playerName = object.playerName || "Player 1"
         this.newBomb = [];
         this.throttledCreateBomb = lib.throttle(this.createBomb, 200);
 
@@ -90,6 +64,10 @@ export default class Dino extends MovingObjects {
             this.x, this.y,
             60, 64
         )
+
+        ctx.font = "16px sans-serif";
+        ctx.textAlign = "center"
+        ctx.fillText(this.playerName, this.x + 28, this.y - 20);
     }
 
     createBomb() {
@@ -145,5 +123,9 @@ export default class Dino extends MovingObjects {
         } else {
             bomb.timer -= secondsPassed;
         }
+    }
+
+    isAlive() {
+        this.status == true;
     }
 }

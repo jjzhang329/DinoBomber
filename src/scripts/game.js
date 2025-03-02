@@ -3,6 +3,7 @@ import Dino from './dino';
 import KeyHandler from './keyHandler';
 import Enemy from './enemy';
 import Bomb from './bomb';
+import * as lib from "./lib.js";
 
 let secondsPassed, oldTimestamp, fps;
 export default class Game {
@@ -23,17 +24,23 @@ export default class Game {
             break;
         }
 
-        this.dino ||= new Dino();
+        this.dinos ||= [new Dino()];
         this.enemies ||= [];
     }
 
     static classicGame(game) {
-        game.dino = new Dino({x: 832, y: 576, game: game});
+        game.dinos = [new Dino({x: 832, y: 576, game: game})];
         game.enemies = [new Enemy({x: 64, y: 64, game: game})];
     }
 
     static demoGame(game) {
-        game.dino = new Dino({x: 448, y: 320, game: game});
+        game.dinos = [
+            new Dino({x: 448, y: 320, game: game}),
+            new Dino({
+                x: 500, y: 320, keyMap: lib.ALT_KEYMAP,
+                playerName: "Player 2", game: game
+            })
+        ];
         game.enemies = [
             new Enemy({x: 320, y: 320, game: game, skin: "grey"}),
             new Enemy({x: 64, y: 64, game: game, skin: "red"})
@@ -55,13 +62,12 @@ export default class Game {
             winModal.classList.remove("hidden");
 
             let message
-            if(this.dino.status === 'burned'){
+            if(this.dinos.every(dino => dino.status === 'burned')) {
                 message = 'Game Over! You are burned!'
-
-            } else if (this.allEnemiesDefeated()){
+            } else if (this.allEnemiesDefeated()) {
                 message = 'You Win! You are unbeatable!'
 
-            }else{
+            } else {
                 message = 'Game Over! Soldier stabbed you, play again?'
             }
             gameMessage.innerHTML = message
@@ -69,10 +75,7 @@ export default class Game {
     }
 
     allEnemiesDefeated() {
-        this.enemies.forEach(enemy => {
-            if (enemy.isAlive()) return false;
-        })
-        return true;
+        this.enemies.every(enemy => enemy.isDead());
     }
 
     animate(timestamp) {
@@ -84,33 +87,33 @@ export default class Game {
         fps = Math.round(1 / secondsPassed);
 
         this.map.draw(this.ctx);
-        this.dino.draw(this.ctx);
-        if (!this.end) {
-            this.enemies.forEach(enemy => {
-                enemy.draw(this.ctx);
-                enemy.move(secondsPassed);
-            })
-            this.dino.move(this.key, secondsPassed);
-            this.enemies.forEach(enemy => {
-                this.collision(enemy, this.dino)
-            })
-        };
+        this.dinos.forEach(dino => dino.draw(this.ctx))
+        this.enemies.forEach(enemy => {
+            enemy.draw(this.ctx);
+            enemy.move(secondsPassed);
+        })
+        this.dinos.forEach(dino => dino.move(this.key, secondsPassed))
+        this.enemies.forEach(enemy => {
+            this.dinos.forEach(dino => this.collision(enemy, dino))
+        })
 
-        if (this.dino.bomb) {
-            this.dino.newBomb.forEach(egg => {
-                let idx = this.map.getIndex(egg.bombX, egg.bombY)
-                this.map.tiles[idx] = 1
-                Bomb.dropBomb(egg);
+        this.dinos.forEach(dino => {
+            if (dino.bomb) {
+                dino.newBomb.forEach(egg => {
+                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
+                    this.map.tiles[idx] = 1
+                    Bomb.dropBomb(egg);
 
-                if (egg.sourceX < egg.width) {
-                    egg.sourceX += egg.width;
-                } else {
-                    egg.sourceX = 0;
-                }
+                    if (egg.sourceX < egg.width) {
+                        egg.sourceX += egg.width;
+                    } else {
+                        egg.sourceX = 0;
+                    }
 
-                this.dino.clearBomb(egg, secondsPassed);
-            })
-        }
+                    dino.clearBomb(egg, secondsPassed);
+                })
+            }
+        })
 
         if (this.explosion.length) {
             this.explosion[0].process(secondsPassed);
