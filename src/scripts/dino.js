@@ -76,6 +76,8 @@ export default class Dino extends MovingObjects {
     }
 
     move(key, secondsPassed) {
+        if (this.isDead()) return;
+
         let moving = false;
         const moveAmount = Math.round(this.speed * secondsPassed);
 
@@ -126,6 +128,10 @@ export default class Dino extends MovingObjects {
     }
 
     isAlive() {
-        this.status == true;
+        return this.status == true;
+    }
+
+    isDead() {
+        return !this.isAlive();
     }
 }

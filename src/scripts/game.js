@@ -94,8 +94,12 @@ export default class Game {
         })
         this.dinos.forEach(dino => dino.move(this.key, secondsPassed))
         this.enemies.forEach(enemy => {
-            this.dinos.forEach(dino => this.collision(enemy, dino))
+            this.dinos.forEach(dino => this.enemyHitCheck(enemy, dino))
         })
+
+        if (this.dinos.every(dino => dino.isDead())) {
+            this.end = true;
+        }
 
         this.dinos.forEach(dino => {
             if (dino.bomb) {
@@ -122,16 +126,14 @@ export default class Game {
         requestAnimationFrame(this.animate.bind(this));
     }
 
-    collision(object1, object2) {
-        if(object1.x === object2.x){
-            if(Math.abs(object1.y - object2.y) <= 64){
-                object2.status = false;
-                this.end = true;
+    enemyHitCheck(enemy, dino) {
+        if(enemy.x === dino.x){
+            if(Math.abs(enemy.y - dino.y) <= 64){
+                dino.status = false;
             }
-        } else if(object1.y === object2.y) {
-            if(Math.abs(object1.x - object2.x) <= 60){
-                object2.status = false;
-                this.end = true;
+        } else if(enemy.y === dino.y) {
+            if(Math.abs(enemy.x - dino.x) <= 60){
+                dino.status = false;
             }
         }
     }
