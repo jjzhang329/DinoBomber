@@ -14,14 +14,15 @@ export default class MovingObjects{
         this.y = object.y;
         this.width = object.width || 24;
         this.height = object.height || 28;
-        this.frameX = 0;
-        this.frameY = 0;
-        this.spriteSheetConfig = new lib.SpriteSheetConfig()
+        this.spriteSheetConfig = new lib.SpriteSheetConfig();
         this.speed = 96;
+        this.direction = MovingObjects.Direction.left;
         this.game = object.game;
         this.moving = false;
         this.status = true;
         this.hitBox = new HitBox(this.x, this.y, this.width, this.height);
+        this.walkCycle = "one";
+        this.walkCycleTimeDelta = 0;
     }
 
     canMove(direction, moveAmount) {

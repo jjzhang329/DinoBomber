@@ -41,18 +41,15 @@ export default class Enemy extends MovingObjects {
         this.game = object.game;
         this.counter = 4;
         this.changeDirectionTimeDelta = 0;
-        this.currentDir = Enemy.Direction.left;
         this.status = true;
         this.skin = object.skin || "grey";
-        this.walkCycle = "one";
-        this.walkCycleTimeDelta = 0;
 
         this.updateSprite();
         this.loadSpriteSheet();
     }
 
     updateSprite() {
-        Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin][this.walkCycle][this.currentDir]);
+        Object.assign(this.spriteSheetConfig, Enemy.sprites[this.skin][this.walkCycle][this.direction]);
     }
 
     loadSpriteSheet() {
@@ -63,6 +60,7 @@ export default class Enemy extends MovingObjects {
     }
 
     draw(ctx) {
+        this.updateSprite();
         const dHeight = 64;
         const dWidth = this.spriteSheetConfig.sWidth * (dHeight / this.spriteSheetConfig.sHeight);
 
@@ -79,12 +77,12 @@ export default class Enemy extends MovingObjects {
         const moveAmount = Math.round(this.speed * secondsPassed);
 
         this.changeDirectionTimeDelta += secondsPassed;
-        if (this.cannotMove(this.currentDir, moveAmount) || this.changeDirectionTimeDelta >= 0.267) {
-            this.currentDir = this.getNextDirection(moveAmount);
+        if (this.cannotMove(this.direction, moveAmount) || this.changeDirectionTimeDelta >= 0.267) {
+            this.direction = this.getNextDirection(moveAmount);
             this.changeDirectionTimeDelta = 0;
         }
 
-        switch (this.currentDir) {
+        switch (this.direction) {
         case Enemy.Direction.up:
             this.y -= moveAmount;
             break;
@@ -101,16 +99,9 @@ export default class Enemy extends MovingObjects {
 
         this.walkCycleTimeDelta += secondsPassed;
         if (this.walkCycleTimeDelta >= 0.267) {
-
-            if (this.walkCycle === "one") {
-                this.walkCycle = "two";
-            } else {
-                this.walkCycle = "one";
-            }
+            this.walkCycle = this.walkCycle === "one" ? "two" : "one";
             this.walkCycleTimeDelta = 0;
         }
-
-        this.updateSprite();
     }
 
     getNextDirection(moveAmount) {
@@ -120,7 +111,7 @@ export default class Enemy extends MovingObjects {
            return moves[this.getRandomInt(0, moves.length)]
         } else {
            this.counter -= 1
-           return this.currentDir
+           return this.direction
         }
     }
 

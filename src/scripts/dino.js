@@ -31,37 +31,65 @@ class KeyMap {
 
 export default class Dino extends MovingObjects {
     "use strict";
+    static spriteSheet = null;
+    static sprites = {
+        one: {
+            [Dino.Direction.left]:  { sx:  0, sy:  0, sWidth: 24, sHeight: 28 },
+            [Dino.Direction.right]: { sx:  0, sy: 29, sWidth: 24, sHeight: 28 },
+            [Dino.Direction.down]:  { sx:  0, sy: 58, sWidth: 21, sHeight: 29 },
+            [Dino.Direction.up]:    { sx:  0, sy: 88, sWidth: 21, sHeight: 29 },
+        },
+        two: {
+            [Dino.Direction.left]:  { sx: 25, sy:  0, sWidth: 24, sHeight: 28 },
+            [Dino.Direction.right]: { sx: 25, sy: 29, sWidth: 24, sHeight: 28 },
+            [Dino.Direction.down]:  { sx: 25, sy: 58, sWidth: 21, sHeight: 29 },
+            [Dino.Direction.up]:    { sx: 25, sy: 88, sWidth: 21, sHeight: 29 },
+        },
+        burned: {
+            one: { sx:  0, sy: 118, sWidth: 21, sHeight: 29 },
+            two: { sx: 26, sy: 118, sWidth: 21, sHeight: 29 },
+        }
+    }
+
     constructor(object) {
         object.width = 60;
         object.height = 60;
         super(object);
-        this.spriteSheetConfig = new lib.SpriteSheetConfig(0, 0, 24, 28);
         this.keyMap = new KeyMap();
         this.bomb = 0;
         this.game = object.game;
         this.newBomb = [];
-        this.walkCycleTimeDelta = 0;
         this.throttledCreateBomb = lib.throttle(this.createBomb, 200);
-        //reset width and heigh when moving
+
+        this.updateSprite();
+        this.loadSpriteSheet();
+    }
+
+    updateSprite() {
+        const sData = this.status === "burned" ?
+            Dino.sprites.burned[this.walkCycle] :
+            Dino.sprites[this.walkCycle][this.direction];
+
+        Object.assign(this.spriteSheetConfig, sData)
+    }
+
+    loadSpriteSheet() {
+        if (Dino.spriteSheet) return;
+
+        Dino.spriteSheet = new Image();
+        Dino.spriteSheet.src = "src/assets/dinoSprite.png";
     }
 
     draw(ctx) {
-        const dinoSprite = new Image();
-        if(this.status === 'burned'){
-            this.spriteSheetConfig.sy = 0;
-            this.spriteSheetConfig.sWidth = 21;
-            this.spriteSheetConfig.sHeight = 29;
-            dinoSprite.src = 'src/assets/deadDino.png'
-        } else { dinoSprite.src = "src/assets/dinoSprite.png"}
-        dinoSprite.addEventListener('load', () =>{
-            // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-            ctx.drawImage(
-                dinoSprite,
-                ...this.spriteSheetConfig.toArgs(),
-                this.x, this.y,
-                60, 64
-            )
-        })
+        this.updateSprite();
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+        ctx.drawImage(
+            Dino.spriteSheet,
+            ...this.spriteSheetConfig.toArgs(),
+            this.x, this.y,
+            60, 64
+        )
     }
 
     createBomb() {
@@ -75,30 +103,22 @@ export default class Dino extends MovingObjects {
 
         if (key[this.keyMap.up] && this.canMoveUp(moveAmount)) {
             this.y -= moveAmount;
-            this.spriteSheetConfig.sy = 84.97;
-            this.spriteSheetConfig.sWidth = 21;
-            this.spriteSheetConfig.sHeight = 29;
+            this.direction = Dino.Direction.up;
             moving = true;
         }
         if (key[this.keyMap.left] && this.canMoveLeft(moveAmount)) {
             this.x -= moveAmount;
-            this.spriteSheetConfig.sy = 0;
-            this.spriteSheetConfig.sWidth = 24;
-            this.spriteSheetConfig.sHeight = 28;
+            this.direction = Dino.Direction.left;
             moving = true;
         }
         if (key[this.keyMap.right] && this.canMoveRight(moveAmount)) {
             this.x += moveAmount;
-            this.spriteSheetConfig.sy = 28;
-            this.spriteSheetConfig.sWidth = 24;
-            this.spriteSheetConfig.sHeight = 28;
+            this.direction = Dino.Direction.right;
             moving = true;
         }
         if (key[this.keyMap.down] && this.canMoveDown(moveAmount)) {
             this.y += moveAmount
-            this.spriteSheetConfig.sy = 55.97;
-            this.spriteSheetConfig.sWidth = 21;
-            this.spriteSheetConfig.sHeight = 29;
+            this.direction = Dino.Direction.down;
             moving = true;
         }
 
@@ -110,11 +130,7 @@ export default class Dino extends MovingObjects {
         }
 
         if (this.moving && this.walkCycleTimeDelta >= 0.267) {
-            if (this.spriteSheetConfig.sx == 0) {
-                this.spriteSheetConfig.sx = this.spriteSheetConfig.sWidth
-            } else {
-                this.spriteSheetConfig.sx = 0
-            }
+            this.walkCycle = this.walkCycle === "one" ? "two" : "one";
             this.walkCycleTimeDelta = 0;
         }
     }
