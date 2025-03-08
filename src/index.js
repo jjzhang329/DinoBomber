@@ -11,6 +11,7 @@ startscreen.addEventListener('load', initMainMenu)
 startscreen.src = 'src/assets/startMap.png'
 canvas.width = 960;
 canvas.height = 704;
+let game;
 
 const mainMenu = document.getElementById("main-menu")
 const instrOpenBtn = document.getElementById('instructions-open');
@@ -18,7 +19,7 @@ const sideBar = document.getElementById('side-bar')
 
 mainMenu.querySelectorAll("button.start").forEach(btn => {
     btn.addEventListener("click", () => {
-        const game = new Game(ctx, btn.dataset.gameMode)
+        game = new Game(ctx, btn.dataset.gameMode)
         game.start()
         // TODO: might not be necessary
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -49,10 +50,10 @@ instrClose.onclick = function() {
     instrModal.classList.add("hidden");
 }
 
-playAgain.onclick = function(){
-    const game = new Game(ctx, "classic")
-    winModal.classList.add("hidden")
-    game.start()
+playAgain.onclick = function() {
+    game = new Game(ctx, game.gameMode);
+    winModal.classList.add("hidden");
+    game.start();
 }
 
 winClose.onclick = function(){

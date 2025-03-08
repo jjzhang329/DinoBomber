@@ -14,8 +14,9 @@ export default class Game {
         this.map = new Map();
         this.key = new KeyHandler().keys;
         this.explosion = [];
+        this.gameMode = gameMode || "classic";
 
-        switch (gameMode) {
+        switch (this.gameMode) {
         case "classic":
             Game.classicGame(this);
             break;
@@ -55,23 +56,20 @@ export default class Game {
     }
 
     gameOver() {
-       //use a modal or run cancelanimationrequest
-        if(this.end) {
-            const winModal = document.getElementById('winModal')
-            const gameMessage = document.getElementsByClassName('game-message')[0]
-            winModal.classList.remove("hidden");
+        const winModal = document.getElementById('winModal')
+        const gameMessage = document.getElementsByClassName('game-message')[0]
+        winModal.classList.remove("hidden");
 
-            let message
-            if(this.dinos.every(dino => dino.status === 'burned')) {
-                message = 'Game Over! You are burned!'
-            } else if (this.allEnemiesDefeated()) {
-                message = 'You Win! You are unbeatable!'
+        let message
+        if(this.dinos.every(dino => dino.status === 'burned')) {
+            message = 'Game Over! You are burned!'
+        } else if (this.allEnemiesDefeated()) {
+            message = 'You Win! You are unbeatable!'
 
-            } else {
-                message = 'Game Over! Soldier stabbed you, play again?'
-            }
-            gameMessage.innerHTML = message
+        } else {
+            message = 'Game Over! Soldier stabbed you, play again?'
         }
+        gameMessage.innerHTML = message;
     }
 
     allEnemiesDefeated() {
@@ -79,7 +77,7 @@ export default class Game {
     }
 
     animate(timestamp) {
-        if (this.end) this.gameOver();
+        if (this.end) return this.gameOver();
 
         secondsPassed = (timestamp - oldTimestamp) / 1000;
         oldTimestamp = timestamp;

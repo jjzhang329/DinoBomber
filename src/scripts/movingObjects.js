@@ -15,7 +15,7 @@ export default class MovingObjects{
         this.width = object.width || 24;
         this.height = object.height || 28;
         this.spriteSheetConfig = new lib.SpriteSheetConfig();
-        this.speed = 96;
+        this.speed = 165;
         this.direction = MovingObjects.Direction.left;
         this.game = object.game;
         this.moving = false;
