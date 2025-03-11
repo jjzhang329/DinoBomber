@@ -3,129 +3,136 @@ import Dino from './dino';
 import KeyHandler from './keyHandler';
 import Enemy from './enemy';
 import Bomb from './bomb';
+import * as lib from "./lib.js";
 
-let fps, fpsInterval, startTime, now, then, elapsed;
-export default class Game{
-    constructor(ctx){
+let secondsPassed, oldTimestamp, fps;
+export default class Game {
+    constructor(ctx, gameMode) {
         this.ctx = ctx;
         this.end = false;
         this.paused = false;
         this.map = new Map();
-        this.dino = new Dino({x:832, y:576, game: this});
-        this.enemies = new Enemy({x:64, y:64, game:this})
-        this.key = new KeyHandler(this.dino).keys;
+        this.key = new KeyHandler().keys;
         this.explosion = [];
-        console.log(this.map.obstacles())
-        
+        this.gameMode = gameMode || "classic";
+
+        switch (this.gameMode) {
+        case "classic":
+            Game.classicGame(this);
+            break;
+        case "demo":
+            Game.demoGame(this);
+            break;
+        }
+
+        this.dinos ||= [new Dino()];
+        this.enemies ||= [];
     }
-    
-   start(){
+
+    static classicGame(game) {
+        game.dinos = [new Dino({x: 832, y: 576, game: game})];
+        game.enemies = [new Enemy({x: 64, y: 64, game: game})];
+    }
+
+    static demoGame(game) {
+        game.dinos = [
+            new Dino({x: 448, y: 320, game: game}),
+            new Dino({
+                x: 500, y: 320, keyMap: lib.ALT_KEYMAP,
+                playerName: "Player 2", game: game
+            })
+        ];
+        game.enemies = [
+            new Enemy({x: 320, y: 320, game: game, skin: "grey"}),
+            new Enemy({x: 64, y: 64, game: game, skin: "red"})
+        ];
+    }
+
+    start() {
        const sideBar = document.getElementById('side-bar')
-       sideBar.style.display = 'flex'  
-       this.startAnimating(6)
+       sideBar.classList.remove("hidden");
+       oldTimestamp = document.timeline.currentTime;
+       requestAnimationFrame(this.animate.bind(this));
     }
 
+    gameOver() {
+        const winModal = document.getElementById('winModal')
+        const gameMessage = document.getElementsByClassName('game-message')[0]
+        winModal.classList.remove("hidden");
 
-   gameOver(){
-       //use a modal or run cancelanimationrequest
-        if(this.end){
-            const winModal = document.getElementById('winModal')
-            const gameMessage = document.getElementsByClassName('game-message')[0]
-            winModal.style.display = 'block'
+        let message
+        if(this.dinos.every(dino => dino.status === 'burned')) {
+            message = 'Game Over! You are burned!'
+        } else if (this.allEnemiesDefeated()) {
+            message = 'You Win! You are unbeatable!'
 
-            let message
-            if(this.dino.status === 'burned'){
-                message = 'Game Over! You are burned!'
-            
-            }else if(!this.enemies.status){
-                message = 'You Win! You are unbeatable!'
-
-            }else{ 
-                message = 'Game Over! Soldier stabbed you, play again?'    
-            }
-            gameMessage.innerHTML = message
-
-        
+        } else {
+            message = 'Game Over! Soldier stabbed you, play again?'
         }
-    }
-   
-   
- 
-    startAnimating(fps) {
-        fpsInterval = 1000 / fps;    
-        then = Date.now();
-        startTime = then;
-        this.animate()
+        gameMessage.innerHTML = message;
     }
 
-    animate(){
-        if(!this.end){
-            requestAnimationFrame(this.animate.bind(this))
+    allEnemiesDefeated() {
+        this.enemies.every(enemy => enemy.isDead());
+    }
+
+    animate(timestamp) {
+        if (this.end) return this.gameOver();
+
+        secondsPassed = (timestamp - oldTimestamp) / 1000;
+        oldTimestamp = timestamp;
+
+        fps = Math.round(1 / secondsPassed);
+
+        this.map.draw(this.ctx);
+        this.dinos.forEach(dino => dino.draw(this.ctx))
+        this.enemies.forEach(enemy => {
+            enemy.draw(this.ctx);
+            enemy.move(secondsPassed);
+        })
+        this.dinos.forEach(dino => dino.move(this.key, secondsPassed))
+        this.enemies.forEach(enemy => {
+            this.dinos.forEach(dino => this.enemyHitCheck(enemy, dino))
+        })
+
+        if (this.dinos.every(dino => dino.isDead())) {
+            this.end = true;
         }
-          
-        this.gameOver() 
-        // this.ctx.clearRect(0, 0, 800, 480)
-        now = Date.now();
-       elapsed = now - then;    
-        if (elapsed > fpsInterval) {    
-            then = now - (elapsed % fpsInterval);
-            this.map.draw(this.ctx);
-            this.dino.draw(this.ctx);
-            if (!this.end) { 
-                this.enemies.draw(this.ctx)
-                this.enemies.randomMove();     
-                this.dino.move(this.key);
-                this.collision(this.enemies, this.dino) 
-            };
-            
-            
-           if(this.dino.bomb){
-               this.dino.newBomb.forEach(egg =>{
-                   let idx = this.map.getIndex(egg.bombX, egg.bombY)
-                   this.map.tiles[idx] = 1
+
+        this.dinos.forEach(dino => {
+            if (dino.bomb) {
+                dino.newBomb.forEach(egg => {
+                    let idx = this.map.getIndex(egg.bombX, egg.bombY)
+                    this.map.tiles[idx] = 1
                     Bomb.dropBomb(egg);
-                    if(egg.sourceX < egg.width) egg.sourceX += egg.width
-                     else{egg.sourceX = 0};
-                    this.dino.clearBomb(egg)
 
+                    if (egg.sourceX < egg.width) {
+                        egg.sourceX += egg.width;
+                    } else {
+                        egg.sourceX = 0;
                     }
-                )
-            }
-            if(this.explosion.length)this.explosion[0].explode()    
-            this.handlePlayerFrame();
-           
-        };   
-        
-    }
 
-    handlePlayerFrame() {
-        if (this.dino.frameX < 1 && this.dino.moving) {
-            this.dino.frameX++
-        } else { this.dino.frameX = 0 }
-        if(this.enemies.frameX < 1){
-            this.enemies.frameX++
-        }else{this.enemies.frameX = 0}
-    }
+                    dino.clearBomb(egg, secondsPassed);
+                })
+            }
+        })
 
-   
-    collision(object1, object2){
-        if(object1.x === object2.x){
-            if(Math.abs(object1.y - object2.y) <= 64){                
-               
-                object2.status = false;
-                this.end = true;
-            }
-        }else if(object1.y === object2.y){
-            if(Math.abs(object1.x - object2.x) <= 60){                
-                
-                object2.status = false;
-                this.end = true;
-            }
+        if (this.explosion.length) {
+            this.explosion[0].process(secondsPassed);
         }
 
-              
+        requestAnimationFrame(this.animate.bind(this));
     }
 
-  
-
+    enemyHitCheck(enemy, dino) {
+        if(enemy.x === dino.x){
+            if(Math.abs(enemy.y - dino.y) <= 64){
+                dino.status = false;
+            }
+        } else if(enemy.y === dino.y) {
+            if(Math.abs(enemy.x - dino.x) <= 60){
+                dino.status = false;
+            }
+        }
+    }
 }

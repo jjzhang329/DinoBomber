@@ -50,6 +50,13 @@ table {
 	border-spacing: 0;
 }
 
+/*!********************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/base.css ***!
+  \********************************************************************************************/
+.hidden {
+    display: none;
+}
+
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
@@ -92,10 +99,11 @@ body {
 .nav-bar {
   display: flex;
   justify-content: center;
-  position: absolute;
-  top: 70%;
-  left: 35%;
   width: 30%;
+  margin: 20px auto 0 auto;
+}
+.nav-bar.hidden {
+  display: none;
 }
 
 .nav-bar > a > img {
@@ -115,24 +123,26 @@ body {
   left: 50%;
 }
 
-#nav-bar {
-  display: none;
-  flex-direction: row;
+.main-menu {
+  position: absolute;
+  top: 60%;
+  left: 29%;
+  width: 400px;
+  height: 240px;
 }
 
 .buttons {
-  position: absolute;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 400px;
-  top: 60%;
-  height: 40px;
-  left: 29%;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.buttons button {
+  width: 240px;
 }
 
 button {
-  transition: all 0.5s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
   color: #F5F5F5;
   border: 2px solid #F5F5F5;
   font-family: "Montserrat", sans-serif;
@@ -182,7 +192,6 @@ li {
 }
 
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   padding-top: 200px;
@@ -290,14 +299,16 @@ li {
   height: 28px;
 }
 
-#side-bar {
-  display: none;
+.side-bar {
+  display: flex;
   position: absolute;
   flex-direction: column;
   left: -8%;
 }
-
-#side-bar > a > img {
+.side-bar.hidden {
+  display: none;
+}
+.side-bar > a > img {
   width: 40px;
   height: 40px;
   margin: 10px;

@@ -1,69 +1,69 @@
+import HitBox from "./hitBox.js";
+import * as lib from "./lib.js";
+
 export default class MovingObjects{
-    constructor(object){
+    static Direction = {
+        up: 0,
+        down: 1,
+        left: 2,
+        right: 3,
+    }
+
+    constructor(object) {
         this.x = object.x;
-        this.y = object.y;  
-        this.frameX = 0;
-        this.frameY = 0;
-        this.speed = 16;
+        this.y = object.y;
+        this.width = object.width || 24;
+        this.height = object.height || 28;
+        this.spriteSheetConfig = new lib.SpriteSheetConfig();
+        this.speed = 165;
+        this.direction = MovingObjects.Direction.left;
         this.game = object.game;
         this.moving = false;
         this.status = true;
-        
+        this.hitBox = new HitBox(this.x, this.y, this.width, this.height);
+        this.walkCycle = "one";
+        this.walkCycleTimeDelta = 0;
     }
 
-
-    moveUp() {
-
-        let i = this.game.map.getRow(this.y) 
-        let j = this.game.map.getCol(this.x);
-     
-        if (i <= 4) {
-            return false
-        } else if (this.game.map.emptyTile(j, i-1)&&this.game.map.emptyTile(j+3, i-1)){
-            return true
-        }
-        
-    }
-
-    moveDown() {
-        
-        let i = this.game.map.getRow(this.y)
-        let j = this.game.map.getCol(this.x);
-        
-        if (i >= canvas.height/16 - 8) {
-            return false
-        } else if (this.game.map.emptyTile(j, i+4)&&this.game.map.emptyTile(j+3, i+4)){
-            return true
-        }   
-
-    }
-    moveLeft() {
-
-        let i = this.game.map.getRow(this.y);
-        let j = this.game.map.getCol(this.x); 
-  
-        if(j <= 4) {
-            return false
-        } else if (this.game.map.emptyTile(j-1, i)&&this.game.map.emptyTile(j-1, i+3)){
-    
-            return true         
-        }
-     
-
-    }
-    moveRight() {
-
-   
-        let i = this.game.map.getRow(this.y);
-        let j = this.game.map.getCol(this.x);
-        
-        if (j >= canvas.width/16 - 8) {
-            return false
-        } else if (this.game.map.emptyTile(j+4, i)&&this.game.map.emptyTile(j+4, i+3)){
-            return true
+    canMove(direction, moveAmount) {
+        switch (direction) {
+        case MovingObjects.Direction.up:
+            return this.emptyTile(this.x,              this.y - moveAmount) &&
+                   this.emptyTile(this.x + this.width, this.y - moveAmount)
+        case MovingObjects.Direction.down:
+            return this.emptyTile(this.x,              this.y + this.height + moveAmount) &&
+                   this.emptyTile(this.x + this.width, this.y + this.height + moveAmount)
+        case MovingObjects.Direction.left:
+            return this.emptyTile(this.x - moveAmount, this.y) &&
+                   this.emptyTile(this.x - moveAmount, this.y + this.height)
+        case MovingObjects.Direction.right:
+            return this.emptyTile(this.x + this.width + moveAmount, this.y) &&
+                   this.emptyTile(this.x + this.width + moveAmount, this.y + this.height)
         }
 
+        return false
     }
+
+    cannotMove(direction, moveAmount) {
+        return !this.canMove(direction, moveAmount)
+    }
+
+    canMoveUp(moveAmount) {
+        return this.canMove(MovingObjects.Direction.up, moveAmount || 2)
+    }
+
+    canMoveDown(moveAmount) {
+        return this.canMove(MovingObjects.Direction.down, moveAmount || 2)
+    }
+
+    canMoveLeft(moveAmount) {
+        return this.canMove(MovingObjects.Direction.left, moveAmount || 2)
+    }
+
+    canMoveRight(moveAmount) {
+        return this.canMove(MovingObjects.Direction.right, moveAmount || 2)
+    }
+
     emptyTile(x, y){
         let i = this.game.map.getRow(x)
         let j = this.game.map.getCol(y)
